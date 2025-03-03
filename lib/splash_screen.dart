@@ -1,4 +1,7 @@
-import 'package:clc_app/login_screen.dart';
+import 'package:clc_app/authentication/login_screen.dart';
+import 'package:clc_app/resources/default_color.dart';
+import 'package:clc_app/resources/extenssions.dart';
+import 'package:clc_app/resources/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,15 +25,16 @@ class _SplashScreenState extends State<SplashScreen> {
   navigationTo() {
     // Show status bar again before navigating
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+    Navigation.pushReplacement(context: context, moveTo: const LoginScreen());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.green,
+        color: primeColor,
+        child:
+            Center(child: Image.asset("splashLogo.png".directory(), scale: 2)),
       ),
     );
   }
