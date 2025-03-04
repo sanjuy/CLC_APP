@@ -1,9 +1,7 @@
-import 'package:clc_app/custom_widget/custom_appbar.dart';
 import 'package:clc_app/custom_widget/custom_image_view.dart';
 import 'package:clc_app/profile/change_membership_type_screen.dart';
-import 'package:clc_app/profile/coupon_redeem_history_screen.dart';
+import 'package:clc_app/profile/edit_profile_screen.dart';
 import 'package:clc_app/profile/reset_password_screen.dart';
-import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +17,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Profile", isEditProfile: true),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 10, right: 10),
@@ -64,11 +61,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         arrowButton(
-                          title: "Coupon Redeem History",
+                          title: "Edit Profile",
                           onPressed: () {
                             Navigation.push(
                               context: context,
-                              moveTo: CouponRedeemHistoryScreen(),
+                              moveTo: EditProfileScreen(),
                             );
                           },
                         ),
@@ -99,8 +96,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              Spacer(),
-              Image.asset("clc.png".directory(), scale: 10),
+              // Spacer(),
+              // Image.asset("clc.png".directory(), scale: 10),
             ],
           ),
         ),

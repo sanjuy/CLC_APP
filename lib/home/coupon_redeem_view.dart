@@ -1,9 +1,179 @@
-import 'package:clc_app/resources/alert_view.dart';
-import 'package:clc_app/resources/extenssions.dart';
-import 'package:clc_app/resources/utils.dart';
+import 'package:clc_app/home/coupon_details_view.dart';
+import 'package:clc_app/resources/dotted_divider_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+void showBoardingPassDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        backgroundColor: Colors.transparent,
+        child: RewardsScreen(), //boardingPassWidget(context),
+      );
+    },
+  );
+}
+
+Widget boardingPassWidget(BuildContext context) {
+  return Container(
+    width: 320,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(20),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black26,
+          blurRadius: 10,
+          spreadRadius: 2,
+        ),
+      ],
+    ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Top Section (Flight Info)
+        Container(
+          padding: const EdgeInsets.all(20),
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Text(
+                  "BOARDING PASS",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("From", style: TextStyle(color: Colors.grey)),
+                      Text("JFK",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      Text("New York", style: TextStyle(color: Colors.grey)),
+                    ],
+                  ),
+                  Icon(Icons.flight_takeoff, size: 30, color: Colors.blue),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text("To", style: TextStyle(color: Colors.grey)),
+                      Text("LAX",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      Text("Los Angeles", style: TextStyle(color: Colors.grey)),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Flight", style: TextStyle(color: Colors.grey)),
+                      Text("AA123",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text("Gate", style: TextStyle(color: Colors.grey)),
+                      Text("B12",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text("Seat", style: TextStyle(color: Colors.grey)),
+                      Text("24A",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        // Dotted Line Divider (Tear effect)
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: DottedDivider(),
+        ),
+
+        // const Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: 15),
+        //   child: DottedLine(dashLength: 6, dashColor: Colors.grey),
+        // ),
+
+        // Bottom Section (QR Code & Time)
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              const Text(
+                "Boarding Time: 12:45 PM",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                height: 80,
+                width: 80,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Center(
+                    child:
+                        Icon(Icons.qr_code, size: 50, color: Colors.black54)),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "Scan at the gate",
+                style: TextStyle(color: Colors.grey.shade600),
+              ),
+            ],
+          ),
+        ),
+
+        // Close Button
+        Container(
+          decoration: const BoxDecoration(
+            color: Colors.blueAccent,
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+          ),
+          child: TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              "Close",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+/*
 void showCouponDetailsDialog({
   required BuildContext context,
   Function()? onRedeemClicked,
@@ -147,6 +317,7 @@ non-functional requirements necessary for the successful execution of the projec
   );
 }
 
+*/
 /*
 class OfferDetailsScreen extends StatelessWidget {
   const OfferDetailsScreen({super.key});

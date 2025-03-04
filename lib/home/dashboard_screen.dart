@@ -1,7 +1,7 @@
 import 'package:clc_app/custom_widget/custom_appbar.dart';
-import 'package:clc_app/home/coupon_redeem_view.dart';
-import 'package:clc_app/resources/extenssions.dart';
-import 'package:clc_app/resources/utils.dart';
+import 'package:clc_app/home/coupon_list_screen.dart';
+import 'package:clc_app/home/coupon_redeem_history_screen.dart';
+import 'package:clc_app/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -12,149 +12,138 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  final List<Map<String, dynamic>> offers = [
-    {
-      "logo": "logo.png".directory(),
-      "title": "EXTRA 5% OFF",
-      "subtitle": "on Zomato",
-      "status": "Active",
-      "statusColor": Colors.green[100],
-    },
-    {
-      "logo": "logo.png".directory(),
-      "title": "EXTRA 4% OFF",
-      "subtitle": "on Swiggy",
-      "status": "Active",
-      "statusColor": Colors.green[100],
-    },
-    {
-      "logo": "logo.png".directory(),
-      "title": "EXTRA 5% OFF",
-      "subtitle": "on Nykaa",
-      "status": "Active",
-      "statusColor": Colors.green[100],
-    },
-    {
-      "logo": "logo.png".directory(),
-      "title": "6% OFF",
-      "subtitle": "on Myntra",
-      "status": "Active",
-      "statusColor": Colors.green[100],
-    },
-    {
-      "logo": "logo.png".directory(),
-      "title": "EXTRA 1.5% OFF",
-      "subtitle": "on Flipkart",
-      "status": "Active",
-      "statusColor": Colors.green[100],
-    },
-    {
-      "logo": "logo.png".directory(),
-      "title": "Get ₹280 Off",
-      "subtitle": "On Park+ Micro Fibre Cloth",
-      "status": "Claimed",
-      "statusColor": Colors.grey[200],
-    },
+  int _selectedIndex = 0;
+  String screenTitle = "Coupons List";
+
+  final List<Widget> _screens = [
+    CouponListScreen(),
+    CouponRedeemHistoryScreen(),
+    ProfileScreen(),
   ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      if (index == 0) {
+        screenTitle = "Coupons List";
+      }
+      if (index == 1) {
+        screenTitle = "Redeemed Coupons List";
+      }
+      if (index == 2) {
+        screenTitle = "My Profile";
+      }
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Dashboard", isShowProfile: true),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8, right: 8),
-          child: Column(
-            spacing: 8,
-            children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: customText(
-                  title: "List of coupons",
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Number of columns
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
-                    childAspectRatio: 1, // Aspect ratio of grid items
-                  ),
-                  itemCount: offers.length,
-                  itemBuilder: (context, index) {
-                    final offer = offers[index];
-                    return InkWell(
-                      onTap: () {
-                        showCouponDetailsDialog(context: context);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.grey.shade300),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.shade200,
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 20),
-                            CircleAvatar(
-                              backgroundColor: Colors.white,
-                              backgroundImage: AssetImage(offer["logo"]),
-                              radius: 30,
-                            ),
-                            customText(
-                              title: offer["title"],
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                customText(
-                                  title: offer["subtitle"],
-                                  fontSize: 14,
-                                  color: Colors.grey,
-                                ),
-                                const Icon(Icons.arrow_forward, size: 16),
-                              ],
-                            ),
-                            Spacer(),
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(vertical: 6),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: offer["statusColor"],
-                                borderRadius: const BorderRadius.vertical(
-                                  bottom: Radius.circular(8),
-                                ),
-                              ),
-                              child: customText(
-                                title: offer["status"],
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
+      appBar: CustomAppBar(title: screenTitle),
+      body: _screens[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.shifting,
+        items: const [
+          BottomNavigationBarItem(
+            backgroundColor: Colors.red,
+            icon: Icon(Icons.local_offer),
+            label: "Coupons",
           ),
-        ),
+          BottomNavigationBarItem(
+            backgroundColor: Colors.blue,
+            icon: Icon(Icons.history),
+            label: "History",
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Colors.green,
+            icon: Icon(Icons.person),
+            label: "Profile",
+          ),
+        ],
       ),
     );
   }
 }
+
+
+/*
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  final List<Reward> rewards = [
+    Reward(
+      imageUrl: 'logo.png'.directory(),
+      title: 'Get 100 points to get 10% off on your next meal',
+      description: 'A maximum of 200 points can be redeemed at one time.',
+      subtitle: 'Selera Delight',
+      progress: 0.0,
+      maxPoints: 100,
+      currentPoints: 0,
+      isFree: true,
+    ),
+    Reward(
+      imageUrl: 'logo.png'.directory(),
+      title: 'Free 4oz Creamy Ube Ice Cream or Classic Taho',
+      description: 'For Every \$25 spent, free 4oz Creamy Ube Ice Cream',
+      subtitle: 'Tinapay Atbp',
+      progress: 0.0,
+      maxPoints: 25,
+      currentPoints: 0,
+    ),
+    Reward(
+      imageUrl: 'logo.png'.directory(),
+      title: '10% Discount',
+      description: '10% Discount for every purchase of cheesecake worth \$50',
+      subtitle: 'Cremefusion',
+      progress: 0.0,
+      maxPoints: 100,
+      currentPoints: 10,
+      isFree: true,
+    ),
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+          appBar: CustomAppBar(title: "Dashboard", isShowProfile: true),
+          body: TabBarView(
+            children: [
+              Center(
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  itemCount: rewards.length,
+                  itemBuilder: (context, index) {
+                    return RewardCard(reward: rewards[index]);
+                  },
+                ),
+              ),
+              Center(child: CouponRedeemHistoryScreen()),
+              Center(child: ProfileScreen()),
+            ],
+          ),
+          bottomNavigationBar: const TabBar(
+            labelColor: Colors.blue,
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: Colors.blue,
+            tabs: [
+              Tab(icon: Icon(Icons.home), text: "Coupon List"),
+              Tab(icon: Icon(Icons.search), text: "History"),
+              Tab(icon: Icon(Icons.person), text: "My Profile"),
+            ],
+          )),
+    );
+  }
+}
+*/

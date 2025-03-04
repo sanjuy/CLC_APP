@@ -1,5 +1,6 @@
 import 'package:clc_app/profile/edit_profile_screen.dart';
 import 'package:clc_app/profile/profile_screen.dart';
+import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/utils.dart';
@@ -27,9 +28,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      backgroundColor: Colors.white,
+      backgroundColor: primeColor,
       title: customText(
-          title: title ?? "", fontSize: 14, fontWeight: FontWeight.bold),
+          title: title ?? "", fontSize: 20, fontWeight: FontWeight.bold),
       actions: [
         isShowProfile
             ? InkWell(
