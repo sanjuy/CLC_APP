@@ -25,11 +25,16 @@ void showInSnackBar({
 
 void showCustomDialog({
   required BuildContext context,
+  required String title,
+  required String msg,
+  String titleOK = "Accept",
+  String titleCancel = "Reject",
+  bool barrierDismissible = false,
   Function()? onAccepted,
 }) async {
   showDialog(
     context: context,
-    barrierDismissible: false,
+    barrierDismissible: barrierDismissible,
     builder: (BuildContext context) {
       return Dialog(
         backgroundColor: Colors.white,
@@ -42,7 +47,7 @@ void showCustomDialog({
             mainAxisSize: MainAxisSize.min,
             children: [
               customText(
-                  title: "Disclaimer",
+                  title: title,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: primeColor),
@@ -56,12 +61,12 @@ void showCustomDialog({
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ButtonType(
-                    title: "Reject",
+                    title: titleCancel,
                     onTab: () => Navigation.pop(context: context),
                   ),
                   SizedBox(width: 10),
                   ButtonType(
-                    title: "Accept",
+                    title: titleOK,
                     onTab: () => onAccepted!(),
                   ),
                 ],

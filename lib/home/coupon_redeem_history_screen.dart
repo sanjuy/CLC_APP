@@ -20,7 +20,6 @@ class _CouponRedeemHistoryScreenState extends State<CouponRedeemHistoryScreen> {
       progress: 0.0,
       maxPoints: 100,
       currentPoints: 0,
-      isFree: true,
     ),
     Reward(
       imageUrl: 'logo.png'.directory(),
@@ -39,12 +38,12 @@ class _CouponRedeemHistoryScreenState extends State<CouponRedeemHistoryScreen> {
       progress: 0.0,
       maxPoints: 100,
       currentPoints: 10,
-      isFree: true,
     ),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: ListView.builder(
           padding: const EdgeInsets.only(left: 8, right: 8),

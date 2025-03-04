@@ -1,3 +1,4 @@
+import 'package:clc_app/home/upgrade_icon.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class RewardCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 8,
           children: [
             SizedBox(
@@ -35,7 +37,7 @@ class RewardCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width - 150,
+              width: MediaQuery.of(context).size.width - 180,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,20 +61,15 @@ class RewardCard extends StatelessWidget {
                       LinearProgressIndicator(
                         borderRadius: BorderRadius.circular(3),
                         value: reward.progress,
-                        backgroundColor: reward.isFree
+                        backgroundColor: !reward.isPaid
                             ? Colors.redAccent[200]
                             : Colors.grey[300],
                         // color: Colors.white,
                         minHeight: 6,
                       ),
                       const SizedBox(height: 4),
-                      reward.isFree
-                          ? customText(
-                              title: "Free Redeem",
-                              color: Colors.grey,
-                              fontSize: 12,
-                            )
-                          : Row(
+                      reward.isPaid
+                          ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 customText(
@@ -86,12 +83,25 @@ class RewardCard extends StatelessWidget {
                                   fontSize: 12,
                                 )
                               ],
+                            )
+                          : customText(
+                              title: "Free Redeem",
+                              color: Colors.grey,
+                              fontSize: 12,
                             ),
                     ],
                   )
                 ],
               ),
-            )
+            ),
+            if (reward.isPaid)
+              Align(
+                alignment: Alignment.topRight,
+                child: CustomPaint(
+                  size: const Size(15, 15), // Set size
+                  painter: UploadIconPainter(),
+                ),
+              ),
           ],
         ),
       ),
@@ -107,7 +117,7 @@ class Reward {
   final double progress;
   final int maxPoints;
   final int currentPoints;
-  final bool isFree;
+  final bool isPaid;
 
   Reward({
     required this.imageUrl,
@@ -117,6 +127,6 @@ class Reward {
     required this.progress,
     required this.maxPoints,
     required this.currentPoints,
-    this.isFree = false,
+    this.isPaid = false,
   });
 }

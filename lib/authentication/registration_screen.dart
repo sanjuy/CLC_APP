@@ -33,7 +33,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
             child: Column(
               children: [
                 CustomImageView(
@@ -92,6 +92,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   onPressed: () {
                     showCustomDialog(
                       context: context,
+                      msg:
+                          "When customers register, they will get a disclaimer popup and they accept it before proceeding to the app.",
+                      title: "Disclaimer",
                       onAccepted: () {
                         Navigation.pop(context: context);
                         Navigation.push(

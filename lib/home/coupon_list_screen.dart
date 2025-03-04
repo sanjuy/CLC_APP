@@ -1,5 +1,6 @@
-import 'package:clc_app/home/coupon_redeem_view.dart';
+import 'package:clc_app/home/coupon_redeem_popup.dart';
 import 'package:clc_app/home/reward_card_view.dart';
+import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/extenssions.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class _CouponListScreenState extends State<CouponListScreen> {
       progress: 0.0,
       maxPoints: 100,
       currentPoints: 0,
-      isFree: true,
+      isPaid: true,
     ),
     Reward(
       imageUrl: 'logo.png'.directory(),
@@ -39,12 +40,13 @@ class _CouponListScreenState extends State<CouponListScreen> {
       progress: 0.0,
       maxPoints: 100,
       currentPoints: 10,
-      isFree: true,
+      isPaid: true,
     ),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: ListView.builder(
           padding: const EdgeInsets.only(left: 8, right: 8),
@@ -52,7 +54,22 @@ class _CouponListScreenState extends State<CouponListScreen> {
           itemBuilder: (context, index) {
             return InkWell(
                 onTap: () {
-                  showBoardingPassDialog(context);
+                  if (rewards[index].isPaid) {
+                    showCustomDialog(
+                      barrierDismissible: true,
+                      context: context,
+                      titleOK: "UPGRADE",
+                      titleCancel: "Cancel",
+                      msg: """Upgrade Plan Inspirational designs, 
+                      illustrations, and graphic elements from the 
+                      world's best designers. Want more inspiration? 
+                      Browse our search results.""",
+                      title: "UPGRADE PLAN",
+                      onAccepted: () {},
+                    );
+                  } else {
+                    showBoardingPassDialog(context);
+                  }
                 },
                 child: RewardCard(reward: rewards[index]));
           },

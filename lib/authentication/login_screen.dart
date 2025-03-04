@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: CustomAppBar(title: "Login"),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
           child: Column(
             spacing: 8,
             children: [

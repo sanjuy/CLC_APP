@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(60);
+  Size get preferredSize => const Size.fromHeight(50);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       backgroundColor: primeColor,
       title: customText(
-          title: title ?? "", fontSize: 20, fontWeight: FontWeight.bold),
+          title: title ?? "", fontSize: 18, fontWeight: FontWeight.bold),
       actions: [
         isShowProfile
             ? InkWell(

@@ -1,4 +1,5 @@
 import 'package:clc_app/resources/buttons.dart';
+import 'package:clc_app/resources/dotted_divider_view.dart';
 import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
@@ -105,17 +106,17 @@ application.and non-functional requirements necessary.""",
                 title: "REDEEM NOW",
                 onPressed: () {},
               ),
-              // const SizedBox(height: 10),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(horizontal: 15),
-              //   child: DottedDivider(),
-              // ),
               const SizedBox(height: 10),
-              // QR Code Section
-              const Text(
-                "SCAN QR CODE",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: DottedDivider(),
               ),
+              // const SizedBox(height: 10),
+              // QR Code Section
+              // const Text(
+              //   "SCAN QR CODE",
+              //   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              // ),
               const SizedBox(height: 10),
               Container(
                 padding: const EdgeInsets.all(10),
