@@ -1,32 +1,25 @@
+import 'package:clc_app/resources/default_color.dart';
 import 'package:flutter/material.dart';
 
 Widget generalTextField({
   String? label,
   required TextEditingController controller,
-  Icon? icon,
+  IconData? icon,
   TextInputType keyboardType = TextInputType.text,
   bool readOnly = false,
   Function(String)? onTab,
 }) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0),
-    child: TextField(
-      readOnly: readOnly,
-      keyboardType: keyboardType,
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: "$label",
-        labelStyle: const TextStyle(color: Colors.grey),
-        suffixIcon: icon != null
-            ? IconButton(
-                icon: icon,
-                onPressed: () {},
-              )
-            : null,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: Colors.grey),
-        ),
+  return TextField(
+    readOnly: readOnly,
+    keyboardType: keyboardType,
+    controller: controller,
+    decoration: InputDecoration(
+      prefixIcon: Icon(icon, color: primeColor),
+      labelText: "$label",
+      labelStyle: const TextStyle(color: Colors.grey),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(color: Colors.grey),
       ),
     ),
   );
@@ -34,6 +27,7 @@ Widget generalTextField({
 
 Widget passwordTextField({
   String? label,
+  IconData? icon,
   required TextEditingController controller,
   bool isObscure = true,
   Function()? onPressed,
@@ -42,6 +36,10 @@ Widget passwordTextField({
     obscureText: isObscure,
     controller: controller,
     decoration: InputDecoration(
+      prefixIcon: Icon(
+        icon,
+        color: primeColor,
+      ),
       labelText: label,
       labelStyle: TextStyle(color: Colors.grey),
       border: OutlineInputBorder(
@@ -103,11 +101,16 @@ Widget multiLineTextField({
 
 Widget dropDownTextField({
   required String title,
+  IconData? icon,
   required List<String> lt,
   required Function(String) onSelected,
 }) {
   return DropdownButtonFormField<String>(
     decoration: InputDecoration(
+      prefixIcon: Icon(
+        icon,
+        color: primeColor,
+      ),
       label: Text(title),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(5),

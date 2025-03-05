@@ -24,13 +24,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
             child: Column(
+              spacing: 8,
               children: [
                 ValueListenableBuilder(
                   valueListenable: isObscure1,
                   builder: (context, value, child) {
                     return passwordTextField(
+                      icon: (Icons.password),
                       label: "Current Password",
                       isObscure: isObscure1.value,
                       controller: currentPasswordController,
@@ -38,11 +40,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     );
                   },
                 ),
-                SizedBox(height: 8),
                 ValueListenableBuilder(
                   valueListenable: isObscure2,
                   builder: (context, value, child) {
                     return passwordTextField(
+                      icon: (Icons.password),
                       label: "New Password",
                       isObscure: isObscure2.value,
                       controller: newPasswordController,
@@ -50,11 +52,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     );
                   },
                 ),
-                SizedBox(height: 8),
                 ValueListenableBuilder(
                   valueListenable: isObscure3,
                   builder: (context, value, child) {
                     return passwordTextField(
+                      icon: (Icons.password),
                       label: "Confirm Password",
                       isObscure: isObscure3.value,
                       controller: confirmPasswordController,
@@ -62,7 +64,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     );
                   },
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 20),
                 FullWidthAction(
                   title: "Reset Password",
                   onPressed: () {},

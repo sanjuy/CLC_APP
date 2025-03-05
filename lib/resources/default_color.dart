@@ -12,4 +12,5 @@ class HexColor extends Color {
   }
 }
 
-Color primeColor = HexColor("#D4905E");
+// Color primeColor = HexColor("#D4905E");
+Color primeColor = Color.fromARGB(255, 212, 144, 94);

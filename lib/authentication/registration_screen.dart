@@ -33,22 +33,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 18),
             child: Column(
+              spacing: 8,
               children: [
-                CustomImageView(
-                  shap: BoxShape.circle,
-                ),
+                CustomImageView(shap: BoxShape.circle),
+                SizedBox(height: 8),
                 generalTextField(
+                  icon: (Icons.account_circle),
                   label: "Name",
                   controller: nameController,
                 ),
                 generalTextField(
+                  icon: (Icons.email),
                   label: "Email Address",
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                 ),
                 generalTextField(
+                  icon: (Icons.contact_phone),
                   label: "Contact No.",
                   controller: mobileController,
                 ),
@@ -56,6 +59,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   valueListenable: isObscure,
                   builder: (context, value, child) {
                     return passwordTextField(
+                      icon: (Icons.password),
                       label: "Password",
                       isObscure: isObscure.value,
                       controller: passwordController,
@@ -63,8 +67,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     );
                   },
                 ),
-                SizedBox(height: 8),
+                // SizedBox(height: 8),
                 dropDownTextField(
+                  icon: (Icons.wc),
                   title: "Gender",
                   lt: [
                     "Male",
@@ -73,8 +78,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ],
                   onSelected: (p0) {},
                 ),
-                SizedBox(height: 8),
+                // SizedBox(height: 8),
                 dropDownTextField(
+                  icon: (Icons.card_membership),
                   title: "Membership Type",
                   lt: [
                     "ChowLucky - Free",
@@ -83,10 +89,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   onSelected: (p0) {},
                 ),
                 generalTextField(
+                  icon: (Icons.location_city),
                   label: "Address",
                   controller: addressController,
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 20),
                 FullWidthAction(
                   title: "Registration",
                   onPressed: () {

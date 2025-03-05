@@ -22,22 +22,26 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
             child: Column(
+              spacing: 8,
               children: [
                 generalTextField(
+                  icon: (Icons.account_circle),
                   label: "Name",
                   controller: nameController,
                 ),
                 generalTextField(
+                  icon: (Icons.contact_phone),
                   label: "Contact No.",
                   controller: mobileController,
                 ),
                 generalTextField(
+                  icon: (Icons.location_city),
                   label: "Address",
                   controller: addressController,
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 20),
                 FullWidthAction(
                   title: "UPDATE",
                   onPressed: () {},

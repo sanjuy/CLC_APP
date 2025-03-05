@@ -29,15 +29,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
             child: Column(
               children: [
                 generalTextField(
+                  icon: Icons.email,
                   label: "Email Address",
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 20),
                 FullWidthAction(
                   title: "Get OTP",
                   onPressed: () {},
