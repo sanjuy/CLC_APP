@@ -1,4 +1,5 @@
-import 'package:clc_app/home/upgrade_icon.dart';
+import 'package:clc_app/resources/default_color.dart';
+import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +38,7 @@ class RewardCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width - 180,
+              width: MediaQuery.of(context).size.width - 175,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,53 +56,19 @@ class RewardCard extends StatelessWidget {
                       fontSize: 14,
                       color: Colors.black54),
                   const SizedBox(height: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      LinearProgressIndicator(
-                        borderRadius: BorderRadius.circular(3),
-                        value: reward.progress,
-                        backgroundColor: !reward.isPaid
-                            ? Colors.redAccent[200]
-                            : Colors.grey[300],
-                        // color: Colors.white,
-                        minHeight: 6,
-                      ),
-                      const SizedBox(height: 4),
-                      reward.isPaid
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                customText(
-                                    title: "Your progress:",
-                                    color: Colors.grey,
-                                    fontSize: 12),
-                                customText(
-                                  title:
-                                      "${reward.currentPoints}/${reward.maxPoints}",
-                                  color: Colors.grey,
-                                  fontSize: 12,
-                                )
-                              ],
-                            )
-                          : customText(
-                              title: "Free Redeem",
-                              color: Colors.grey,
-                              fontSize: 12,
-                            ),
-                    ],
-                  )
+                  LinearProgressIndicator(
+                    borderRadius: BorderRadius.circular(3),
+                    value: reward.progress,
+                    backgroundColor:
+                        !reward.isPaid ? primeColor : Colors.grey[300],
+                    minHeight: 6,
+                  ),
                 ],
               ),
             ),
-            if (reward.isPaid)
-              Align(
-                alignment: Alignment.topRight,
-                child: CustomPaint(
-                  size: const Size(15, 15), // Set size
-                  painter: UploadIconPainter(),
-                ),
-              ),
+            reward.isPaid
+                ? Image.asset("ribbon.png".directory(), scale: 20)
+                : SizedBox(),
           ],
         ),
       ),

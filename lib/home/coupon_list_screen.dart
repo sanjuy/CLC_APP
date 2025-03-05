@@ -1,7 +1,9 @@
 import 'package:clc_app/home/coupon_redeem_popup.dart';
+import 'package:clc_app/home/credit_card_screen.dart';
 import 'package:clc_app/home/reward_card_view.dart';
 import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/extenssions.dart';
+import 'package:clc_app/resources/router.dart';
 import 'package:flutter/material.dart';
 
 class CouponListScreen extends StatefulWidget {
@@ -60,15 +62,27 @@ class _CouponListScreenState extends State<CouponListScreen> {
                       context: context,
                       titleOK: "UPGRADE",
                       titleCancel: "Cancel",
-                      msg: """Upgrade Plan Inspirational designs, 
-                      illustrations, and graphic elements from the 
-                      world's best designers. Want more inspiration? 
-                      Browse our search results.""",
+                      msg:
+                          "Upgrade Plan Inspirational designs,illustrations, and graphic elements from the world's best designers. Want more inspiration? msgBrowse our search results.",
                       title: "UPGRADE PLAN",
-                      onAccepted: () {},
+                      onAccepted: () {
+                        Navigation.push(
+                            context: context, moveTo: CreditCardFormScreen());
+                      },
                     );
                   } else {
-                    showBoardingPassDialog(context);
+                    showCustomDialog(
+                      barrierDismissible: true,
+                      context: context,
+                      titleOK: "Redeem Now",
+                      titleCancel: "NO",
+                      msg:
+                          "To redeem this coupon, you must be inside the restaurant. The coupon will expire 10 minutes after you click Redeem Now.",
+                      title: "INSTRUCTIONS",
+                      onAccepted: () {
+                        showBoardingPassDialog(context);
+                      },
+                    );
                   }
                 },
                 child: RewardCard(reward: rewards[index]));

@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 3), () {
       navigationTo();
     });
   }
@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         color: primeColor,
         child:
-            Center(child: Image.asset("splashLogo.png".directory(), scale: 2)),
+            Center(child: Image.asset("splashLogo.png".directory(), scale: 1)),
       ),
     );
   }

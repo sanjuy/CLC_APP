@@ -64,7 +64,7 @@ class _OtpScreenState extends State<OtpScreen> {
         child: Column(
           spacing: 20,
           children: [
-            Image.asset("logo.png".directory(), scale: 3),
+            Image.asset("logo.png".directory(), scale: 5),
             SizedBox(height: 20),
             customText(
                 title: "Enter $otpViewSize-digit OTP SENT TO",

@@ -53,9 +53,7 @@ void showCustomDialog({
                   color: primeColor),
               Divider(),
               SizedBox(height: 10),
-              customText(
-                  title:
-                      "When customers register, they will get a disclaimer popup and they accept it before proceeding to the app."),
+              customText(title: msg),
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +65,10 @@ void showCustomDialog({
                   SizedBox(width: 10),
                   ButtonType(
                     title: titleOK,
-                    onTab: () => onAccepted!(),
+                    onTab: () {
+                      Navigation.pop(context: context);
+                      onAccepted!();
+                    },
                   ),
                 ],
               ),

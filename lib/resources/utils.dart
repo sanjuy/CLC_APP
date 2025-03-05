@@ -111,7 +111,7 @@ Widget dropDownTextField({
         icon,
         color: primeColor,
       ),
-      label: Text(title),
+      label: customText(title: title, color: Colors.grey),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(5),
         borderSide: BorderSide(color: Colors.blue, width: 2),

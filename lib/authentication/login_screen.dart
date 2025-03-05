@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               spacing: 8,
               children: [
-                Image.asset("logo.png".directory(), scale: 3),
+                Image.asset("logo.png".directory(), scale: 5),
                 SizedBox(height: 10),
                 customText(
                   title: "WELCOME",
