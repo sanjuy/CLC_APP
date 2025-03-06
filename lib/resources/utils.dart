@@ -47,7 +47,10 @@ Widget passwordTextField({
         borderSide: const BorderSide(color: Colors.grey),
       ),
       suffixIcon: IconButton(
-        icon: Icon(isObscure ? Icons.visibility_off : Icons.visibility),
+        icon: Icon(
+          isObscure ? Icons.visibility_off : Icons.visibility,
+          color: primeColor,
+        ),
         onPressed: () {
           onPressed!();
         },
