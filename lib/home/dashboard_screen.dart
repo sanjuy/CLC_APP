@@ -37,6 +37,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
     _startTimer();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
+    _secondsRemaining.dispose();
+    isHideAd.dispose();
+    isShowAd.dispose();
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       if (index == 0) {
