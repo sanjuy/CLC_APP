@@ -1,7 +1,9 @@
-import 'package:clc_app/authentication/login_screen.dart';
+import 'package:clc_app/authentication/login/login_screen.dart';
+import 'package:clc_app/home/dashboard_screen.dart';
 import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/router.dart';
+import 'package:clc_app/resources/user_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,10 +24,17 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
-  navigationTo() {
-    // Show status bar again before navigating
+  navigationTo() async {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    Navigation.pushReplacement(context: context, moveTo: const LoginScreen());
+
+    if (await UserDetail.getUserLoggedIn ?? false) {
+      if (!mounted) return;
+      Navigation.pushReplacement(
+          context: context, moveTo: const DashboardScreen());
+    } else {
+      if (!mounted) return;
+      Navigation.pushReplacement(context: context, moveTo: const LoginScreen());
+    }
   }
 
   @override

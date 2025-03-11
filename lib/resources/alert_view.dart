@@ -3,17 +3,18 @@ import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 void showInSnackBar({
   required BuildContext context,
   required String message,
-  Color bgColor = Colors.grey,
+  Color? bgColor,
 }) {
   ScaffoldMessenger.of(context).clearSnackBars();
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(message, style: TextStyle(color: Colors.white)),
-      backgroundColor: bgColor,
+      backgroundColor: bgColor ?? primeColor,
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
@@ -74,6 +75,39 @@ void showCustomDialog({
               ),
             ],
           ),
+        ),
+      );
+    },
+  );
+}
+
+Future<void> showImagePickerDialog(
+    BuildContext context, Function(ImageSource) onClicked) {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: customText(title: "Select Image Source"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(Icons.camera_alt, color: primeColor),
+              title: customText(title: "Camera"),
+              onTap: () {
+                onClicked(ImageSource.camera);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.photo_library, color: primeColor),
+              title: customText(title: "Gallery"),
+              onTap: () {
+                onClicked(ImageSource.gallery);
+                Navigator.pop(context);
+              },
+            ),
+          ],
         ),
       );
     },

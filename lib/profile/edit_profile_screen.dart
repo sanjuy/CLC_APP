@@ -1,5 +1,7 @@
 import 'package:clc_app/custom_widget/custom_appbar.dart';
+import 'package:clc_app/profile/profile_controller.dart';
 import 'package:clc_app/resources/buttons.dart';
+import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +17,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController mobileController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  getUserInfo() async {
+    nameController.text = await UserDetail.getUserName ?? "";
+    mobileController.text = await UserDetail.getMobileNUmber ?? "";
+    addressController.text = await UserDetail.getAddress ?? "";
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +60,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 SizedBox(height: 20),
                 FullWidthAction(
                   title: "UPDATE",
-                  onPressed: () {},
+                  onPressed: () {
+                    ProfileController.editProfile(
+                      context: context,
+                      name: nameController.text,
+                      mobile: mobileController.text,
+                      address: addressController.text,
+                    );
+                  },
                 ),
               ],
             ),

@@ -1,9 +1,11 @@
+import 'package:clc_app/authentication/login/login_screen.dart';
 import 'package:clc_app/custom_widget/custom_image_view.dart';
 import 'package:clc_app/profile/change_membership_type_screen.dart';
 import 'package:clc_app/profile/edit_profile_screen.dart';
 import 'package:clc_app/profile/reset_password_screen.dart';
 import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/router.dart';
+import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +17,31 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String name = "";
+  String email = "";
+  String mobile = "";
+  String gender = "";
+  String address = "";
+  String memberType = "";
+  String profile = "";
+
+  getUserInfo() async {
+    name = await UserDetail.getUserName ?? "";
+    email = await UserDetail.getUserEmail ?? "";
+    mobile = await UserDetail.getMobileNUmber ?? "";
+    gender = await UserDetail.getGender ?? "";
+    address = await UserDetail.getAddress ?? "";
+    memberType = await UserDetail.getMembershipType ?? "";
+    profile = await UserDetail.getProfilePicture ?? "";
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,8 +52,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
             child: Column(
               children: [
-                CustomImageView(
+                NetworkImageView(
                   shap: BoxShape.circle,
+                  imagePath: "https://acacioustech.co.in/$profile",
                 ),
                 TextButton(
                   onPressed: () {},
@@ -56,52 +84,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildUserInfo() {
     return Column(
+      spacing: 5,
       children: [
-        _buildInfoRow(Icons.person, 'Fullname', 'John Jack'),
-        _buildSeparator(),
-        _buildInfoRow(Icons.email, 'Email', 'john.jack@gmail.com'),
-        _buildSeparator(),
-        _buildInfoRow(Icons.phone, 'Mobile', '8130686230'),
-        _buildSeparator(),
-        _buildInfoRow(Icons.location_on, 'Address', 'Noida UP'),
-        _buildSeparator(),
-        _buildInfoRow(Icons.male, 'Gender', 'Male'),
-        _buildSeparator(),
-        _buildInfoRow(Icons.card_membership, 'Membership Type', 'Free'),
+        _buildInfoRow(Icons.person, 'Fullname', name),
+        _buildInfoRow(Icons.email, 'Email', email),
+        _buildInfoRow(Icons.phone, 'Mobile', mobile),
+        _buildInfoRow(Icons.location_on, 'Address', address),
+        _buildInfoRow(Icons.male, 'Gender', gender),
+        _buildInfoRow(Icons.card_membership, 'Membership Type', memberType),
       ],
     );
   }
 
   Widget _buildSettings() {
     return Card(
-      // color: Colors.transparent,
       margin: EdgeInsets.all(8.0),
       child: Column(
+        spacing: 5,
         children: [
-          _buildListTile(Icons.edit, 'Edit Profile', '', () {
-            Navigation.push(
-              context: context,
-              moveTo: EditProfileScreen(),
+          _buildListTile(Icons.edit, 'Edit Profile', '', () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EditProfileScreen()),
             );
+            getUserInfo();
           }),
-          _buildSeparator(),
           _buildListTile(Icons.swap_horiz, 'Change Membership Type', '', () {
             Navigation.push(
               context: context,
               moveTo: ChangeMembershipTypeScreen(),
             );
           }),
-          _buildSeparator(),
           _buildListTile(Icons.lock, 'Reset Password', '', () {
             Navigation.push(
               context: context,
               moveTo: ResetPasswordScreen(),
             );
           }),
-          _buildSeparator(),
-          _buildListTile(Icons.delete, 'Delete Account', ''),
-          _buildSeparator(),
-          _buildListTile(Icons.logout, 'Logout', ''),
+          _buildListTile(Icons.delete, 'Delete Account', '', () {}),
+          _buildListTile(Icons.logout, 'Logout', '', () {
+            UserDetail.setUserLoggedIn = false;
+            Navigation.pushAndRemoveUntil(
+                context: context, moveTo: LoginScreen());
+          }),
         ],
       ),
     );
@@ -125,10 +150,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
-  }
-
-  Widget _buildSeparator() {
-    return SizedBox(height: 5);
   }
 
   Widget _buildListTile(IconData icon, String title, String subtitle,
@@ -163,114 +184,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-
-
-/*
-import 'package:clc_app/custom_widget/custom_image_view.dart';
-import 'package:clc_app/profile/change_membership_type_screen.dart';
-import 'package:clc_app/profile/edit_profile_screen.dart';
-import 'package:clc_app/profile/reset_password_screen.dart';
-import 'package:clc_app/resources/router.dart';
-import 'package:clc_app/resources/utils.dart';
-import 'package:flutter/material.dart';
-
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          child: Column(
-            children: [
-              CustomImageView(
-                shap: BoxShape.circle,
-              ),
-              TextButton(
-                onPressed: () {},
-                child: customText(
-                    title: "Change Profile Image", color: Colors.blue),
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      spacing: 10,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomRowView(label: "Name", value: "John Jack"),
-                        CustomRowView(
-                            label: "Phone number", value: "8130686230"),
-                        CustomRowView(
-                            label: "Email-Id", value: "john.jack@gmail.com"),
-                        CustomRowView(label: "Gender", value: "Male"),
-                        CustomRowView(label: "Membership Type", value: "Free"),
-                        CustomRowView(label: "Address", value: "Noida UP"),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        arrowButton(
-                          title: "Edit Profile",
-                          onPressed: () {
-                            Navigation.push(
-                              context: context,
-                              moveTo: EditProfileScreen(),
-                            );
-                          },
-                        ),
-                        arrowButton(
-                          title: "Change Membership Type",
-                          onPressed: () {
-                            Navigation.push(
-                              context: context,
-                              moveTo: ChangeMembershipTypeScreen(),
-                            );
-                          },
-                        ),
-                        arrowButton(
-                          title: "Reset Password",
-                          onPressed: () {
-                            Navigation.push(
-                              context: context,
-                              moveTo: ResetPasswordScreen(),
-                            );
-                          },
-                        ),
-                        arrowButton(
-                          title: "Delete Account",
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              // Spacer(),
-              // Image.asset("clc.png".directory(), scale: 10),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-*/

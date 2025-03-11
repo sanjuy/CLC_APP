@@ -1,5 +1,6 @@
 import 'package:clc_app/authentication/forgot_password_screen.dart';
-import 'package:clc_app/authentication/registration_screen.dart';
+import 'package:clc_app/authentication/login/login_controller.dart';
+import 'package:clc_app/authentication/registration/registration_screen.dart';
 import 'package:clc_app/custom_widget/custom_appbar.dart';
 import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/buttons.dart';
@@ -85,11 +86,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           context: context, message: "Enter Email-Id");
                       return;
                     }
+                    if (passwordController.text == "") {
+                      showInSnackBar(
+                          context: context, message: "Enter Password");
+                      return;
+                    }
                     if (!isValidateEmail(emailController.text)) {
                       showInSnackBar(
                           context: context, message: "Enter Valid Email-Id");
                       return;
                     }
+                    LoginController.login(
+                      context: context,
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
                   },
                 ),
                 Row(

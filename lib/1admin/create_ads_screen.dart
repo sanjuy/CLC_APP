@@ -53,7 +53,7 @@ class _CreateAdsScreenState extends State<CreateAdsScreen> {
                         title: "Ads Creatives Image",
                         fontWeight: FontWeight.bold),
                     CustomImageView(
-                      imagePath: "ads.png",
+                      // imagePath: "ads.png",
                       width: double.infinity,
                     ),
                   ],

@@ -7,12 +7,18 @@ Widget generalTextField({
   IconData? icon,
   TextInputType keyboardType = TextInputType.text,
   bool readOnly = false,
+  FocusNode? focusNode,
+  TextInputAction textInputAction = TextInputAction.done,
   Function(String)? onTab,
+  Function()? onSubmitted,
 }) {
   return TextField(
+    focusNode: focusNode,
     readOnly: readOnly,
     keyboardType: keyboardType,
     controller: controller,
+    textInputAction: textInputAction,
+    onSubmitted: (_) => onSubmitted,
     decoration: InputDecoration(
       prefixIcon: Icon(icon, color: primeColor),
       labelText: "$label",
@@ -31,15 +37,18 @@ Widget passwordTextField({
   required TextEditingController controller,
   bool isObscure = true,
   Function()? onPressed,
+  FocusNode? focusNode,
+  TextInputAction textInputAction = TextInputAction.done,
+  Function()? onSubmitted,
 }) {
   return TextFormField(
     obscureText: isObscure,
     controller: controller,
+    focusNode: focusNode,
+    textInputAction: textInputAction,
+    onFieldSubmitted: (_) => onSubmitted,
     decoration: InputDecoration(
-      prefixIcon: Icon(
-        icon,
-        color: primeColor,
-      ),
+      prefixIcon: Icon(icon, color: primeColor),
       labelText: label,
       labelStyle: TextStyle(color: Colors.grey),
       border: OutlineInputBorder(
@@ -51,9 +60,7 @@ Widget passwordTextField({
           isObscure ? Icons.visibility_off : Icons.visibility,
           color: primeColor,
         ),
-        onPressed: () {
-          onPressed!();
-        },
+        onPressed: () => onPressed!(),
       ),
     ),
   );

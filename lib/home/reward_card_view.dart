@@ -58,9 +58,9 @@ class RewardCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   LinearProgressIndicator(
                     borderRadius: BorderRadius.circular(3),
-                    value: reward.progress,
+                    value: 0.0,
                     backgroundColor:
-                        !reward.isPaid ? primeColor : Colors.grey[300],
+                        reward.isPaid ? Colors.grey[300] : primeColor,
                     minHeight: 6,
                   ),
                 ],
@@ -80,20 +80,20 @@ class Reward {
   final String imageUrl;
   final String title;
   final String description;
-  final String subtitle;
-  final double progress;
-  final int maxPoints;
-  final int currentPoints;
+  // final String subtitle;
+  // final double progress;
+  // final int maxPoints;
+  // final int currentPoints;
   final bool isPaid;
 
   Reward({
     required this.imageUrl,
     required this.title,
     required this.description,
-    required this.subtitle,
-    required this.progress,
-    required this.maxPoints,
-    required this.currentPoints,
+    // required this.subtitle,
+    // required this.progress,
+    // required this.maxPoints,
+    // required this.currentPoints,
     this.isPaid = false,
   });
 }

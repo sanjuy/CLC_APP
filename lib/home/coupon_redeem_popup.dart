@@ -64,100 +64,120 @@ class _RewardsScreenState extends State<RewardsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          spacing: 20,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: Image.asset(
-                'logo.png'.directory(),
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(height: 10),
-            customText(
-              title: "Mang Joe's Chicken Inasal NZ",
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-            customText(
-              title: "Auckland",
-              fontSize: 14,
-              color: Colors.grey,
-            ),
-            const SizedBox(height: 15),
-            // Points Balance Section
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(5),
-              ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(height: 20),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.asset(
+                      'logo.png'.directory(),
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   customText(
-                    title: "Discount",
+                    title: "Mang Joe's Chicken Inasal NZ",
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  customText(
+                    title: "Auckland",
                     fontSize: 14,
                     color: Colors.grey,
                   ),
+                  const SizedBox(height: 15),
+                  // Points Balance Section
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[100],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Column(
+                      children: [
+                        customText(
+                          title: "Discount",
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(height: 5),
+                        customText(
+                          title: "5%",
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  // Rewards Information
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: customText(
+                      title: "Description of the COUPON",
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: customText(
+                        title:
+                            """This document outlines the business requirements for the development of a mobile
+            application.and non-functional requirements necessary.""",
+                        color: Colors.grey),
+                  ),
+                  const SizedBox(height: 10),
+                  // Instructions Section
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Instructions:",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   const SizedBox(height: 5),
                   customText(
-                    title: "5%",
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    title: "1. Offer only valid on Zomato vouchers\n"
+                        "2. This code can be used twice per day\n"
+                        "3. This offer cannot be clubbed with any other offer\n",
+                    color: Colors.grey,
+                  ),
+                  // const SizedBox(height: 10),
+                  ValueListenableBuilder(
+                    valueListenable: _remainingTime,
+                    builder: (context, value, child) {
+                      return FullWidthAction(
+                        title: "Time Remaining: ${formatTime(value)}",
+                        onPressed: () {},
+                      );
+                    },
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 15),
-            // Rewards Information
-            Align(
-              alignment: Alignment.centerLeft,
-              child: customText(
-                title: "Description of the COUPON",
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+            Container(
+              width: double.infinity,
+              height: 150,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.grey, width: 3),
+                borderRadius: BorderRadius.circular(0),
               ),
-            ),
-            const SizedBox(height: 5),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: customText(
-                  title:
-                      """This document outlines the business requirements for the development of a mobile
-      application.and non-functional requirements necessary.""",
-                  color: Colors.grey),
-            ),
-            const SizedBox(height: 10),
-            // Instructions Section
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Instructions:",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(height: 5),
-            customText(
-              title: "1. Offer only valid on Zomato vouchers\n"
-                  "2. This code can be used twice per day\n"
-                  "3. This offer cannot be clubbed with any other offer\n",
-              color: Colors.grey,
-            ),
-            // const SizedBox(height: 10),
-            ValueListenableBuilder(
-                valueListenable: _remainingTime,
-                builder: (context, value, child) {
-                  return FullWidthAction(
-                    title: "Time Remaining: ${formatTime(value)}",
-                    onPressed: () {},
-                  );
-                }),
+              child: Image.asset("ads.png".directory(), fit: BoxFit.cover),
+            )
           ],
         ),
       ),
