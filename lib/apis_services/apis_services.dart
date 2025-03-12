@@ -1,5 +1,7 @@
 import 'dart:io';
+
 import 'package:clc_app/apis_services/apis_endpoints.dart';
+import 'package:clc_app/loading_indicator.dart';
 import 'package:dio/dio.dart';
 
 class ApiService {
@@ -22,6 +24,7 @@ class ApiService {
     Map<String, dynamic>? queryParams,
     File? filePath,
   }) async {
+    LoadingIndicator.show();
     try {
       if (params != null) {
         params["token"] = token;
@@ -48,6 +51,7 @@ class ApiService {
 
   // 🔹 Handle API responses
   static dynamic _handleResponse(Response response) {
+    LoadingIndicator.hide();
     if (response.statusCode == 200 || response.statusCode == 201) {
       return response.data;
     } else {
@@ -57,6 +61,7 @@ class ApiService {
 
   // 🔹 Handle API errors
   static dynamic _handleError(DioException e) {
+    LoadingIndicator.hide();
     if (e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.receiveTimeout ||
         e.type == DioExceptionType.sendTimeout) {

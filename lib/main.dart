@@ -1,3 +1,4 @@
+import 'package:clc_app/loading_indicator.dart';
 import 'package:clc_app/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class CLCApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: LoadingIndicator.navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
