@@ -1,7 +1,6 @@
-import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_controller.dart';
-import 'package:clc_app/home/redeem/coupon_redeem_popup.dart';
 import 'package:clc_app/home/credit_card_screen.dart';
+import 'package:clc_app/home/redeem/coupon_redeem_popup.dart';
 import 'package:clc_app/home/reward_card_view.dart';
 import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/router.dart';
@@ -50,7 +49,7 @@ class _CouponListScreenState extends State<CouponListScreen> {
                 valueListenable: ads,
                 builder: (context, value, child) {
                   return value != ""
-                      ? Image.network("$baseURL$value", fit: BoxFit.cover)
+                      ? Image.network(value, fit: BoxFit.cover)
                       : SizedBox();
                 },
               ),

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/custom_widget/custom_appbar.dart';
 import 'package:clc_app/custom_widget/custom_image_view.dart';
 import 'package:clc_app/profile/profile_controller.dart';
@@ -65,20 +64,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   onTap: () => showImagePickerDialog(context, (source) {
                     _pickImage(source);
                   }),
-                  child: _image.value != null
-                      ? ValueListenableBuilder(
-                          valueListenable: _image,
-                          builder: (context, value, child) {
-                            return CustomImageView(
+                  child: ValueListenableBuilder(
+                    valueListenable: _image,
+                    builder: (context, value, child) {
+                      return _image.value != null
+                          ? CustomImageView(
                               shap: BoxShape.circle,
                               imagePath: value,
+                            )
+                          : NetworkImageView(
+                              shap: BoxShape.circle,
+                              imagePath: profile,
                             );
-                          },
-                        )
-                      : NetworkImageView(
-                          shap: BoxShape.circle,
-                          imagePath: "$baseURL$profile",
-                        ),
+                    },
+                  ),
                 ),
                 generalTextField(
                   icon: (Icons.account_circle),

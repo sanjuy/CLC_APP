@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/home/redeem/redeem_controller.dart';
 import 'package:clc_app/home/reward_card_view.dart';
 import 'package:clc_app/resources/buttons.dart';
@@ -194,7 +193,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                   valueListenable: ads,
                   builder: (context, value, child) {
                     return value != ""
-                        ? Image.network("$baseURL$value", fit: BoxFit.cover)
+                        ? Image.network(value, fit: BoxFit.cover)
                         : SizedBox();
                   }),
             )

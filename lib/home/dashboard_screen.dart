@@ -114,7 +114,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               valueListenable: bannerImage,
                               builder: (context, value, child) {
                                 return value != ""
-                                    ? Image.network("$baseURL$value")
+                                    ? Image.network(value)
                                     : SizedBox();
                               },
                             ),

@@ -44,7 +44,7 @@ class ProfileController {
       UserDetail.setUserName = dt.data?.name ?? "";
       UserDetail.setMobileNUmber = dt.data?.contactNo ?? "";
       UserDetail.setProfilePicture = dt.data?.profilePicture ?? "";
-      UserDetail.setAddress = address; //dt.data?.address ?? "";
+      UserDetail.setAddress = dt.data?.address ?? "";
       showInSnackBar(context: context, message: dt.meta?.message ?? "");
       Navigation.pop(context: context);
     } else if (dt.meta != null) {

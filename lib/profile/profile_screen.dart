@@ -1,4 +1,3 @@
-import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/authentication/login/login_screen.dart';
 import 'package:clc_app/custom_widget/custom_image_view.dart';
 import 'package:clc_app/profile/change_membership_type_screen.dart';
@@ -54,7 +53,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 NetworkImageView(
                   shap: BoxShape.circle,
-                  imagePath: "$baseURL$profile",
+                  imagePath: profile,
                 ),
                 SizedBox(height: 10),
                 Card(
