@@ -36,6 +36,12 @@ class LoginController {
       UserDetail.setUserId = dt.data?.userId ?? "";
       UserDetail.setUserEmail = dt.data?.email ?? "";
       UserDetail.setUserName = dt.data?.name ?? "";
+      UserDetail.setMobileNUmber = dt.data?.contactNo ?? "";
+      UserDetail.setGender = dt.data?.gender ?? "";
+      UserDetail.setMembershipType = dt.data?.membershipType ?? "";
+      UserDetail.setUserStatus = dt.data?.userStatus ?? "";
+      UserDetail.setProfilePicture = dt.data?.profilePicture ?? "";
+      UserDetail.setAddress = dt.data?.address ?? "";
       _moveTo(context);
     } else if (dt.meta != null) {
       showInSnackBar(context: context, message: dt.meta?.message ?? "");

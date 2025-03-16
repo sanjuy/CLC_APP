@@ -1,9 +1,15 @@
+import 'dart:io';
+
+import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/custom_widget/custom_appbar.dart';
+import 'package:clc_app/custom_widget/custom_image_view.dart';
 import 'package:clc_app/profile/profile_controller.dart';
+import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/buttons.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -18,10 +24,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController addressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  final ValueNotifier<File?> _image = ValueNotifier<File?>(null);
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage(ImageSource source) async {
+    final XFile? pickedFile = await _picker.pickImage(source: source);
+    if (pickedFile != null) {
+      _image.value = File(pickedFile.path);
+    }
+  }
+
+  String profile = "";
+
   getUserInfo() async {
     nameController.text = await UserDetail.getUserName ?? "";
     mobileController.text = await UserDetail.getMobileNUmber ?? "";
     addressController.text = await UserDetail.getAddress ?? "";
+    profile = await UserDetail.getProfilePicture ?? "";
     setState(() {});
   }
 
@@ -42,6 +61,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             child: Column(
               spacing: 8,
               children: [
+                InkWell(
+                  onTap: () => showImagePickerDialog(context, (source) {
+                    _pickImage(source);
+                  }),
+                  child: _image.value != null
+                      ? ValueListenableBuilder(
+                          valueListenable: _image,
+                          builder: (context, value, child) {
+                            return CustomImageView(
+                              shap: BoxShape.circle,
+                              imagePath: value,
+                            );
+                          },
+                        )
+                      : NetworkImageView(
+                          shap: BoxShape.circle,
+                          imagePath: "$baseURL$profile",
+                        ),
+                ),
                 generalTextField(
                   icon: (Icons.account_circle),
                   label: "Name",
@@ -66,6 +104,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       name: nameController.text,
                       mobile: mobileController.text,
                       address: addressController.text,
+                      file: _image.value,
                     );
                   },
                 ),

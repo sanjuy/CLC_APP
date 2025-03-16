@@ -8,7 +8,7 @@ class ApiService {
   static String token = "0818a9acf0488b7ae004eb7b3cf82360";
   static final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: 'https://acacioustech.co.in/api/api/', // Change as needed
+      baseUrl: '$baseURL/api/api/', // Change as needed
       connectTimeout: Duration(seconds: 20), // Connection timeout
       receiveTimeout: Duration(seconds: 20), // Response timeout
       sendTimeout: Duration(seconds: 20), // Send timeout
@@ -23,8 +23,9 @@ class ApiService {
     Map<String, dynamic>? params,
     Map<String, dynamic>? queryParams,
     File? filePath,
+    bool isShowLoader = true,
   }) async {
-    LoadingIndicator.show();
+    isShowLoader ? LoadingIndicator.show() : LoadingIndicator.hide();
     try {
       if (params != null) {
         params["token"] = token;

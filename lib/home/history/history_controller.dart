@@ -1,12 +1,12 @@
 import 'package:clc_app/apis_services/apis_services.dart';
-import 'package:clc_app/home/coupon_list/coupon_list_model.dart';
+import 'package:clc_app/home/history/history_model.dart';
 import 'package:clc_app/home/reward_card_view.dart';
 import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/user_detail.dart';
 
-class CouponListController {
-  static Future<List<Reward>> couponsList() async {
-    Map<String, String> queryParams = {"p": "allcoupon"};
+class HistoryController {
+  static Future<List<Reward>> redeemedCoupons() async {
+    Map<String, String> queryParams = {"p": "allRedeems"};
     Map<String, String> params = {};
     params["user_id"] = await UserDetail.getUserId ?? "";
 
@@ -14,28 +14,24 @@ class CouponListController {
       params: params,
       queryParams: queryParams,
     );
-    // if (!context.mounted) return;
-    var dt = CouponListModelModel.fromJson(responce);
+    var dt = CouponHistoryModel.fromJson(responce);
     List<Reward> rewards = [];
     if (dt.data?.isNotEmpty ?? false) {
-      List<AllCouponsList> lt = dt.data ?? [];
+      List<CouponHistory> lt = dt.data ?? [];
       for (var item in lt) {
         rewards.add(
           Reward(
-            couponId: item.couponId,
             imageUrl: 'logo.png'.directory(),
             title: item.title.toString(),
             description: item.description.toString(),
             couponType: item.couponType.toString(),
-            isPaid: item.membershipType != "Free",
+            isPaid: false,
           ),
         );
       }
+
       return rewards;
     }
     return rewards;
-    // else {
-    //   showInSnackBar(context: context, message: responce["message"].toString());
-    // }
   }
 }

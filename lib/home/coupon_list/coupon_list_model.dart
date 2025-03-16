@@ -1,33 +1,15 @@
 class CouponListModelModel {
   Meta? meta;
+  List<AllCouponsList>? data;
 
   CouponListModelModel({
     this.meta,
+    this.data,
   });
 
   factory CouponListModelModel.fromJson(Map<String, dynamic> json) =>
       CouponListModelModel(
         meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
-      );
-}
-
-class Meta {
-  int? statusCode;
-  String? status;
-  String? message;
-  List<AllCouponsList>? data;
-
-  Meta({
-    this.statusCode,
-    this.status,
-    this.message,
-    this.data,
-  });
-
-  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-        statusCode: json["StatusCode"],
-        status: json["Status"],
-        message: json["Message"],
         data: json["data"] == null
             ? []
             : List<AllCouponsList>.from(
@@ -45,6 +27,7 @@ class AllCouponsList {
   String? discountType;
   String? discountValue;
   String? couponStatus;
+  String? usageStatus;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -58,6 +41,7 @@ class AllCouponsList {
     this.discountType,
     this.discountValue,
     this.couponStatus,
+    this.usageStatus,
     this.createdAt,
     this.updatedAt,
   });
@@ -72,11 +56,30 @@ class AllCouponsList {
         discountType: json["discount_type"],
         discountValue: json["discount_value"],
         couponStatus: json["coupon_status"],
+        usageStatus: json["usage_status"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
+      );
+}
+
+class Meta {
+  int? statusCode;
+  String? status;
+  String? message;
+
+  Meta({
+    this.statusCode,
+    this.status,
+    this.message,
+  });
+
+  factory Meta.fromJson(Map<String, dynamic> json) => Meta(
+        statusCode: json["StatusCode"],
+        status: json["Status"],
+        message: json["Message"],
       );
 }

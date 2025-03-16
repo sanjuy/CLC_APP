@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/custom_widget/custom_appbar.dart';
+import 'package:clc_app/home/ads/ads_controller.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_screen.dart';
-import 'package:clc_app/home/coupon_redeem_history_screen.dart';
+import 'package:clc_app/home/history/coupon_redeem_history_screen.dart';
 import 'package:clc_app/profile/profile_screen.dart';
 import 'package:clc_app/resources/default_color.dart';
-import 'package:clc_app/resources/extenssions.dart';
+import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +22,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final ValueNotifier<int> _secondsRemaining = ValueNotifier<int>(0);
   final ValueNotifier<bool> isShowAd = ValueNotifier<bool>(true);
   final ValueNotifier<bool> isHideAd = ValueNotifier<bool>(false);
+  final ValueNotifier<String> bannerImage = ValueNotifier<String>("");
   Timer? _timer;
 
   int _selectedIndex = 0;
@@ -34,7 +37,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    _startTimer();
+    getAds();
+  }
+
+  getAds() {
+    AdsController.getAds(() async {
+      bannerImage.value = await UserDetail.getFullAd ?? "";
+      _startTimer();
+    });
   }
 
   @override
@@ -100,9 +110,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
-                            Image.asset(
-                              "ads.png".directory(),
-                              fit: BoxFit.cover,
+                            ValueListenableBuilder(
+                              valueListenable: bannerImage,
+                              builder: (context, value, child) {
+                                return value != ""
+                                    ? Image.network("$baseURL$value")
+                                    : SizedBox();
+                              },
                             ),
                             ValueListenableBuilder<int>(
                               valueListenable: _secondsRemaining,

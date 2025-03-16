@@ -1,26 +1,35 @@
 import 'dart:async';
 
+import 'package:clc_app/apis_services/apis_endpoints.dart';
+import 'package:clc_app/home/redeem/redeem_controller.dart';
+import 'package:clc_app/home/reward_card_view.dart';
 import 'package:clc_app/resources/buttons.dart';
 import 'package:clc_app/resources/extenssions.dart';
-import 'package:clc_app/resources/router.dart';
+import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
 
-void showBoardingPassDialog(BuildContext context) {
+void showBoardingPassDialog(
+  BuildContext context,
+  Reward obj,
+) {
   showDialog(
     context: context,
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: Colors.transparent,
-        child: RewardsScreen(),
+        child: RewardsScreen(obj: obj),
       );
     },
   );
 }
 
+// ignore: must_be_immutable
 class RewardsScreen extends StatefulWidget {
-  const RewardsScreen({super.key});
+  Reward? obj;
+  RewardsScreen({super.key, this.obj});
 
   @override
   State<RewardsScreen> createState() => _RewardsScreenState();
@@ -29,6 +38,7 @@ class RewardsScreen extends StatefulWidget {
 class _RewardsScreenState extends State<RewardsScreen> {
   Timer? _timer;
   final ValueNotifier<int> _remainingTime = ValueNotifier<int>(600);
+  ValueNotifier<String> ads = ValueNotifier<String>("");
 
   void startTimer() {
     _timer?.cancel();
@@ -36,8 +46,9 @@ class _RewardsScreenState extends State<RewardsScreen> {
       if (_remainingTime.value > 0) {
         _remainingTime.value--;
       } else {
+        redeem();
         timer.cancel();
-        Navigation.pop(context: context);
+        // Navigation.pop(context: context);
       }
     });
   }
@@ -52,6 +63,11 @@ class _RewardsScreenState extends State<RewardsScreen> {
   void initState() {
     startTimer();
     super.initState();
+    getAds();
+  }
+
+  getAds() async {
+    ads.value = await UserDetail.getPopupAd ?? "";
   }
 
   @override
@@ -85,7 +101,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                   ),
                   const SizedBox(height: 10),
                   customText(
-                    title: "Mang Joe's Chicken Inasal NZ",
+                    title: widget.obj?.title ?? "",
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -133,9 +149,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: customText(
-                        title:
-                            """This document outlines the business requirements for the development of a mobile
-            application.and non-functional requirements necessary.""",
+                        title: widget.obj?.description ?? "",
                         color: Colors.grey),
                   ),
                   const SizedBox(height: 10),
@@ -161,7 +175,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                     builder: (context, value, child) {
                       return FullWidthAction(
                         title: "Time Remaining: ${formatTime(value)}",
-                        onPressed: () {},
+                        onPressed: () => redeem(),
                       );
                     },
                   ),
@@ -176,11 +190,22 @@ class _RewardsScreenState extends State<RewardsScreen> {
                 border: Border.all(color: Colors.grey, width: 3),
                 borderRadius: BorderRadius.circular(0),
               ),
-              child: Image.asset("ads.png".directory(), fit: BoxFit.cover),
+              child: ValueListenableBuilder(
+                  valueListenable: ads,
+                  builder: (context, value, child) {
+                    return value != ""
+                        ? Image.network("$baseURL$value", fit: BoxFit.cover)
+                        : SizedBox();
+                  }),
             )
           ],
         ),
       ),
     );
+  }
+
+  redeem() {
+    RedeemController.redeemNow(
+        context: context, couponID: widget.obj?.couponId ?? "");
   }
 }

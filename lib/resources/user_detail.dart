@@ -81,4 +81,28 @@ class UserDetail {
   static set setAddress(String value) {
     UserDefaults.shared.saveString(key: Keys.address, value: value);
   }
+
+  static Future<String?> get getFullAd {
+    return UserDefaults.shared.getString(Keys.fullAd);
+  }
+
+  static set setFullAd(String value) {
+    UserDefaults.shared.saveString(key: Keys.fullAd, value: value);
+  }
+
+  static Future<String?> get getListAd {
+    return UserDefaults.shared.getString(Keys.listAd);
+  }
+
+  static set setListAd(String value) {
+    UserDefaults.shared.saveString(key: Keys.listAd, value: value);
+  }
+
+  static Future<String?> get getPopupAd {
+    return UserDefaults.shared.getString(Keys.popupAd);
+  }
+
+  static set setPopupAd(String value) {
+    UserDefaults.shared.saveString(key: Keys.popupAd, value: value);
+  }
 }

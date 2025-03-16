@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:clc_app/apis_services/apis_services.dart';
 import 'package:clc_app/profile/edit_profile_model.dart';
 import 'package:clc_app/resources/alert_view.dart';
@@ -11,6 +13,7 @@ class ProfileController {
     required String name,
     required String mobile,
     required String address,
+    File? file,
   }) async {
     if (name == "") {
       showInSnackBar(context: context, message: "Please Enter Name");
@@ -33,19 +36,15 @@ class ProfileController {
     var responce = await ApiService.postRequest(
       params: params,
       queryParams: queryParams,
+      filePath: file,
     );
     if (!context.mounted) return;
     var dt = EditProfileModel.fromJson(responce);
     if (dt.data != null && dt.meta != null) {
-      // UserDetail.setUserId = dt.data?.userId ?? "";
-      // UserDetail.setUserEmail = dt.data?.email ?? "";
       UserDetail.setUserName = dt.data?.name ?? "";
       UserDetail.setMobileNUmber = dt.data?.contactNo ?? "";
-      // UserDetail.setGender = dt.data?.gender ?? "";
-      // UserDetail.setMembershipType = dt.data?.membershipType ?? "";
-      // UserDetail.setUserStatus = dt.data?.userStatus ?? "";
-      // UserDetail.setProfilePicture = dt.data?.profilePicture ?? "";
-      // UserDetail.setAddress = dt.data?.address ?? "";
+      UserDetail.setProfilePicture = dt.data?.profilePicture ?? "";
+      UserDetail.setAddress = address; //dt.data?.address ?? "";
       showInSnackBar(context: context, message: dt.meta?.message ?? "");
       Navigation.pop(context: context);
     } else if (dt.meta != null) {

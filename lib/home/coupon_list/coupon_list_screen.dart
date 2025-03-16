@@ -1,10 +1,11 @@
+import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_controller.dart';
-import 'package:clc_app/home/coupon_redeem_popup.dart';
+import 'package:clc_app/home/redeem/coupon_redeem_popup.dart';
 import 'package:clc_app/home/credit_card_screen.dart';
 import 'package:clc_app/home/reward_card_view.dart';
 import 'package:clc_app/resources/alert_view.dart';
-import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/router.dart';
+import 'package:clc_app/resources/user_detail.dart';
 import 'package:flutter/material.dart';
 
 class CouponListScreen extends StatefulWidget {
@@ -16,6 +17,7 @@ class CouponListScreen extends StatefulWidget {
 
 class _CouponListScreenState extends State<CouponListScreen> {
   ValueNotifier<List<Reward>> rewards = ValueNotifier<List<Reward>>([]);
+  ValueNotifier<String> ads = ValueNotifier<String>("");
 
   @override
   void initState() {
@@ -25,6 +27,7 @@ class _CouponListScreenState extends State<CouponListScreen> {
 
   getCoupon() async {
     rewards.value = await CouponListController.couponsList();
+    ads.value = await UserDetail.getListAd ?? "";
   }
 
   @override
@@ -43,7 +46,14 @@ class _CouponListScreenState extends State<CouponListScreen> {
                 border: Border.all(color: Colors.grey, width: 3),
                 borderRadius: BorderRadius.circular(0),
               ),
-              child: Image.asset("ads.png".directory(), fit: BoxFit.cover),
+              child: ValueListenableBuilder(
+                valueListenable: ads,
+                builder: (context, value, child) {
+                  return value != ""
+                      ? Image.network("$baseURL$value", fit: BoxFit.cover)
+                      : SizedBox();
+                },
+              ),
             ),
             Expanded(
               child: ValueListenableBuilder(
@@ -80,7 +90,8 @@ class _CouponListScreenState extends State<CouponListScreen> {
                                       "To redeem this coupon, you must be inside the restaurant. The coupon will expire 10 minutes after you click Redeem Now.",
                                   title: "INSTRUCTIONS",
                                   onAccepted: () {
-                                    showBoardingPassDialog(context);
+                                    showBoardingPassDialog(
+                                        context, value[index]);
                                   },
                                 );
                               }

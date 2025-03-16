@@ -1,3 +1,4 @@
+import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/authentication/login/login_screen.dart';
 import 'package:clc_app/custom_widget/custom_image_view.dart';
 import 'package:clc_app/profile/change_membership_type_screen.dart';
@@ -6,7 +7,6 @@ import 'package:clc_app/profile/reset_password_screen.dart';
 import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
-import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -54,13 +54,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 NetworkImageView(
                   shap: BoxShape.circle,
-                  imagePath: "https://acacioustech.co.in/$profile",
+                  imagePath: "$baseURL$profile",
                 ),
-                TextButton(
-                  onPressed: () {},
-                  child: customText(
-                      title: "Change Profile Image", color: Colors.blue),
-                ),
+                SizedBox(height: 10),
                 Card(
                     child: Padding(
                   padding: const EdgeInsets.all(12.0),

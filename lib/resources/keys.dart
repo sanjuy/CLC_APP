@@ -10,4 +10,7 @@ class Keys {
   static const userStatus = "userStatus";
   static const profilePicture = "profilePicture";
   static const address = "address";
+  static const fullAd = "fullAd";
+  static const listAd = "listAd";
+  static const popupAd = "popupAd";
 }

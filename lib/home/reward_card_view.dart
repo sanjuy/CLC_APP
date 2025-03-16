@@ -27,13 +27,14 @@ class RewardCard extends StatelessWidget {
                 children: [
                   ClipOval(
                     child: Image.asset(
-                      reward.imageUrl,
+                      reward.imageUrl.toString(),
                       width: 80,
                       height: 80,
                       fit: BoxFit.cover,
                     ),
                   ),
-                  customText(title: "Selera Delight", color: Colors.grey)
+                  customText(
+                      title: reward.couponType.toString(), color: Colors.grey)
                 ],
               ),
             ),
@@ -46,13 +47,13 @@ class RewardCard extends StatelessWidget {
                   customText(
                     maxLines: 2,
                     isSingleLine: true,
-                    title: reward.title,
+                    title: reward.title.toString(),
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
                   const SizedBox(height: 8),
                   customText(
-                      title: reward.description,
+                      title: reward.description.toString(),
                       fontSize: 14,
                       color: Colors.black54),
                   const SizedBox(height: 8),
@@ -77,23 +78,19 @@ class RewardCard extends StatelessWidget {
 }
 
 class Reward {
-  final String imageUrl;
-  final String title;
-  final String description;
-  // final String subtitle;
-  // final double progress;
-  // final int maxPoints;
-  // final int currentPoints;
+  final String? couponId;
+  final String? imageUrl;
+  final String? title;
+  final String? description;
+  final String? couponType;
   final bool isPaid;
 
   Reward({
-    required this.imageUrl,
-    required this.title,
-    required this.description,
-    // required this.subtitle,
-    // required this.progress,
-    // required this.maxPoints,
-    // required this.currentPoints,
+    this.couponId,
+    this.imageUrl,
+    this.title,
+    this.description,
+    this.couponType,
     this.isPaid = false,
   });
 }

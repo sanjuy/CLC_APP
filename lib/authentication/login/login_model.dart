@@ -17,17 +17,47 @@ class Data {
   String? userId;
   String? name;
   String? email;
+  String? address;
+  String? profilePicture;
+  String? contactNo;
+  String? gender;
+  String? membershipType;
+  String? userStatus;
+  String? createdAt;
+  String? updatedAt;
+  String? otp;
+  String? otpExpiry;
 
   Data({
     this.userId,
     this.name,
     this.email,
+    this.address,
+    this.profilePicture,
+    this.contactNo,
+    this.gender,
+    this.membershipType,
+    this.userStatus,
+    this.createdAt,
+    this.updatedAt,
+    this.otp,
+    this.otpExpiry,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         userId: json["user_id"],
         name: json["name"],
         email: json["email"],
+        address: json["address"],
+        profilePicture: json["profile_picture"],
+        contactNo: json["contact_no"],
+        gender: json["gender"],
+        membershipType: json["membership_type"],
+        userStatus: json["user_status"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
+        otp: json["otp"],
+        otpExpiry: json["otp_expiry"],
       );
 }
 
