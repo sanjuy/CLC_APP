@@ -2,7 +2,9 @@ import 'package:clc_app/authentication/login/login_screen.dart';
 import 'package:clc_app/custom_widget/custom_image_view.dart';
 import 'package:clc_app/profile/change_membership_type_screen.dart';
 import 'package:clc_app/profile/edit_profile_screen.dart';
+import 'package:clc_app/profile/profile_controller.dart';
 import 'package:clc_app/profile/reset_password_screen.dart';
+import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
@@ -116,7 +118,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               moveTo: ResetPasswordScreen(),
             );
           }),
-          _buildListTile(Icons.delete, 'Delete Account', '', () {}),
+          _buildListTile(Icons.delete, 'Delete Account', '', () {
+            showCustomDialog(
+              context: context,
+              msg: "Do you want to delete your account?",
+              title: "Delete Account",
+              titleOK: "Yes",
+              titleCancel: "No",
+              onAccepted: () {
+                ProfileController.deleteAccount(context: context);
+              },
+            );
+          }),
           _buildListTile(Icons.logout, 'Logout', '', () {
             UserDetail.setUserLoggedIn = false;
             Navigation.pushAndRemoveUntil(

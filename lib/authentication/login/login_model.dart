@@ -45,12 +45,12 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        userId: json["user_id"],
+        userId: "${json["user_id"]}",
         name: json["name"],
         email: json["email"],
         address: json["address"],
         profilePicture: json["profile_picture"],
-        contactNo: json["contact_no"],
+        contactNo: "${json["contact_no"]}",
         gender: json["gender"],
         membershipType: json["membership_type"],
         userStatus: json["user_status"],

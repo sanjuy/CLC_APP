@@ -153,7 +153,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 dropDownTextField(
                   icon: (Icons.card_membership),
                   title: "Membership Type",
-                  lt: ["ChowLucky - Free", "ChowLucky Plus"],
+                  lt: ["Free", "Paid"],
                   onSelected: (p0) {
                     membershipType = p0;
                   },

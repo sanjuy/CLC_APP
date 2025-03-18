@@ -14,7 +14,8 @@ import 'package:flutter/material.dart';
 
 class OtpScreen extends StatefulWidget {
   final String? emailId;
-  const OtpScreen({super.key, this.emailId});
+  final String? verificationType;
+  const OtpScreen({super.key, this.emailId, this.verificationType});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -31,6 +32,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   void initState() {
+    sendOTP();
     _controllers =
         List.generate(otpViewSize, (index) => TextEditingController());
     _focusNodes = List.generate(otpViewSize, (index) => FocusNode());
@@ -67,9 +69,13 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   void _resendOtp() async {
+    sendOTP();
+    _startTimer();
+  }
+
+  sendOTP() async {
     await OtpController.resendOTP(
         context: context, email: widget.emailId ?? "");
-    _startTimer();
   }
 
   void _onOtpChanged(String value, int index) {
@@ -85,12 +91,19 @@ class _OtpScreenState extends State<OtpScreen> {
   void _verifyOtp() {
     String otp = _controllers.map((e) => e.text).join();
     if (otp.length == otpViewSize) {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text("Entered OTP: $otp")),
-      // );
-      UserDetail.setUserLoggedIn = true;
-      Navigation.pushAndRemoveUntil(
-          context: context, moveTo: const DashboardScreen());
+      OtpController.verifyOTP(
+          context: context,
+          otp: otp,
+          onVerified: (verified) {
+            if (verified) {
+              if (widget.verificationType != null) {
+              } else {
+                UserDetail.setUserLoggedIn = true;
+                Navigation.pushAndRemoveUntil(
+                    context: context, moveTo: const DashboardScreen());
+              }
+            }
+          });
     } else {
       showInSnackBar(context: context, message: "Please Enter 6 digit OTP");
     }

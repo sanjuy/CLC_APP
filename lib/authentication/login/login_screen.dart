@@ -1,4 +1,4 @@
-import 'package:clc_app/authentication/forgot_password_screen.dart';
+import 'package:clc_app/authentication/forgot/forgot_password_screen.dart';
 import 'package:clc_app/authentication/login/login_controller.dart';
 import 'package:clc_app/authentication/registration/registration_screen.dart';
 import 'package:clc_app/custom_widget/custom_appbar.dart';

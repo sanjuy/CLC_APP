@@ -1,5 +1,7 @@
 import 'package:clc_app/custom_widget/custom_appbar.dart';
+import 'package:clc_app/profile/profile_controller.dart';
 import 'package:clc_app/resources/buttons.dart';
+import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +15,18 @@ class ChangeMembershipTypeScreen extends StatefulWidget {
 
 class _ChangeMembershipTypeScreenState
     extends State<ChangeMembershipTypeScreen> {
-  TextEditingController nameController = TextEditingController(text: "Free");
+  TextEditingController nameController = TextEditingController();
+  String typeStr = "";
+  @override
+  void initState() {
+    super.initState();
+    currentMembershipType();
+  }
+
+  currentMembershipType() async {
+    nameController.text = await UserDetail.getMembershipType ?? "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,16 +47,18 @@ class _ChangeMembershipTypeScreenState
                 dropDownTextField(
                   icon: (Icons.card_membership),
                   title: "Membership Type",
-                  lt: [
-                    "ChowLucky - Free",
-                    "ChowLucky Plus",
-                  ],
-                  onSelected: (p0) {},
+                  lt: ["Free", "Paid"],
+                  onSelected: (p0) {
+                    typeStr = p0;
+                  },
                 ),
                 SizedBox(height: 20),
                 FullWidthAction(
                   title: "Change Membership Type",
-                  onPressed: () {},
+                  onPressed: () {
+                    ProfileController.changeMembershipType(
+                        context: context, membershipType: typeStr);
+                  },
                 ),
               ],
             ),
