@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/custom_widget/custom_appbar.dart';
 import 'package:clc_app/home/ads/ads_controller.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_screen.dart';
