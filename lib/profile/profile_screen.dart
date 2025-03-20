@@ -1,10 +1,10 @@
 import 'package:clc_app/authentication/login/login_screen.dart';
 import 'package:clc_app/custom_widget/custom_image_view.dart';
-import 'package:clc_app/profile/change_membership_type_screen.dart';
+import 'package:clc_app/profile/change_membership/change_membership_type_screen.dart';
 import 'package:clc_app/profile/edit_profile_screen.dart';
 import 'package:clc_app/profile/enquiry_screen.dart';
 import 'package:clc_app/profile/profile_controller.dart';
-import 'package:clc_app/profile/reset_password_screen.dart';
+import 'package:clc_app/profile/reset_password/reset_password_screen.dart';
 import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/router.dart';
@@ -109,11 +109,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
             getUserInfo();
           }),
-          _buildListTile(Icons.swap_horiz, 'Change Membership Type', '', () {
-            Navigation.push(
-              context: context,
-              moveTo: ChangeMembershipTypeScreen(),
+          _buildListTile(Icons.swap_horiz, 'Change Membership Type', '',
+              () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ChangeMembershipTypeScreen()),
             );
+            getUserInfo();
           }),
           _buildListTile(Icons.help_outline, 'Enquiry', '', () {
             Navigation.push(
@@ -140,9 +143,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
           }),
           _buildListTile(Icons.logout, 'Logout', '', () {
-            UserDetail.setUserLoggedIn = false;
-            Navigation.pushAndRemoveUntil(
-                context: context, moveTo: LoginScreen());
+            showCustomDialog(
+              context: context,
+              msg: "Do you want to logout your account?",
+              title: "Logout Account",
+              titleOK: "Yes",
+              titleCancel: "No",
+              onAccepted: () {
+                UserDetail.setUserLoggedIn = false;
+                Navigation.pushAndRemoveUntil(
+                    context: context, moveTo: LoginScreen());
+              },
+            );
           }),
         ],
       ),

@@ -1,5 +1,5 @@
 import 'package:clc_app/custom_widget/custom_appbar.dart';
-import 'package:clc_app/profile/profile_controller.dart';
+import 'package:clc_app/profile/change_membership/membership_controller.dart';
 import 'package:clc_app/resources/buttons.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
@@ -56,7 +56,7 @@ class _ChangeMembershipTypeScreenState
                 FullWidthAction(
                   title: "Change Membership Type",
                   onPressed: () {
-                    ProfileController.changeMembershipType(
+                    MembershipController.changeMembershipType(
                         context: context, membershipType: typeStr);
                   },
                 ),

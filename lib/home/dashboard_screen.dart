@@ -36,11 +36,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    // getAds();
+    getAds();
   }
 
   getAds() {
     AdsController.getAds(() async {
+      isHideAd.value = false;
       bannerImage.value = await UserDetail.getFullAd ?? "";
       _startTimer();
     });
@@ -99,11 +100,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 return value
                     ? SizedBox()
                     : Container(
-                        width: double.infinity,
-                        height: double.infinity,
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey, width: 5),
+                          color: Color.fromRGBO(0, 0, 0, 0.7),
+                          border: Border.all(color: Colors.grey, width: 1),
                           borderRadius: BorderRadius.circular(0),
                         ),
                         child: Stack(
@@ -113,7 +112,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               valueListenable: bannerImage,
                               builder: (context, value, child) {
                                 return value != ""
-                                    ? Image.network(value)
+                                    ? Center(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              100,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height -
+                                              400,
+                                          child: Image.network(value),
+                                        ),
+                                      )
                                     : SizedBox();
                               },
                             ),
@@ -123,11 +139,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 return customText(
                                     title: "Skip Ad in $value seconds",
                                     fontSize: 16,
-                                    color: Colors.black);
+                                    color: Colors.white);
                               },
                             ),
                             Positioned(
-                              bottom: 0,
+                              top: 0,
                               right: 0,
                               child: ValueListenableBuilder(
                                 valueListenable: isShowAd,
@@ -136,7 +152,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       ? IconButton(
                                           onPressed: () =>
                                               isHideAd.value = true,
-                                          icon: Icon(Icons.cancel))
+                                          icon: Icon(
+                                            Icons.cancel,
+                                            color: Colors.white,
+                                          ))
                                       : SizedBox();
                                 },
                               ),

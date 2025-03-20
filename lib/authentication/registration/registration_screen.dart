@@ -162,16 +162,48 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 FullWidthAction(
                   title: "Registration",
                   onPressed: () {
-                    // if (_image.value?.path == null) {
-                    //   showInSnackBar(
-                    //       context: context,
-                    //       message: "Please Select Profile Image");
-                    //   return;
-                    // }
+                    if (_nameController.text == "") {
+                      showInSnackBar(
+                          context: context, message: "Please Enter Full Name");
+                      return;
+                    }
+                    if (_emailController.text == "") {
+                      showInSnackBar(
+                          context: context,
+                          message: "Please Enter Correct Email-ID");
+                      return;
+                    }
+                    if (_mobileController.text == "") {
+                      showInSnackBar(
+                          context: context,
+                          message: "Please Enter Contact No.");
+                      return;
+                    }
+                    if (_passwordController.text == "") {
+                      showInSnackBar(
+                          context: context, message: "Please Enter Password");
+                      return;
+                    }
+                    if (_addressController.text == "") {
+                      showInSnackBar(
+                          context: context, message: "Please Enter Address");
+                      return;
+                    }
+                    if (gender == "") {
+                      showInSnackBar(
+                          context: context, message: "Please Select Gender");
+                      return;
+                    }
+                    if (membershipType == "") {
+                      showInSnackBar(
+                          context: context,
+                          message: "Please Select Membership TYpe");
+                      return;
+                    }
                     showCustomDialog(
                       context: context,
                       msg:
-                          "When customers register, they will get a disclaimer popup and they accept it before proceeding to the app.",
+                          "This app is provided as is with no warranties. Use at your own risk; we are not liable for any losses. Accuracy and features may change without notice.",
                       title: "Disclaimer",
                       onAccepted: () {
                         RegistrationController.register(

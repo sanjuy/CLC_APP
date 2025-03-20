@@ -1,5 +1,6 @@
 import 'package:clc_app/authentication/forgot/forgot_controller.dart';
 import 'package:clc_app/custom_widget/custom_appbar.dart';
+import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/buttons.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
@@ -55,9 +56,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   title: widget.verified ? "Create Password" : "Get OTP",
                   onPressed: () {
                     if (!widget.verified) {
+                      if (emailController.text == "") {
+                        showInSnackBar(
+                            context: context,
+                            message: "Please Enter Registered Email-ID");
+                        return;
+                      }
                       ForgotController.sendOTO(
                           context: context, email: emailController.text);
                     } else {
+                      if (passwordController.text == "") {
+                        showInSnackBar(
+                            context: context,
+                            message: "Please Enter New Password");
+                        return;
+                      }
                       ForgotController.createNewPassword(
                           context: context, password: passwordController.text);
                     }

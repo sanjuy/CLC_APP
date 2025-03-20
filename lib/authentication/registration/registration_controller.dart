@@ -20,36 +20,6 @@ class RegistrationController {
     required String membershipType,
     required File file,
   }) async {
-    if (name == "") {
-      showInSnackBar(context: context, message: "Please Enter Full Name");
-      return;
-    }
-    if (email == "") {
-      showInSnackBar(
-          context: context, message: "Please Enter Correct Email-ID");
-      return;
-    }
-    if (mobile == "") {
-      showInSnackBar(context: context, message: "Please Enter Contact No.");
-      return;
-    }
-    if (password == "") {
-      showInSnackBar(context: context, message: "Please Enter Password");
-      return;
-    }
-    if (address == "") {
-      showInSnackBar(context: context, message: "Please Enter Address");
-      return;
-    }
-    if (gender == "") {
-      showInSnackBar(context: context, message: "Please Select Gender");
-      return;
-    }
-    if (membershipType == "") {
-      showInSnackBar(
-          context: context, message: "Please Select Membership TYpe");
-      return;
-    }
     Map<String, String> queryParams = {"p": "addUser"};
     Map<String, String> params = {};
     params["name"] = name;

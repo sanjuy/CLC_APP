@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clc_app/authentication/forgot/forgot_password_screen.dart';
 import 'package:clc_app/authentication/otp/otp_controller.dart';
 import 'package:clc_app/custom_widget/custom_appbar.dart';
 import 'package:clc_app/home/dashboard_screen.dart';
@@ -97,6 +98,9 @@ class _OtpScreenState extends State<OtpScreen> {
           onVerified: (verified) {
             if (verified) {
               if (widget.verificationType != null) {
+                Navigation.push(
+                    context: context,
+                    moveTo: ForgotPasswordScreen(verified: true));
               } else {
                 UserDetail.setUserLoggedIn = true;
                 Navigation.pushAndRemoveUntil(

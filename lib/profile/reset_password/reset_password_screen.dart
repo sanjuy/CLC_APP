@@ -1,4 +1,5 @@
 import 'package:clc_app/custom_widget/custom_appbar.dart';
+import 'package:clc_app/profile/reset_password/reset_pass_controllert.dart';
 import 'package:clc_app/resources/buttons.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 SizedBox(height: 20),
                 FullWidthAction(
                   title: "Reset Password",
-                  onPressed: () {},
+                  onPressed: () {
+                    ResetPassControllert.resetPassword(
+                      context: context,
+                      currentPassword: currentPasswordController.text,
+                      newPassword: newPasswordController.text,
+                      confirmPassword: confirmPasswordController.text,
+                    );
+                  },
                 ),
               ],
             ),
