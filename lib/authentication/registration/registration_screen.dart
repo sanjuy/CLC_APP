@@ -162,12 +162,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 FullWidthAction(
                   title: "Registration",
                   onPressed: () {
-                    if (_image.value?.path == null) {
-                      showInSnackBar(
-                          context: context,
-                          message: "Please Select Profile Image");
-                      return;
-                    }
+                    // if (_image.value?.path == null) {
+                    //   showInSnackBar(
+                    //       context: context,
+                    //       message: "Please Select Profile Image");
+                    //   return;
+                    // }
                     showCustomDialog(
                       context: context,
                       msg:
@@ -183,7 +183,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           address: _addressController.text,
                           gender: gender,
                           membershipType: membershipType,
-                          file: _image.value!,
+                          file: _image.value ?? File(""),
                         );
                       },
                     );

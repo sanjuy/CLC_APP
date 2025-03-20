@@ -60,11 +60,11 @@ class RegistrationController {
     params["gender"] = gender;
     params["membership_type"] = membershipType;
     params["user_status"] = "Active";
-
+    print(file.path);
     var responce = await ApiService.postRequest(
       params: params,
       queryParams: queryParams,
-      filePath: file,
+      filePath: file.path != "" ? file : null,
     );
     if (!context.mounted) return;
     var dt = RegisterModel.fromJson(responce);

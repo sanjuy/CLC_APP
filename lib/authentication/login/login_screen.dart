@@ -103,22 +103,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    customText(title: "New User Registration"),
-                    TextButton(
-                      onPressed: () {
-                        Navigation.push(
-                            context: context, moveTo: RegistrationScreen());
-                      },
-                      child:
-                          customText(title: "Click Here?", color: primeColor),
-                    ),
-                  ],
+                SizedBox(height: 10),
+                FullWidthAction(
+                  title: "Register",
+                  onPressed: () {
+                    Navigation.push(
+                        context: context, moveTo: RegistrationScreen());
+                  },
                 ),
-                // Spacer(),
-                // Image.asset("clc.png".directory(), scale: 10),
               ],
             ),
           ),

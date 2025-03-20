@@ -2,6 +2,7 @@ import 'package:clc_app/authentication/login/login_screen.dart';
 import 'package:clc_app/custom_widget/custom_image_view.dart';
 import 'package:clc_app/profile/change_membership_type_screen.dart';
 import 'package:clc_app/profile/edit_profile_screen.dart';
+import 'package:clc_app/profile/enquiry_screen.dart';
 import 'package:clc_app/profile/profile_controller.dart';
 import 'package:clc_app/profile/reset_password_screen.dart';
 import 'package:clc_app/resources/alert_view.dart';
@@ -53,10 +54,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
             child: Column(
               children: [
-                NetworkImageView(
-                  shap: BoxShape.circle,
-                  imagePath: profile,
-                ),
+                profile == ""
+                    ? CustomImageView(shap: BoxShape.circle)
+                    : NetworkImageView(
+                        shap: BoxShape.circle,
+                        imagePath: profile,
+                      ),
                 SizedBox(height: 10),
                 Card(
                     child: Padding(
@@ -110,6 +113,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Navigation.push(
               context: context,
               moveTo: ChangeMembershipTypeScreen(),
+            );
+          }),
+          _buildListTile(Icons.help_outline, 'Enquiry', '', () {
+            Navigation.push(
+              context: context,
+              moveTo: EnquiryScreen(),
             );
           }),
           _buildListTile(Icons.lock, 'Reset Password', '', () {

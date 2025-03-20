@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:clc_app/home/redeem/redeem_controller.dart';
+import 'package:clc_app/home/redeem/web_view_screen.dart';
 import 'package:clc_app/home/reward_card_view.dart';
 import 'package:clc_app/resources/buttons.dart';
 import 'package:clc_app/resources/extenssions.dart';
+import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
@@ -104,11 +106,19 @@ class _RewardsScreenState extends State<RewardsScreen> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
-                  customText(
-                    title: "Auckland",
-                    fontSize: 14,
-                    color: Colors.grey,
-                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigation.push(
+                            context: context,
+                            moveTo: WebViewScreen(
+                                title: widget.obj?.title ?? "",
+                                url: "https://chowluckclub.com"));
+                      },
+                      child: customText(
+                        title: "Read More",
+                        fontSize: 14,
+                        color: Colors.red,
+                      )),
                   const SizedBox(height: 15),
                   // Points Balance Section
                   Container(

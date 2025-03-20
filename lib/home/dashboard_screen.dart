@@ -20,7 +20,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final ValueNotifier<int> _secondsRemaining = ValueNotifier<int>(0);
   final ValueNotifier<bool> isShowAd = ValueNotifier<bool>(true);
-  final ValueNotifier<bool> isHideAd = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> isHideAd = ValueNotifier<bool>(true);
   final ValueNotifier<String> bannerImage = ValueNotifier<String>("");
   Timer? _timer;
 
@@ -36,7 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    getAds();
+    // getAds();
   }
 
   getAds() {

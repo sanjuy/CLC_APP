@@ -72,10 +72,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               shap: BoxShape.circle,
                               imagePath: value,
                             )
-                          : NetworkImageView(
-                              shap: BoxShape.circle,
-                              imagePath: profile,
-                            );
+                          : profile != ""
+                              ? NetworkImageView(
+                                  shap: BoxShape.circle,
+                                  imagePath: profile,
+                                )
+                              : CustomImageView(shap: BoxShape.circle);
                     },
                   ),
                 ),
