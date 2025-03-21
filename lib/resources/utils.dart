@@ -72,14 +72,14 @@ Text customText({
   String? fontfamily = "Corporate S",
   Color color = Colors.black,
   bool isSingleLine = false,
-  TextAlign alinment = TextAlign.left,
+  TextAlign alignment = TextAlign.left,
   FontWeight fontWeight = FontWeight.normal,
   int maxLines = 15,
 }) {
   return Text(
     title,
     maxLines: maxLines,
-    textAlign: alinment,
+    textAlign: alignment,
     style: TextStyle(
         fontSize: fontSize,
         fontFamily: fontfamily,

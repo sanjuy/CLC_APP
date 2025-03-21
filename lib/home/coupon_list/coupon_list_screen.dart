@@ -1,10 +1,10 @@
 import 'package:clc_app/home/coupon_list/coupon_list_controller.dart';
-import 'package:clc_app/home/credit_card_screen.dart';
 import 'package:clc_app/home/redeem/coupon_redeem_popup.dart';
 import 'package:clc_app/home/reward_card_view.dart';
 import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
+import 'package:clc_app/subscription_plans/subscription_plans_screen.dart';
 import 'package:flutter/material.dart';
 
 class CouponListScreen extends StatefulWidget {
@@ -76,7 +76,7 @@ class _CouponListScreenState extends State<CouponListScreen> {
                                   onAccepted: () {
                                     Navigation.push(
                                         context: context,
-                                        moveTo: CreditCardFormScreen());
+                                        moveTo: SubscriptionPlansScreen());
                                   },
                                 );
                               } else {

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CreditCardFormScreen extends StatefulWidget {
-  const CreditCardFormScreen({super.key});
+  final String? amount;
+  const CreditCardFormScreen({super.key, this.amount});
 
   @override
   State<CreditCardFormScreen> createState() => _CreditCardFormScreenState();
@@ -21,7 +22,6 @@ class _CreditCardFormScreenState extends State<CreditCardFormScreen> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      // Handle the form submission logic
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Card details submitted successfully!")),
       );
@@ -111,7 +111,9 @@ class _CreditCardFormScreenState extends State<CreditCardFormScreen> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  FullWidthAction(title: "Make Payment", onPressed: _submitForm)
+                  FullWidthAction(
+                      title: "Make Payment ${widget.amount}",
+                      onPressed: _submitForm)
                 ],
               ),
             ),
