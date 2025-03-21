@@ -1,7 +1,5 @@
 import 'package:clc_app/apis_services/apis_services.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_model.dart';
-import 'package:clc_app/home/reward_card_view.dart';
-import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/user_detail.dart';
 
 class CouponListController {
