@@ -5,7 +5,7 @@ import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/user_detail.dart';
 
 class CouponListController {
-  static Future<List<Reward>> couponsList() async {
+  static Future<List<AllCouponsList>> couponsList() async {
     Map<String, String> queryParams = {"p": "allcoupon"};
     Map<String, String> params = {};
     params["user_id"] = await UserDetail.getUserId ?? "";
@@ -16,24 +16,11 @@ class CouponListController {
     );
     // if (!context.mounted) return;
     var dt = CouponListModelModel.fromJson(responce);
-    List<Reward> rewards = [];
     if (dt.data?.isNotEmpty ?? false) {
       List<AllCouponsList> lt = dt.data ?? [];
-      for (var item in lt) {
-        rewards.add(
-          Reward(
-            couponId: item.couponId,
-            imageUrl: 'logo.png'.directory(),
-            title: item.title.toString(),
-            description: item.description.toString(),
-            couponType: item.couponType.toString(),
-            isPaid: item.membershipType != "Free",
-          ),
-        );
-      }
-      return rewards;
+      return lt;
     }
-    return rewards;
+    return [];
     // else {
     //   showInSnackBar(context: context, message: responce["message"].toString());
     // }

@@ -13,4 +13,7 @@ class Keys {
   static const fullAd = "fullAd";
   static const listAd = "listAd";
   static const popupAd = "popupAd";
+  static const fullAdUrl = "fullAdUrl";
+  static const listAdUrl = "listAdUrl";
+  static const popupAdUrl = "popupAdUrl";
 }

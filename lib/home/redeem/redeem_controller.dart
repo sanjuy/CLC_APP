@@ -1,5 +1,4 @@
 import 'package:clc_app/apis_services/apis_services.dart';
-import 'package:clc_app/home/redeem/redeem_model.dart';
 import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
@@ -18,9 +17,12 @@ class RedeemController {
       queryParams: queryParams,
     );
     if (!context.mounted) return;
-    var dt = RedeemModel.fromJson(responce);
-    if (dt.meta != null) {
-      showInSnackBar(context: context, message: dt.meta?.message ?? "");
+    var dt = responce["meta"] as Map<String, dynamic>;
+    int code = dt["StatusCode"] as int;
+    if (code == 200 || code == 201) {
+      showInSnackBar(context: context, message: dt["Message"].toString());
+    } else {
+      showInSnackBar(context: context, message: dt["Message"].toString());
     }
     Navigation.pop(context: context);
   }

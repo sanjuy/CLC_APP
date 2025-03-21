@@ -19,13 +19,15 @@ class AdsData {
   String? id;
   String? name;
   String? images;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  String? adsurl;
+  String? createdAt;
+  String? updatedAt;
 
   AdsData({
     this.id,
     this.name,
     this.images,
+    this.adsurl,
     this.createdAt,
     this.updatedAt,
   });
@@ -34,12 +36,9 @@ class AdsData {
         id: json["id"],
         name: json["name"],
         images: json["images"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
+        adsurl: json["adsurl"],
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
       );
 }
 

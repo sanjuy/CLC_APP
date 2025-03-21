@@ -1,3 +1,4 @@
+import 'package:clc_app/home/coupon_list/coupon_list_model.dart';
 import 'package:clc_app/home/history/history_controller.dart';
 import 'package:clc_app/home/reward_card_view.dart';
 import 'package:clc_app/resources/utils.dart';
@@ -12,7 +13,8 @@ class CouponRedeemHistoryScreen extends StatefulWidget {
 }
 
 class _CouponRedeemHistoryScreenState extends State<CouponRedeemHistoryScreen> {
-  ValueNotifier<List<Reward>> rewards = ValueNotifier<List<Reward>>([]);
+  ValueNotifier<List<AllCouponsList>> rewards =
+      ValueNotifier<List<AllCouponsList>>([]);
 
   @override
   void initState() {

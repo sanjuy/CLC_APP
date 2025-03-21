@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:clc_app/apis_services/apis_endpoints.dart';
+import 'package:clc_app/home/coupon_list/coupon_list_model.dart';
+import 'package:clc_app/home/coupon_list/coupon_list_screen.dart';
 import 'package:clc_app/home/redeem/redeem_controller.dart';
 import 'package:clc_app/home/redeem/web_view_screen.dart';
-import 'package:clc_app/home/reward_card_view.dart';
 import 'package:clc_app/resources/buttons.dart';
-import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
@@ -12,7 +13,7 @@ import 'package:flutter/material.dart';
 
 void showBoardingPassDialog(
   BuildContext context,
-  Reward obj,
+  AllCouponsList obj,
 ) {
   showDialog(
     context: context,
@@ -29,7 +30,7 @@ void showBoardingPassDialog(
 
 // ignore: must_be_immutable
 class RewardsScreen extends StatefulWidget {
-  Reward? obj;
+  AllCouponsList? obj;
   RewardsScreen({super.key, this.obj});
 
   @override
@@ -39,7 +40,7 @@ class RewardsScreen extends StatefulWidget {
 class _RewardsScreenState extends State<RewardsScreen> {
   Timer? _timer;
   final ValueNotifier<int> _remainingTime = ValueNotifier<int>(600);
-  ValueNotifier<String> ads = ValueNotifier<String>("");
+  ValueNotifier<Ads> ads = ValueNotifier<Ads>(Ads());
 
   void startTimer() {
     _timer?.cancel();
@@ -68,7 +69,9 @@ class _RewardsScreenState extends State<RewardsScreen> {
   }
 
   getAds() async {
-    ads.value = await UserDetail.getPopupAd ?? "";
+    ads.value.image = await UserDetail.getPopupAd ?? "";
+    ads.value.url = await UserDetail.getPopupAdUrl ?? "";
+    setState(() {});
   }
 
   @override
@@ -93,8 +96,8 @@ class _RewardsScreenState extends State<RewardsScreen> {
                   SizedBox(height: 20),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(50),
-                    child: Image.asset(
-                      'logo.png'.directory(),
+                    child: Image.network(
+                      "$baseURLImg${widget.obj?.restaurantLogo.toString()}",
                       width: 100,
                       height: 100,
                       fit: BoxFit.cover,
@@ -109,10 +112,12 @@ class _RewardsScreenState extends State<RewardsScreen> {
                   TextButton(
                       onPressed: () {
                         Navigation.push(
-                            context: context,
-                            moveTo: WebViewScreen(
-                                title: widget.obj?.title ?? "",
-                                url: "https://chowluckclub.com"));
+                          context: context,
+                          moveTo: WebViewScreen(
+                            title: widget.obj?.title ?? "",
+                            url: "https://${widget.obj?.url}",
+                          ),
+                        );
                       },
                       child: customText(
                         title: "Read More",
@@ -136,7 +141,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                         ),
                         const SizedBox(height: 5),
                         customText(
-                          title: "5%",
+                          title: "${widget.obj?.discountValue}%",
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -173,9 +178,9 @@ class _RewardsScreenState extends State<RewardsScreen> {
                   ),
                   const SizedBox(height: 5),
                   customText(
-                    title: "1. Offer only valid on Zomato vouchers\n"
-                        "2. This code can be used twice per day\n"
-                        "3. This offer cannot be clubbed with any other offer\n",
+                    title: "1. ${widget.obj?.ins1}\n"
+                        "2. ${widget.obj?.ins2}\n"
+                        "3. ${widget.obj?.ins3}\n",
                     color: Colors.grey,
                   ),
                   // const SizedBox(height: 10),
@@ -202,8 +207,20 @@ class _RewardsScreenState extends State<RewardsScreen> {
               child: ValueListenableBuilder(
                   valueListenable: ads,
                   builder: (context, value, child) {
-                    return value != ""
-                        ? Image.network(value, fit: BoxFit.cover)
+                    return value.image != null
+                        ? InkWell(
+                            child: Image.network(value.image.toString(),
+                                fit: BoxFit.cover),
+                            onTap: () {
+                              Navigation.push(
+                                context: context,
+                                moveTo: WebViewScreen(
+                                  title: "Ad",
+                                  url: "https://${value.url}",
+                                ),
+                              );
+                            },
+                          )
                         : SizedBox();
                   }),
             )

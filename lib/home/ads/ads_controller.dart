@@ -17,12 +17,15 @@ class AdsController {
       for (var item in dt.data ?? []) {
         if (item.name == "Dashboard") {
           UserDetail.setFullAd = item.images ?? "";
+          UserDetail.setFullAdUrl = item.adsurl ?? "";
         }
         if (item.name == "couponlist") {
           UserDetail.setListAd = item.images ?? "";
+          UserDetail.setListAdUrl = item.adsurl ?? "";
         }
         if (item.name == "Coupon Popup") {
           UserDetail.setPopupAd = item.images ?? "";
+          UserDetail.setPopupAdUrl = item.adsurl ?? "";
         }
       }
       onCompletion();

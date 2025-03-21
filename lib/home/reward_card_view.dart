@@ -1,16 +1,19 @@
+import 'package:clc_app/apis_services/apis_endpoints.dart';
+import 'package:clc_app/home/coupon_list/coupon_list_model.dart';
 import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
 
 class RewardCard extends StatelessWidget {
-  final Reward reward;
+  final AllCouponsList reward;
 
   const RewardCard({super.key, required this.reward});
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 3,
       color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       margin: const EdgeInsets.symmetric(vertical: 4),
@@ -26,15 +29,16 @@ class RewardCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ClipOval(
-                    child: Image.asset(
-                      reward.imageUrl.toString(),
+                    child: Image.network(
+                      "$baseURLImg${reward.restaurantLogo.toString()}",
                       width: 80,
                       height: 80,
                       fit: BoxFit.cover,
                     ),
                   ),
                   customText(
-                      title: reward.couponType.toString(), color: Colors.grey)
+                      title: reward.restaurantName.toString(),
+                      color: Colors.grey)
                 ],
               ),
             ),
@@ -60,14 +64,15 @@ class RewardCard extends StatelessWidget {
                   LinearProgressIndicator(
                     borderRadius: BorderRadius.circular(3),
                     value: 0.0,
-                    backgroundColor:
-                        reward.isPaid ? Colors.grey[300] : primeColor,
+                    backgroundColor: reward.membershipType != "Free"
+                        ? Colors.grey[300]
+                        : primeColor,
                     minHeight: 6,
                   ),
                 ],
               ),
             ),
-            reward.isPaid
+            reward.membershipType != "Free"
                 ? Image.asset("ribbon.png".directory(), scale: 20)
                 : SizedBox(),
           ],
@@ -75,22 +80,4 @@ class RewardCard extends StatelessWidget {
       ),
     );
   }
-}
-
-class Reward {
-  final String? couponId;
-  final String? imageUrl;
-  final String? title;
-  final String? description;
-  final String? couponType;
-  final bool isPaid;
-
-  Reward({
-    this.couponId,
-    this.imageUrl,
-    this.title,
-    this.description,
-    this.couponType,
-    this.isPaid = false,
-  });
 }

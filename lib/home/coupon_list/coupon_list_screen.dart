@@ -1,11 +1,19 @@
 import 'package:clc_app/home/coupon_list/coupon_list_controller.dart';
+import 'package:clc_app/home/coupon_list/coupon_list_model.dart';
 import 'package:clc_app/home/redeem/coupon_redeem_popup.dart';
+import 'package:clc_app/home/redeem/web_view_screen.dart';
 import 'package:clc_app/home/reward_card_view.dart';
 import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/subscription_plans/subscription_plans_screen.dart';
 import 'package:flutter/material.dart';
+
+class Ads {
+  String? image;
+  String? url;
+  Ads({this.image, this.url});
+}
 
 class CouponListScreen extends StatefulWidget {
   const CouponListScreen({super.key});
@@ -15,8 +23,9 @@ class CouponListScreen extends StatefulWidget {
 }
 
 class _CouponListScreenState extends State<CouponListScreen> {
-  ValueNotifier<List<Reward>> rewards = ValueNotifier<List<Reward>>([]);
-  ValueNotifier<String> ads = ValueNotifier<String>("");
+  ValueNotifier<List<AllCouponsList>> rewards =
+      ValueNotifier<List<AllCouponsList>>([]);
+  ValueNotifier<Ads> ads = ValueNotifier<Ads>(Ads());
 
   @override
   void initState() {
@@ -26,7 +35,9 @@ class _CouponListScreenState extends State<CouponListScreen> {
 
   getCoupon() async {
     rewards.value = await CouponListController.couponsList();
-    ads.value = await UserDetail.getListAd ?? "";
+    ads.value.image = await UserDetail.getListAd ?? "";
+    ads.value.url = await UserDetail.getListAdUrl ?? "";
+    setState(() {});
   }
 
   @override
@@ -48,8 +59,20 @@ class _CouponListScreenState extends State<CouponListScreen> {
               child: ValueListenableBuilder(
                 valueListenable: ads,
                 builder: (context, value, child) {
-                  return value != ""
-                      ? Image.network(value, fit: BoxFit.cover)
+                  return value.image != null
+                      ? InkWell(
+                          child: Image.network(value.image ?? "",
+                              fit: BoxFit.cover),
+                          onTap: () {
+                            Navigation.push(
+                              context: context,
+                              moveTo: WebViewScreen(
+                                title: "Ad",
+                                url: "https://${value.url}",
+                              ),
+                            );
+                          },
+                        )
                       : SizedBox();
                 },
               ),
@@ -64,7 +87,7 @@ class _CouponListScreenState extends State<CouponListScreen> {
                       itemBuilder: (context, index) {
                         return InkWell(
                             onTap: () {
-                              if (value[index].isPaid) {
+                              if (value[index].membershipType != "Free") {
                                 showCustomDialog(
                                   barrierDismissible: true,
                                   context: context,

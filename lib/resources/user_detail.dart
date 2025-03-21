@@ -105,4 +105,28 @@ class UserDetail {
   static set setPopupAd(String value) {
     UserDefaults.shared.saveString(key: Keys.popupAd, value: value);
   }
+
+  static Future<String?> get getFullAdUrl {
+    return UserDefaults.shared.getString(Keys.fullAdUrl);
+  }
+
+  static set setFullAdUrl(String value) {
+    UserDefaults.shared.saveString(key: Keys.fullAdUrl, value: value);
+  }
+
+  static Future<String?> get getListAdUrl {
+    return UserDefaults.shared.getString(Keys.listAdUrl);
+  }
+
+  static set setListAdUrl(String value) {
+    UserDefaults.shared.saveString(key: Keys.listAdUrl, value: value);
+  }
+
+  static Future<String?> get getPopupAdUrl {
+    return UserDefaults.shared.getString(Keys.popupAdUrl);
+  }
+
+  static set setPopupAdUrl(String value) {
+    UserDefaults.shared.saveString(key: Keys.popupAdUrl, value: value);
+  }
 }

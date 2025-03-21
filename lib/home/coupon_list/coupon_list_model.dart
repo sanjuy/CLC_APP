@@ -28,8 +28,19 @@ class AllCouponsList {
   String? discountValue;
   String? couponStatus;
   String? usageStatus;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  String? url;
+  String? ins1;
+  String? ins2;
+  String? ins3;
+  String? restaurantName;
+  String? restaurantPhone;
+  String? restaurantEmail;
+  String? restaurantAddress;
+  String? restaurantLogo;
+  String? createdAt;
+  String? updatedAt;
+  String? restaurantCreatedDate;
+  String? restaurantUpdatedDate;
 
   AllCouponsList({
     this.couponId,
@@ -44,12 +55,23 @@ class AllCouponsList {
     this.usageStatus,
     this.createdAt,
     this.updatedAt,
+    this.url,
+    this.ins1,
+    this.ins2,
+    this.ins3,
+    this.restaurantName,
+    this.restaurantPhone,
+    this.restaurantEmail,
+    this.restaurantAddress,
+    this.restaurantLogo,
+    this.restaurantCreatedDate,
+    this.restaurantUpdatedDate,
   });
 
   factory AllCouponsList.fromJson(Map<String, dynamic> json) => AllCouponsList(
-        couponId: json["coupon_id"],
+        couponId: "${json["coupon_id"]}",
         title: json["title"],
-        restaurantId: json["restaurant_id"],
+        restaurantId: "${json["restaurant_id"]}",
         description: json["description"],
         couponType: json["coupon_type"],
         membershipType: json["membership_type"],
@@ -57,12 +79,19 @@ class AllCouponsList {
         discountValue: json["discount_value"],
         couponStatus: json["coupon_status"],
         usageStatus: json["usage_status"],
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"],
+        updatedAt: json["updated_at"],
+        url: json["url"],
+        ins1: json["ins1"],
+        ins2: json["ins2"],
+        ins3: json["ins3"],
+        restaurantName: json["restaurant_name"],
+        restaurantPhone: json["restaurant_phone"],
+        restaurantEmail: json["restaurant_email"],
+        restaurantAddress: json["restaurant_address"],
+        restaurantLogo: json["restaurant_logo"],
+        restaurantCreatedDate: json["restaurant_created_date"],
+        restaurantUpdatedDate: json["restaurant_updated_date"],
       );
 }
 

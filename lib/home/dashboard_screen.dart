@@ -4,8 +4,10 @@ import 'package:clc_app/custom_widget/custom_appbar.dart';
 import 'package:clc_app/home/ads/ads_controller.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_screen.dart';
 import 'package:clc_app/home/history/coupon_redeem_history_screen.dart';
+import 'package:clc_app/home/redeem/web_view_screen.dart';
 import 'package:clc_app/profile/profile_screen.dart';
 import 'package:clc_app/resources/default_color.dart';
+import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final ValueNotifier<int> _secondsRemaining = ValueNotifier<int>(0);
   final ValueNotifier<bool> isShowAd = ValueNotifier<bool>(true);
   final ValueNotifier<bool> isHideAd = ValueNotifier<bool>(true);
-  final ValueNotifier<String> bannerImage = ValueNotifier<String>("");
+  final ValueNotifier<Ads> ads = ValueNotifier<Ads>(Ads());
   Timer? _timer;
 
   int _selectedIndex = 0;
@@ -42,7 +44,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   getAds() {
     AdsController.getAds(() async {
       isHideAd.value = false;
-      bannerImage.value = await UserDetail.getFullAd ?? "";
+      ads.value.image = await UserDetail.getFullAd ?? "";
+      ads.value.url = await UserDetail.getFullAdUrl ?? "";
       _startTimer();
     });
   }
@@ -106,12 +109,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           borderRadius: BorderRadius.circular(0),
                         ),
                         child: Stack(
+                          // alignment: Alignment.center,
                           fit: StackFit.expand,
                           children: [
                             ValueListenableBuilder(
-                              valueListenable: bannerImage,
+                              valueListenable: ads,
                               builder: (context, value, child) {
-                                return value != ""
+                                return value.image != null
                                     ? Center(
                                         child: Container(
                                           decoration: BoxDecoration(
@@ -127,21 +131,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   .size
                                                   .height -
                                               400,
-                                          child: Image.network(value),
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigation.push(
+                                                context: context,
+                                                moveTo: WebViewScreen(
+                                                  title: "Ad",
+                                                  url: "https://${value.url}",
+                                                ),
+                                              );
+                                            },
+                                            child: Image.network(
+                                                value.image.toString()),
+                                          ),
                                         ),
                                       )
                                     : SizedBox();
                               },
                             ),
-                            ValueListenableBuilder<int>(
-                              valueListenable: _secondsRemaining,
-                              builder: (context, value, child) {
-                                return customText(
-                                    title: "Skip Ad in $value seconds",
-                                    fontSize: 16,
-                                    color: Colors.white);
-                              },
-                            ),
+                            // /*
+                            Positioned(
+                                top: 0,
+                                left: 0,
+                                child: ValueListenableBuilder<int>(
+                                  valueListenable: _secondsRemaining,
+                                  builder: (context, value, child) {
+                                    return customText(
+                                        title: "Skip Ad in $value seconds",
+                                        fontSize: 16,
+                                        color: Colors.white);
+                                  },
+                                )),
                             Positioned(
                               top: 0,
                               right: 0,
@@ -160,6 +180,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 },
                               ),
                             ),
+                            // */
                           ],
                         ),
                       );
