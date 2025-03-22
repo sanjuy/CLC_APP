@@ -5,8 +5,10 @@ import 'package:clc_app/home/ads/ads_controller.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_screen.dart';
 import 'package:clc_app/home/history/coupon_redeem_history_screen.dart';
 import 'package:clc_app/home/redeem/web_view_screen.dart';
+import 'package:clc_app/profile/enquiry_screen.dart';
 import 'package:clc_app/profile/profile_screen.dart';
 import 'package:clc_app/resources/default_color.dart';
+import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
@@ -93,6 +95,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: screenTitle),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              // decoration: BoxDecoration(color: Colors.blue),
+              child: Image.asset("logo.png".directory()),
+            ),
+            buildListTile(Icons.help_outline, 'Enquiry', '', () {
+              Navigator.pop(context);
+              Navigation.push(
+                context: context,
+                moveTo: EnquiryScreen(),
+              );
+            }),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: Stack(
           children: [

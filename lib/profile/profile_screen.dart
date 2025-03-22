@@ -2,7 +2,6 @@ import 'package:clc_app/authentication/login/login_screen.dart';
 import 'package:clc_app/custom_widget/custom_image_view.dart';
 import 'package:clc_app/profile/change_membership/change_membership_type_screen.dart';
 import 'package:clc_app/profile/edit_profile_screen.dart';
-import 'package:clc_app/profile/enquiry_screen.dart';
 import 'package:clc_app/profile/profile_controller.dart';
 import 'package:clc_app/profile/reset_password/reset_password_screen.dart';
 import 'package:clc_app/resources/alert_view.dart';
@@ -102,14 +101,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: Column(
         spacing: 5,
         children: [
-          _buildListTile(Icons.edit, 'Edit Profile', '', () async {
+          buildListTile(Icons.edit, 'Edit Profile', '', () async {
             await Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => EditProfileScreen()),
             );
             getUserInfo();
           }),
-          _buildListTile(Icons.swap_horiz, 'Change Membership Type', '',
+          buildListTile(Icons.swap_horiz, 'Change Membership Type', '',
               () async {
             await Navigator.push(
               context,
@@ -118,19 +117,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
             getUserInfo();
           }),
-          _buildListTile(Icons.help_outline, 'Enquiry', '', () {
-            Navigation.push(
-              context: context,
-              moveTo: EnquiryScreen(),
-            );
-          }),
-          _buildListTile(Icons.lock, 'Reset Password', '', () {
+          buildListTile(Icons.lock, 'Reset Password', '', () {
             Navigation.push(
               context: context,
               moveTo: ResetPasswordScreen(),
             );
           }),
-          _buildListTile(Icons.delete, 'Delete Account', '', () {
+          buildListTile(Icons.delete, 'Delete Account', '', () {
             showCustomDialog(
               context: context,
               msg: "Do you want to delete your account?",
@@ -142,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
             );
           }),
-          _buildListTile(Icons.logout, 'Logout', '', () {
+          buildListTile(Icons.logout, 'Logout', '', () {
             showCustomDialog(
               context: context,
               msg: "Do you want to logout your account?",
@@ -180,36 +173,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+}
 
-  Widget _buildListTile(IconData icon, String title, String subtitle,
-      [VoidCallback? onTap]) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade300,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          children: [
-            Icon(icon, color: primeColor),
-            SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-                  if (subtitle.isNotEmpty)
-                    Text(subtitle,
-                        style: TextStyle(color: Colors.black54, fontSize: 12)),
-                ],
-              ),
-            ),
-            if (onTap != null) Icon(Icons.arrow_forward_ios, size: 16),
-          ],
-        ),
+Widget buildListTile(IconData icon, String title, String subtitle,
+    [VoidCallback? onTap]) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade300,
+        borderRadius: BorderRadius.circular(8),
       ),
-    );
-  }
+      child: Row(
+        children: [
+          Icon(icon, color: primeColor),
+          SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+                if (subtitle.isNotEmpty)
+                  Text(subtitle,
+                      style: TextStyle(color: Colors.black54, fontSize: 12)),
+              ],
+            ),
+          ),
+          if (onTap != null) Icon(Icons.arrow_forward_ios, size: 16),
+        ],
+      ),
+    ),
+  );
 }
