@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 10),
                 generalTextField(
                   icon: (Icons.email),
-                  label: "Email Id",
+                  label: "Email Address",
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     if (emailController.text == "") {
                       showInSnackBar(
-                          context: context, message: "Enter Email-Id");
+                          context: context, message: "Enter Email Address");
                       return;
                     }
                     if (passwordController.text == "") {

@@ -112,7 +112,7 @@ class _CreditCardFormScreenState extends State<CreditCardFormScreen> {
                   ),
                   SizedBox(height: 20),
                   FullWidthAction(
-                      title: "Make Payment ${widget.amount}",
+                      title: "Payment Method ${widget.amount}",
                       onPressed: _submitForm)
                 ],
               ),

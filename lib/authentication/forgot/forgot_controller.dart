@@ -11,7 +11,7 @@ class ForgotController {
   static sendOTO({required BuildContext context, required String email}) async {
     if (email == "") {
       showInSnackBar(
-          context: context, message: "Please Enter Correct Email-ID");
+          context: context, message: "Please Enter Correct Email Address");
       return;
     }
     Map<String, String> queryParams = {"p": "sendOtp"};
@@ -25,6 +25,7 @@ class ForgotController {
     var dt = SendOtpModel.fromJson(responce);
     if (dt.data != null && dt.meta != null) {
       showInSnackBar(context: context, message: dt.meta?.message ?? "");
+      UserDetail.setUserId = dt.data?.id ?? "";
       _moveTo(context, email);
     } else if (dt.meta != null) {
       showInSnackBar(context: context, message: dt.meta?.message ?? "");

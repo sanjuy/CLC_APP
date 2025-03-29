@@ -108,8 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
             getUserInfo();
           }),
-          buildListTile(Icons.swap_horiz, 'Change Membership Type', '',
-              () async {
+          buildListTile(Icons.swap_horiz, 'Membership Type', '', () async {
             await Navigator.push(
               context,
               MaterialPageRoute(

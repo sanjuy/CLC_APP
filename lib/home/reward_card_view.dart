@@ -1,4 +1,3 @@
-import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_model.dart';
 import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/extenssions.dart';
@@ -29,15 +28,24 @@ class RewardCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ClipOval(
-                    child: Image.network(
-                      "$baseURLImg${reward.restaurantLogo.toString()}",
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.cover,
-                    ),
+                    child: reward.restaurantLogo != null
+                        ? Image.network(
+                            reward.restaurantLogo.toString(),
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            "logo.png".directory(),
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                   customText(
-                      title: reward.restaurantName.toString(),
+                      title: reward.restaurantName != null
+                          ? reward.restaurantName.toString()
+                          : "",
                       color: Colors.grey)
                 ],
               ),

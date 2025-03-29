@@ -26,74 +26,71 @@ class SubscriptionCard extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (isTopChoice)
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: customText(
-                  title: "TOP CHOICE",
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (isTopChoice)
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(16),
               ),
-            const SizedBox(height: 8),
-            customText(
-              title: title,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              alignment: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            customText(
-              title: duration,
-              alignment: TextAlign.center,
-            ),
-            const SizedBox(height: 4),
-            if (oldPrice != null)
-              Text(
-                oldPrice!,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.red,
-                  decoration: TextDecoration.lineThrough,
-                ),
-              ),
-            customText(
-              title: price,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              alignment: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange[300],
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-              ),
-              onPressed: () => onClicked(),
-              child: customText(title: "Subscribe now", color: Colors.white),
-            ),
-            const SizedBox(height: 8),
-            Flexible(
               child: customText(
-                title: renews,
-                color: Colors.grey,
-                fontSize: 12,
-                alignment: TextAlign.center,
+                title: "TOP CHOICE",
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
             ),
-          ],
-        ),
+          if (isTopChoice) const SizedBox(height: 8),
+          customText(
+            title: title,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            alignment: TextAlign.center,
+          ),
+          const SizedBox(height: 8),
+          customText(
+            title: duration,
+            alignment: TextAlign.center,
+          ),
+          const SizedBox(height: 4),
+          if (oldPrice != null)
+            Text(
+              oldPrice!,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.red,
+                decoration: TextDecoration.lineThrough,
+              ),
+            ),
+          customText(
+            title: price,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            alignment: TextAlign.center,
+          ),
+          const SizedBox(height: 8),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.orange[300],
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4)),
+            ),
+            onPressed: () => onClicked(),
+            child: customText(title: "Subscribe now", color: Colors.white),
+          ),
+          const SizedBox(height: 8),
+          Flexible(
+            child: customText(
+              title: renews,
+              color: Colors.grey,
+              fontSize: 12,
+              alignment: TextAlign.center,
+            ),
+          ),
+        ],
       ),
     );
   }

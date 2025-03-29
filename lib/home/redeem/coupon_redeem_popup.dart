@@ -1,11 +1,12 @@
 import 'dart:async';
 
-import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_model.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_screen.dart';
 import 'package:clc_app/home/redeem/redeem_controller.dart';
 import 'package:clc_app/home/redeem/web_view_screen.dart';
+import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/buttons.dart';
+import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 void showBoardingPassDialog(
   BuildContext context,
   AllCouponsList obj,
+  Function() onRedeemed,
 ) {
   showDialog(
     context: context,
@@ -22,7 +24,10 @@ void showBoardingPassDialog(
       return Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         backgroundColor: Colors.transparent,
-        child: RewardsScreen(obj: obj),
+        child: RewardsScreen(
+          obj: obj,
+          onRedeemed: () => onRedeemed(),
+        ),
       );
     },
   );
@@ -31,7 +36,8 @@ void showBoardingPassDialog(
 // ignore: must_be_immutable
 class RewardsScreen extends StatefulWidget {
   AllCouponsList? obj;
-  RewardsScreen({super.key, this.obj});
+  Function() onRedeemed;
+  RewardsScreen({super.key, this.obj, required this.onRedeemed});
 
   @override
   State<RewardsScreen> createState() => _RewardsScreenState();
@@ -83,47 +89,80 @@ class _RewardsScreenState extends State<RewardsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.cancel, color: Colors.black),
+            onPressed: () {
+              showCustomDialog(
+                barrierDismissible: false,
+                context: context,
+                titleOK: "OK",
+                titleCancel: "NO",
+                msg:
+                    "Do you want to cancel this coupon ?. \n If you cancel this coupon, you will not get the benefit of this and coupon will expire",
+                title: "Alert",
+                onAccepted: () {
+                  redeem();
+                },
+              );
+              // Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           spacing: 20,
           children: [
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 20),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(50),
-                    child: Image.network(
-                      "$baseURLImg${widget.obj?.restaurantLogo.toString()}",
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ),
+                    child: widget.obj?.restaurantLogo != null
+                        ? Image.network(
+                            "${widget.obj?.restaurantLogo.toString()}",
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            "logo.png".directory(),
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                   const SizedBox(height: 10),
                   customText(
-                    title: widget.obj?.title ?? "",
+                    title: widget.obj?.restaurantName ?? "",
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
-                  TextButton(
-                      onPressed: () {
-                        Navigation.push(
-                          context: context,
-                          moveTo: WebViewScreen(
-                            title: widget.obj?.title ?? "",
-                            url: "https://${widget.obj?.url}",
-                          ),
-                        );
-                      },
-                      child: customText(
-                        title: "Read More",
-                        fontSize: 14,
-                        color: Colors.red,
-                      )),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigation.push(
+                        context: context,
+                        moveTo: WebViewScreen(
+                          title: widget.obj?.restaurantName ?? "",
+                          url: "${widget.obj?.url}",
+                        ),
+                      );
+                    },
+                    child: customText(
+                      title: "Read More",
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                  ),
                   const SizedBox(height: 15),
                   // Points Balance Section
                   Container(
@@ -135,7 +174,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                     child: Column(
                       children: [
                         customText(
-                          title: "Discount",
+                          title: "Specials",
                           fontSize: 14,
                           color: Colors.grey,
                         ),
@@ -154,7 +193,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: customText(
-                      title: "Description of the COUPON",
+                      title: "Description of the coupon",
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -177,11 +216,14 @@ class _RewardsScreenState extends State<RewardsScreen> {
                     ),
                   ),
                   const SizedBox(height: 5),
-                  customText(
-                    title: "1. ${widget.obj?.ins1}\n"
-                        "2. ${widget.obj?.ins2}\n"
-                        "3. ${widget.obj?.ins3}\n",
-                    color: Colors.grey,
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: customText(
+                      title: "1. ${widget.obj?.ins1}\n"
+                          "2. ${widget.obj?.ins2}\n"
+                          "3. ${widget.obj?.ins3}\n",
+                      color: Colors.grey,
+                    ),
                   ),
                   // const SizedBox(height: 10),
                   ValueListenableBuilder(
@@ -189,7 +231,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                     builder: (context, value, child) {
                       return FullWidthAction(
                         title: "Time Remaining: ${formatTime(value)}",
-                        onPressed: () => redeem(),
+                        onPressed: () {},
                       );
                     },
                   ),
@@ -216,7 +258,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                                 context: context,
                                 moveTo: WebViewScreen(
                                   title: "Ad",
-                                  url: "https://${value.url}",
+                                  url: "${value.url}",
                                 ),
                               );
                             },
@@ -232,6 +274,9 @@ class _RewardsScreenState extends State<RewardsScreen> {
 
   redeem() {
     RedeemController.redeemNow(
-        context: context, couponID: widget.obj?.couponId ?? "");
+      context: context,
+      couponID: widget.obj?.couponId ?? "",
+      onRedeem: () => widget.onRedeemed(),
+    );
   }
 }

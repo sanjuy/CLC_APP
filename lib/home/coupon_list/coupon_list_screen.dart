@@ -68,7 +68,7 @@ class _CouponListScreenState extends State<CouponListScreen> {
                               context: context,
                               moveTo: WebViewScreen(
                                 title: "Ad",
-                                url: "https://${value.url}",
+                                url: "${value.url}",
                               ),
                             );
                           },
@@ -91,10 +91,10 @@ class _CouponListScreenState extends State<CouponListScreen> {
                                 showCustomDialog(
                                   barrierDismissible: true,
                                   context: context,
-                                  titleOK: "UPGRADE",
-                                  titleCancel: "Cancel",
+                                  titleOK: "Right Now",
+                                  titleCancel: "Not Now",
                                   msg:
-                                      "Upgrade Plan Inspirational designs,illustrations, and graphic elements from the world's best designers. Want more inspiration? msgBrowse our search results.",
+                                      "Unlock more with Chow Luck Card! Upgrade to a paid membership and enjoy exclusive perks.",
                                   title: "UPGRADE PLAN",
                                   onAccepted: () {
                                     Navigation.push(
@@ -107,13 +107,13 @@ class _CouponListScreenState extends State<CouponListScreen> {
                                   barrierDismissible: true,
                                   context: context,
                                   titleOK: "Redeem Now",
-                                  titleCancel: "NO",
+                                  titleCancel: "Not Now",
                                   msg:
-                                      "To redeem this coupon, you must be inside the restaurant. The coupon will expire 10 minutes after you click Redeem Now.",
+                                      "To redeem this coupon, show this to the wait staff. This coupon will expire in 10 minutes after you click Redeem Now.",
                                   title: "INSTRUCTIONS",
                                   onAccepted: () {
-                                    showBoardingPassDialog(
-                                        context, value[index]);
+                                    showBoardingPassDialog(context,
+                                        value[index], () => getCoupon());
                                   },
                                 );
                               }

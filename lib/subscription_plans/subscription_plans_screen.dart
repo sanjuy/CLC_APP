@@ -11,14 +11,14 @@ class SubscriptionPlansScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: Colors.orange[100],
-      appBar: CustomAppBar(title: "Chow Luck Card Subscription Plans"),
+      appBar: CustomAppBar(title: "Subscription Plans"),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: GridView.count(
-          crossAxisCount: 2,
+          crossAxisCount: 1,
           crossAxisSpacing: 8.0,
           mainAxisSpacing: 8.0,
-          childAspectRatio: 0.65,
+          childAspectRatio: 1.5,
           children: [
             SubscriptionCard(
               title: "ChowLucky Plus Weekly",

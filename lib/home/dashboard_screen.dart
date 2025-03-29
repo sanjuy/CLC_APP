@@ -40,7 +40,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    getAds();
+    Future.delayed(Duration(seconds: 5), () {
+      getAds();
+    });
   }
 
   getAds() {
@@ -64,10 +66,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void _onItemTapped(int index) {
     setState(() {
       if (index == 0) {
-        screenTitle = "Coupons List";
+        screenTitle = "Coupon List";
       }
       if (index == 1) {
-        screenTitle = "Redeemed Coupons List";
+        screenTitle = "Redeemed Coupon List";
       }
       if (index == 2) {
         screenTitle = "My Profile";
@@ -77,7 +79,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void _startTimer() {
-    _secondsRemaining.value = 10;
+    _secondsRemaining.value = 3;
 
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (_secondsRemaining.value > 0) {
@@ -102,11 +104,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
               // decoration: BoxDecoration(color: Colors.blue),
               child: Image.asset("logo.png".directory()),
             ),
-            buildListTile(Icons.help_outline, 'Enquiry', '', () {
+            buildListTile(Icons.help_outline, 'Restaurant Enquiry', '', () {
               Navigator.pop(context);
               Navigation.push(
                 context: context,
                 moveTo: EnquiryScreen(),
+              );
+            }),
+            const SizedBox(height: 4),
+            buildListTile(Icons.privacy_tip, 'Privacy Policy', '', () {
+              Navigator.pop(context);
+              Navigation.push(
+                context: context,
+                moveTo: WebViewScreen(
+                  url:
+                      'https://drive.google.com/file/d/1ZABD_MptkFiZrJd3UJJkVrlBsA3WD6w9/view',
+                  title: 'Privacy Policy',
+                ),
               );
             }),
           ],
@@ -136,70 +150,75 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               builder: (context, value, child) {
                                 return value.image != null
                                     ? Center(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width -
-                                              100,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height -
-                                              400,
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigation.push(
-                                                context: context,
-                                                moveTo: WebViewScreen(
-                                                  title: "Ad",
-                                                  url: "https://${value.url}",
-                                                ),
-                                              );
-                                            },
-                                            child: Image.network(
-                                                value.image.toString()),
-                                          ),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width -
+                                                  100,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height -
+                                                  400,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  Navigation.push(
+                                                    context: context,
+                                                    moveTo: WebViewScreen(
+                                                      title: "Ad",
+                                                      url: "${value.url}",
+                                                    ),
+                                                  );
+                                                },
+                                                child: Image.network(
+                                                    value.image.toString()),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: 0,
+                                              right: 0,
+                                              child: ValueListenableBuilder(
+                                                valueListenable: isShowAd,
+                                                builder: (context, v, child) {
+                                                  return !v
+                                                      ? IconButton(
+                                                          onPressed: () =>
+                                                              isHideAd.value =
+                                                                  true,
+                                                          icon: Icon(
+                                                            Icons.cancel,
+                                                            color: Colors.black,
+                                                          ))
+                                                      : SizedBox();
+                                                },
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       )
                                     : SizedBox();
                               },
                             ),
                             // /*
-                            Positioned(
-                                top: 0,
-                                left: 0,
-                                child: ValueListenableBuilder<int>(
-                                  valueListenable: _secondsRemaining,
-                                  builder: (context, value, child) {
-                                    return customText(
-                                        title: "Skip Ad in $value seconds",
-                                        fontSize: 16,
-                                        color: Colors.white);
-                                  },
-                                )),
-                            Positioned(
-                              top: 0,
-                              right: 0,
-                              child: ValueListenableBuilder(
-                                valueListenable: isShowAd,
-                                builder: (context, v, child) {
-                                  return !v
-                                      ? IconButton(
-                                          onPressed: () =>
-                                              isHideAd.value = true,
-                                          icon: Icon(
-                                            Icons.cancel,
-                                            color: Colors.white,
-                                          ))
-                                      : SizedBox();
-                                },
-                              ),
-                            ),
-                            // */
+                            // Positioned(
+                            //   top: 0,
+                            //   left: 0,
+                            //   child: ValueListenableBuilder<int>(
+                            //     valueListenable: _secondsRemaining,
+                            //     builder: (context, value, child) {
+                            //       return customText(
+                            //           title: "Skip Ad in $value seconds",
+                            //           fontSize: 16,
+                            //           color: Colors.white);
+                            //     },
+                            //   ),
+                            // ),
                           ],
                         ),
                       );

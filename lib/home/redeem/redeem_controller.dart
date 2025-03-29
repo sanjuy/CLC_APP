@@ -5,8 +5,11 @@ import 'package:clc_app/resources/user_detail.dart';
 import 'package:flutter/material.dart';
 
 class RedeemController {
-  static redeemNow(
-      {required BuildContext context, required String couponID}) async {
+  static redeemNow({
+    required BuildContext context,
+    required String couponID,
+    required Function() onRedeem,
+  }) async {
     Map<String, String> queryParams = {"p": "addRedeem"};
     Map<String, String> params = {};
     params["user_id"] = await UserDetail.getUserId ?? "";
@@ -24,6 +27,7 @@ class RedeemController {
     } else {
       showInSnackBar(context: context, message: dt["Message"].toString());
     }
+    onRedeem();
     Navigation.pop(context: context);
   }
 }

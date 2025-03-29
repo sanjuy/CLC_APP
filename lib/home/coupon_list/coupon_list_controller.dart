@@ -13,12 +13,18 @@ class CouponListController {
       queryParams: queryParams,
     );
     // if (!context.mounted) return;
+    List<AllCouponsList> lt1 = [];
     var dt = CouponListModelModel.fromJson(responce);
     if (dt.data?.isNotEmpty ?? false) {
       List<AllCouponsList> lt = dt.data ?? [];
-      return lt;
+      for (var item in lt) {
+        if (item.usageStatus == "Unused") {
+          lt1.add(item);
+        }
+      }
+      return lt1;
     }
-    return [];
+    return lt1;
     // else {
     //   showInSnackBar(context: context, message: responce["message"].toString());
     // }

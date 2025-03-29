@@ -170,7 +170,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     if (_emailController.text == "") {
                       showInSnackBar(
                           context: context,
-                          message: "Please Enter Correct Email-ID");
+                          message: "Please Enter Correct Email Address");
                       return;
                     }
                     if (_mobileController.text == "") {
@@ -184,11 +184,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           context: context, message: "Please Enter Password");
                       return;
                     }
-                    if (_addressController.text == "") {
-                      showInSnackBar(
-                          context: context, message: "Please Enter Address");
-                      return;
-                    }
+                    // if (_addressController.text == "") {
+                    //   showInSnackBar(
+                    //       context: context, message: "Please Enter Address");
+                    //   return;
+                    // }
                     if (gender == "") {
                       showInSnackBar(
                           context: context, message: "Please Select Gender");
