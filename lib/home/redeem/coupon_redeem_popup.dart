@@ -6,6 +6,7 @@ import 'package:clc_app/home/redeem/redeem_controller.dart';
 import 'package:clc_app/home/redeem/web_view_screen.dart';
 import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/buttons.dart';
+import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
@@ -88,184 +89,210 @@ class _RewardsScreenState extends State<RewardsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.cancel, color: Colors.black),
-            onPressed: () {
-              showCustomDialog(
-                barrierDismissible: false,
-                context: context,
-                titleOK: "OK",
-                titleCancel: "NO",
-                msg:
-                    "Do you want to cancel this coupon ?. \n If you cancel this coupon, you will not get the benefit of this and coupon will expire",
-                title: "Alert",
-                onAccepted: () {
-                  redeem();
-                },
-              );
-              // Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          spacing: 20,
+    return Card(
+      color: Colors.white,
+      child: SingleChildScrollView(
+        child: Stack(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 20),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: widget.obj?.restaurantLogo != null
-                        ? Image.network(
-                            "${widget.obj?.restaurantLogo.toString()}",
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.asset(
-                            "logo.png".directory(),
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 20,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 15, right: 15, bottom: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 20),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: widget.obj?.restaurantLogo != null
+                            ? Image.network(
+                                "${widget.obj?.restaurantLogo.toString()}",
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                "logo.png".directory(),
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                      const SizedBox(height: 10),
+                      customText(
+                        title: widget.obj?.restaurantName ?? "",
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigation.push(
+                            context: context,
+                            moveTo: WebViewScreen(
+                              title: widget.obj?.restaurantName ?? "",
+                              url: "${widget.obj?.url}",
+                            ),
+                          );
+                        },
+                        child: Card(
+                          color: primeColor,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: customText(
+                              title: "Read More",
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
-                  ),
-                  const SizedBox(height: 10),
-                  customText(
-                    title: widget.obj?.restaurantName ?? "",
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigation.push(
-                        context: context,
-                        moveTo: WebViewScreen(
-                          title: widget.obj?.restaurantName ?? "",
-                          url: "${widget.obj?.url}",
                         ),
-                      );
-                    },
-                    child: customText(
-                      title: "Read More",
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red,
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  // Points Balance Section
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Column(
-                      children: [
-                        customText(
-                          title: "Specials",
-                          fontSize: 14,
-                          color: Colors.grey,
+                      ),
+                      const SizedBox(height: 15),
+                      // Points Balance Section
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                        const SizedBox(height: 5),
-                        customText(
-                          title: "${widget.obj?.discountValue}%",
-                          fontSize: 20,
+                        child: Column(
+                          children: [
+                            customText(
+                              title: "Specials",
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                            const SizedBox(height: 5),
+                            customText(
+                              title: "${widget.obj?.discountValue}%",
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      // Rewards Information
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: customText(
+                          title: "Description",
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 5),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: customText(
+                            title: widget.obj?.description ?? "",
+                            color: Colors.grey),
+                      ),
+                      const SizedBox(height: 10),
+                      // Instructions Section
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Instructions:",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Column(
+                          children: [
+                            widget.obj?.ins1 != ""
+                                ? customText(
+                                    title: "1. ${widget.obj?.ins1}",
+                                    color: Colors.grey,
+                                  )
+                                : SizedBox(),
+                            widget.obj?.ins2 != ""
+                                ? customText(
+                                    title: "2. ${widget.obj?.ins2}",
+                                    color: Colors.grey,
+                                  )
+                                : SizedBox(),
+                            widget.obj?.ins3 != ""
+                                ? customText(
+                                    title: "3. ${widget.obj?.ins3}",
+                                    color: Colors.grey,
+                                  )
+                                : SizedBox()
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      ValueListenableBuilder(
+                        valueListenable: _remainingTime,
+                        builder: (context, value, child) {
+                          return FullWidthAction(
+                            title: "Time Remaining: ${formatTime(value)}",
+                            onPressed: () {},
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 15),
-                  // Rewards Information
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: customText(
-                      title: "Description of the coupon",
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 150,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey, width: 3),
+                    borderRadius: BorderRadius.circular(0),
                   ),
-                  const SizedBox(height: 5),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: customText(
-                        title: widget.obj?.description ?? "",
-                        color: Colors.grey),
-                  ),
-                  const SizedBox(height: 10),
-                  // Instructions Section
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Instructions:",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: customText(
-                      title: "1. ${widget.obj?.ins1}\n"
-                          "2. ${widget.obj?.ins2}\n"
-                          "3. ${widget.obj?.ins3}\n",
-                      color: Colors.grey,
-                    ),
-                  ),
-                  // const SizedBox(height: 10),
-                  ValueListenableBuilder(
-                    valueListenable: _remainingTime,
-                    builder: (context, value, child) {
-                      return FullWidthAction(
-                        title: "Time Remaining: ${formatTime(value)}",
-                        onPressed: () {},
-                      );
+                  child: ValueListenableBuilder(
+                      valueListenable: ads,
+                      builder: (context, value, child) {
+                        return value.image != null
+                            ? InkWell(
+                                child: Image.network(value.image.toString(),
+                                    fit: BoxFit.cover),
+                                onTap: () {
+                                  Navigation.push(
+                                    context: context,
+                                    moveTo: WebViewScreen(
+                                      title: "Ad",
+                                      url: "${value.url}",
+                                    ),
+                                  );
+                                },
+                              )
+                            : SizedBox();
+                      }),
+                )
+              ],
+            ),
+            Positioned(
+              top: 5,
+              right: 5,
+              child: IconButton(
+                icon: Icon(Icons.cancel, color: Colors.black),
+                onPressed: () {
+                  showCustomDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    titleOK: "I USED IT",
+                    titleCancel: "STAY",
+                    msg:
+                        "Do you want to close this coupon ? \n If you cancel this coupon, you will not get the benefit of this and coupon will expire",
+                    title: "Alert",
+                    onAccepted: () {
+                      // Navigation.pop(context: context);
+                      redeem();
                     },
-                  ),
-                ],
+                  );
+                },
               ),
             ),
-            Container(
-              width: double.infinity,
-              height: 150,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.grey, width: 3),
-                borderRadius: BorderRadius.circular(0),
-              ),
-              child: ValueListenableBuilder(
-                  valueListenable: ads,
-                  builder: (context, value, child) {
-                    return value.image != null
-                        ? InkWell(
-                            child: Image.network(value.image.toString(),
-                                fit: BoxFit.cover),
-                            onTap: () {
-                              Navigation.push(
-                                context: context,
-                                moveTo: WebViewScreen(
-                                  title: "Ad",
-                                  url: "${value.url}",
-                                ),
-                              );
-                            },
-                          )
-                        : SizedBox();
-                  }),
-            )
           ],
         ),
       ),

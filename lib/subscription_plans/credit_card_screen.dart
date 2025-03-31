@@ -33,91 +33,93 @@ class _CreditCardFormScreenState extends State<CreditCardFormScreen> {
     return Scaffold(
       appBar: CustomAppBar(title: "Make Payment"),
       backgroundColor: Colors.grey[300],
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            CreditCardPreview(
-              cardNumber: cardNumberController.text.isEmpty
-                  ? "**** **** **** ****"
-                  : cardNumberController.text,
-              cardHolder: cardHolderController.text.isEmpty
-                  ? "CARDHOLDER NAME"
-                  : cardHolderController.text,
-              expiryDate: expiryDateController.text.isEmpty
-                  ? "MM/YY"
-                  : expiryDateController.text,
-            ),
-            SizedBox(height: 20),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  _buildTextField(
-                    controller: cardNumberController,
-                    label: "Card Number",
-                    hint: "1234 5678 9012 3456",
-                    maxLength: 19,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      CardNumberInputFormatter(), // Custom Formatter
-                    ],
-                    onChanged: (p0) {
-                      cardNumberController.text = p0;
-                      setState(() {});
-                    },
-                  ),
-                  _buildTextField(
-                    controller: cardHolderController,
-                    label: "Cardholder Name",
-                    hint: "John Doe",
-                    onChanged: (p0) {
-                      cardHolderController.text = p0;
-                      setState(() {});
-                    },
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildTextField(
-                          controller: expiryDateController,
-                          label: "Expiry Date",
-                          hint: "MM/YY",
-                          maxLength: 5,
-                          keyboardType: TextInputType.datetime,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            ExpiryDateInputFormatter(), // Auto add '/'
-                          ],
-                          onChanged: (p0) {
-                            expiryDateController.text = p0;
-                            setState(() {});
-                          },
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Expanded(
-                        child: _buildTextField(
-                          controller: cvvController,
-                          label: "CVV",
-                          hint: "***",
-                          maxLength: 3,
-                          keyboardType: TextInputType.number,
-                          obscureText: true,
-                          onChanged: (p0) {},
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  FullWidthAction(
-                      title: "Payment Method ${widget.amount}",
-                      onPressed: _submitForm)
-                ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            children: [
+              CreditCardPreview(
+                cardNumber: cardNumberController.text.isEmpty
+                    ? "**** **** **** ****"
+                    : cardNumberController.text,
+                cardHolder: cardHolderController.text.isEmpty
+                    ? "CARDHOLDER NAME"
+                    : cardHolderController.text,
+                expiryDate: expiryDateController.text.isEmpty
+                    ? "MM/YY"
+                    : expiryDateController.text,
               ),
-            ),
-          ],
+              SizedBox(height: 20),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    _buildTextField(
+                      controller: cardNumberController,
+                      label: "Card Number",
+                      hint: "1234 5678 9012 3456",
+                      maxLength: 19,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        CardNumberInputFormatter(), // Custom Formatter
+                      ],
+                      onChanged: (p0) {
+                        cardNumberController.text = p0;
+                        setState(() {});
+                      },
+                    ),
+                    _buildTextField(
+                      controller: cardHolderController,
+                      label: "Cardholder Name",
+                      hint: "John Doe",
+                      onChanged: (p0) {
+                        cardHolderController.text = p0;
+                        setState(() {});
+                      },
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildTextField(
+                            controller: expiryDateController,
+                            label: "Expiry Date",
+                            hint: "MM/YY",
+                            maxLength: 5,
+                            keyboardType: TextInputType.datetime,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              ExpiryDateInputFormatter(), // Auto add '/'
+                            ],
+                            onChanged: (p0) {
+                              expiryDateController.text = p0;
+                              setState(() {});
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: _buildTextField(
+                            controller: cvvController,
+                            label: "CVV",
+                            hint: "***",
+                            maxLength: 3,
+                            keyboardType: TextInputType.number,
+                            obscureText: true,
+                            onChanged: (p0) {},
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    FullWidthAction(
+                        title: "Payment Method ${widget.amount}",
+                        onPressed: _submitForm)
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:clc_app/home/redeem/web_view_screen.dart';
 import 'package:clc_app/resources/buttons.dart';
 import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/router.dart';
@@ -31,51 +32,99 @@ void showCustomDialog({
   String titleOK = "Accept",
   String titleCancel = "Reject",
   bool barrierDismissible = false,
+  bool isShowCheckBox = false,
   Function()? onAccepted,
 }) async {
+  var isChecked = false;
   showDialog(
     context: context,
     barrierDismissible: barrierDismissible,
     builder: (BuildContext context) {
-      return Dialog(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              customText(
-                  title: title,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: primeColor),
-              Divider(),
-              SizedBox(height: 10),
-              customText(title: msg),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return Dialog(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  ButtonType(
-                    title: titleCancel,
-                    onTab: () => Navigation.pop(context: context),
-                  ),
-                  SizedBox(width: 10),
-                  ButtonType(
-                    title: titleOK,
-                    onTab: () {
-                      Navigation.pop(context: context);
-                      onAccepted!();
-                    },
+                  customText(
+                      title: title,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: primeColor),
+                  Divider(),
+                  SizedBox(height: 10),
+                  customText(title: msg),
+                  SizedBox(height: 10),
+                  isShowCheckBox
+                      ? Row(
+                          children: [
+                            Checkbox(
+                              activeColor: primeColor,
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                              },
+                            ),
+                            customText(title: "I agree to the"),
+                            TextButton(
+                                onPressed: () {
+                                  Navigation.push(
+                                    context: context,
+                                    moveTo: WebViewScreen(
+                                      title: "Terms and Conditions",
+                                      url:
+                                          "https://drive.google.com/file/d/18TbSJ283MmYBUDYXGn-K_iBH0C-mOAgJ/view",
+                                    ),
+                                  );
+                                },
+                                child: customText(
+                                    title: "Terms and Conditions",
+                                    color: Colors.red))
+                          ],
+                        )
+                      : SizedBox(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ButtonType(
+                        title: titleCancel,
+                        onTab: () => Navigation.pop(context: context),
+                      ),
+                      SizedBox(width: 5),
+                      ButtonType(
+                        title: titleOK,
+                        onTab: () {
+                          if (isShowCheckBox) {
+                            if (isChecked) {
+                              Navigation.pop(context: context);
+                              onAccepted!();
+                            } else {
+                              showInSnackBar(
+                                  context: context,
+                                  message:
+                                      "Please agree to the Terms and Conditions.");
+                            }
+                          } else {
+                            Navigation.pop(context: context);
+                            onAccepted!();
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       );
     },
   );

@@ -142,7 +142,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           borderRadius: BorderRadius.circular(0),
                         ),
                         child: Stack(
-                          // alignment: Alignment.center,
                           fit: StackFit.expand,
                           children: [
                             ValueListenableBuilder(
@@ -154,7 +153,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                           children: [
                                             Container(
                                               decoration: BoxDecoration(
-                                                color: Colors.white,
+                                                color: Colors.transparent,
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
@@ -177,7 +176,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   );
                                                 },
                                                 child: Image.network(
-                                                    value.image.toString()),
+                                                  value.image.toString(),
+                                                  fit: BoxFit.fill,
+                                                ),
                                               ),
                                             ),
                                             Positioned(

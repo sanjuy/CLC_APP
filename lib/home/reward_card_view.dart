@@ -19,7 +19,7 @@ class RewardCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           spacing: 8,
           children: [
             SizedBox(
@@ -42,32 +42,32 @@ class RewardCard extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                   ),
-                  customText(
-                      title: reward.restaurantName != null
-                          ? reward.restaurantName.toString()
-                          : "",
-                      color: Colors.grey)
+                  reward.restaurantName != null
+                      ? customText(
+                          title: reward.restaurantName.toString(),
+                          color: Colors.grey)
+                      : SizedBox()
                 ],
               ),
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width - 175,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   customText(
                     maxLines: 2,
                     isSingleLine: true,
                     title: reward.title.toString(),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 8),
-                  customText(
-                      title: reward.description.toString(),
-                      fontSize: 14,
-                      color: Colors.black54),
+                  // const SizedBox(height: 8),
+                  // customText(
+                  //     title: reward.description.toString(),
+                  //     fontSize: 14,
+                  //     color: Colors.black54),
                   const SizedBox(height: 8),
                   LinearProgressIndicator(
                     borderRadius: BorderRadius.circular(3),

@@ -205,6 +205,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       msg:
                           "This app is provided as is with no warranties. Use at your own risk; we are not liable for any losses. Accuracy and features may change without notice.",
                       title: "Disclaimer",
+                      isShowCheckBox: true,
                       onAccepted: () {
                         RegistrationController.register(
                           context: context,

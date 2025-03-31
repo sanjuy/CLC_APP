@@ -72,14 +72,17 @@ class SubscriptionCard extends StatelessWidget {
             alignment: TextAlign.center,
           ),
           const SizedBox(height: 8),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.orange[300],
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4)),
+          SizedBox(
+            height: 25,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange[300],
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4)),
+              ),
+              onPressed: () => onClicked(),
+              child: customText(title: "Subscribe now", color: Colors.white),
             ),
-            onPressed: () => onClicked(),
-            child: customText(title: "Subscribe now", color: Colors.white),
           ),
           const SizedBox(height: 8),
           Flexible(
