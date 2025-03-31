@@ -26,6 +26,7 @@ class _CouponListScreenState extends State<CouponListScreen> {
   ValueNotifier<List<AllCouponsList>> rewards =
       ValueNotifier<List<AllCouponsList>>([]);
   ValueNotifier<Ads> ads = ValueNotifier<Ads>(Ads());
+  String membershipType = "";
 
   @override
   void initState() {
@@ -37,6 +38,7 @@ class _CouponListScreenState extends State<CouponListScreen> {
     rewards.value = await CouponListController.couponsList();
     ads.value.image = await UserDetail.getListAd ?? "";
     ads.value.url = await UserDetail.getListAdUrl ?? "";
+    membershipType = await UserDetail.getMembershipType ?? "";
     setState(() {});
   }
 
@@ -59,7 +61,7 @@ class _CouponListScreenState extends State<CouponListScreen> {
               child: ValueListenableBuilder(
                 valueListenable: ads,
                 builder: (context, value, child) {
-                  return value.image != null
+                  return value.image != null && value.image != ""
                       ? InkWell(
                           child: Image.network(value.image ?? "",
                               fit: BoxFit.cover),
@@ -87,7 +89,8 @@ class _CouponListScreenState extends State<CouponListScreen> {
                       itemBuilder: (context, index) {
                         return InkWell(
                             onTap: () {
-                              if (value[index].membershipType != "Free") {
+                              if (value[index].membershipType != "Free" &&
+                                  membershipType != "Paid") {
                                 showCustomDialog(
                                   barrierDismissible: true,
                                   context: context,
@@ -98,8 +101,14 @@ class _CouponListScreenState extends State<CouponListScreen> {
                                   title: "UPGRADE PLAN",
                                   onAccepted: () {
                                     Navigation.push(
-                                        context: context,
-                                        moveTo: SubscriptionPlansScreen());
+                                      context: context,
+                                      moveTo: SubscriptionPlansScreen(
+                                        onSuccess: () {
+                                          UserDetail.setMembershipType = "Paid";
+                                          getCoupon();
+                                        },
+                                      ),
+                                    );
                                   },
                                 );
                               } else {

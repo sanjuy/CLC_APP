@@ -1,8 +1,10 @@
 import 'package:clc_app/custom_widget/custom_appbar.dart';
 import 'package:clc_app/profile/change_membership/membership_controller.dart';
 import 'package:clc_app/resources/buttons.dart';
+import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
+import 'package:clc_app/subscription_plans/subscription_plans_screen.dart';
 import 'package:flutter/material.dart';
 
 class ChangeMembershipTypeScreen extends StatefulWidget {
@@ -25,6 +27,7 @@ class _ChangeMembershipTypeScreenState
 
   currentMembershipType() async {
     nameController.text = await UserDetail.getMembershipType ?? "";
+    setState(() {});
   }
 
   @override
@@ -47,7 +50,7 @@ class _ChangeMembershipTypeScreenState
                 dropDownTextField(
                   icon: (Icons.card_membership),
                   title: "Membership Type",
-                  lt: ["Free", "Paid"],
+                  lt: nameController.text == "Free" ? ["Paid"] : ["Free"],
                   onSelected: (p0) {
                     typeStr = p0;
                   },
@@ -56,8 +59,20 @@ class _ChangeMembershipTypeScreenState
                 FullWidthAction(
                   title: "Change Membership Type",
                   onPressed: () {
-                    MembershipController.changeMembershipType(
-                        context: context, membershipType: typeStr);
+                    if (typeStr == "Paid") {
+                      Navigation.push(
+                        context: context,
+                        moveTo: SubscriptionPlansScreen(
+                          onSuccess: () {
+                            MembershipController.changeMembershipType(
+                                context: context, membershipType: typeStr);
+                          },
+                        ),
+                      );
+                    } else {
+                      MembershipController.changeMembershipType(
+                          context: context, membershipType: typeStr);
+                    }
                   },
                 ),
               ],

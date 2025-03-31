@@ -42,12 +42,14 @@ class ButtonType extends StatelessWidget {
           backgroundColor: primeColor,
           foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          padding: EdgeInsets.symmetric(horizontal: 0),
         ),
         child: customText(
-            title: title,
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: Colors.white),
+          title: title,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
       ),
     );
   }

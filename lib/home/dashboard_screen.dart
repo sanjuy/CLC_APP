@@ -242,7 +242,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             icon: Container(
               color: _selectedIndex != 0 ? Colors.white : primeColor,
               width: MediaQuery.of(context).size.width / 3,
-              height: 50,
+              height: 51,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 2,
@@ -261,7 +261,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             icon: Container(
               color: _selectedIndex != 1 ? Colors.white : primeColor,
               width: MediaQuery.of(context).size.width / 3,
-              height: 50,
+              height: 51,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 2,
@@ -280,7 +280,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             icon: Container(
               color: _selectedIndex != 2 ? Colors.white : primeColor,
               width: MediaQuery.of(context).size.width / 3,
-              height: 50,
+              height: 51,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 2,

@@ -8,9 +8,9 @@
         <true/>
     </dict>
 	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera</string>
+	<string>We need access to your camera to take profile image</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your gallery</string>
+	<string>We need access to your gallery to take profile image</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

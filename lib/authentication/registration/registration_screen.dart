@@ -5,7 +5,9 @@ import 'package:clc_app/custom_widget/custom_appbar.dart';
 import 'package:clc_app/custom_widget/custom_image_view.dart';
 import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/buttons.dart';
+import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/utils.dart';
+import 'package:clc_app/subscription_plans/subscription_plans_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -207,17 +209,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       title: "Disclaimer",
                       isShowCheckBox: true,
                       onAccepted: () {
-                        RegistrationController.register(
-                          context: context,
-                          name: _nameController.text,
-                          email: _emailController.text,
-                          mobile: _mobileController.text,
-                          password: _passwordController.text,
-                          address: _addressController.text,
-                          gender: gender,
-                          membershipType: membershipType,
-                          file: _image.value ?? File(""),
-                        );
+                        if (membershipType == "Paid") {
+                          Navigation.push(
+                              context: context,
+                              moveTo: SubscriptionPlansScreen(
+                                  onSuccess: () => register()));
+                        } else {
+                          register();
+                        }
                       },
                     );
                   },
@@ -227,6 +226,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  register() {
+    RegistrationController.register(
+      context: context,
+      name: _nameController.text,
+      email: _emailController.text,
+      mobile: _mobileController.text,
+      password: _passwordController.text,
+      address: _addressController.text,
+      gender: gender,
+      membershipType: membershipType,
+      file: _image.value ?? File(""),
     );
   }
 }
