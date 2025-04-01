@@ -7,7 +7,7 @@ class SubscriptionController {
   SubscriptionController._();
   static final SubscriptionController instance = SubscriptionController._();
 
-  Future<void> makePayment(int amount, Function(bool) onSuccess) async {
+  Future<void> makePayment(double amount, Function(bool) onSuccess) async {
     try {
       String? paymentIntentClientsecret =
           await _createPaymentIntent(amount, "usd");
@@ -23,7 +23,7 @@ class SubscriptionController {
     }
   }
 
-  Future<String?> _createPaymentIntent(int amount, String currency) async {
+  Future<String?> _createPaymentIntent(double amount, String currency) async {
     try {
       final Dio dio = Dio();
       Map<String, dynamic> data = {
@@ -52,9 +52,9 @@ class SubscriptionController {
     return null;
   }
 
-  String _calculatedAmount(int amount) {
+  String _calculatedAmount(double amount) {
     final calAmount = amount * 100;
-    return calAmount.toString();
+    return calAmount.toStringAsFixed(0);
   }
 
   Future<void> _processPayment(Function(bool) onSuccess) async {

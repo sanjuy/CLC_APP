@@ -33,7 +33,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   void initState() {
-    sendOTP();
+    // sendOTP();
     _controllers =
         List.generate(otpViewSize, (index) => TextEditingController());
     _focusNodes = List.generate(otpViewSize, (index) => FocusNode());

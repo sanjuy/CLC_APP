@@ -167,7 +167,9 @@ class _RewardsScreenState extends State<RewardsScreen> {
                             ),
                             const SizedBox(height: 5),
                             customText(
-                              title: "${widget.obj?.discountValue}%",
+                              title: widget.obj?.discountType == "Percentage"
+                                  ? "${widget.obj?.discountValue}%"
+                                  : "\$${widget.obj?.discountValue} Off",
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
@@ -283,7 +285,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                     titleOK: "I USED IT",
                     titleCancel: "STAY",
                     msg:
-                        "Do you want to close this coupon ? \n If you cancel this coupon, you will not get the benefit of this and coupon will expire",
+                        "Do you want to close this coupon?\nIf you cancel this coupon, you will not get the benefit of this and coupon will expire",
                     title: "Alert",
                     onAccepted: () {
                       // Navigation.pop(context: context);

@@ -19,7 +19,7 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Restaurants Enquiry"),
+      appBar: CustomAppBar(title: "Restaurant Enquiry"),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

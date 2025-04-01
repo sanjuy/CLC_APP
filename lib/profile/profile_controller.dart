@@ -24,10 +24,10 @@ class ProfileController {
       showInSnackBar(context: context, message: "Please Enter Contact No.");
       return;
     }
-    if (address == "") {
-      showInSnackBar(context: context, message: "Please Enter Address");
-      return;
-    }
+    // if (address == "") {
+    //   showInSnackBar(context: context, message: "Please Enter Address");
+    //   return;
+    // }
     Map<String, String> queryParams = {"p": "editUser"};
     Map<String, String> params = {};
     params["user_id"] = await UserDetail.getUserId ?? "";

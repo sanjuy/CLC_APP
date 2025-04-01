@@ -11,3 +11,6 @@ const String baseURLImg = "${baseURL}upload/";
 class Endpoints {
   static String endpoint = "api.php";
 }
+
+const String chowLucky = "ChowLucky";
+const String chowLuckyPlus = "ChowLucky Plus";

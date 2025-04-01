@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/authentication/registration/registration_controller.dart';
 import 'package:clc_app/custom_widget/custom_appbar.dart';
 import 'package:clc_app/custom_widget/custom_image_view.dart';
@@ -155,7 +156,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 dropDownTextField(
                   icon: (Icons.card_membership),
                   title: "Membership Type",
-                  lt: ["Free", "Paid"],
+                  lt: [chowLucky, chowLuckyPlus],
                   onSelected: (p0) {
                     membershipType = p0;
                   },
@@ -209,7 +210,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       title: "Disclaimer",
                       isShowCheckBox: true,
                       onAccepted: () {
-                        if (membershipType == "Paid") {
+                        if (membershipType == chowLuckyPlus) {
                           Navigation.push(
                               context: context,
                               moveTo: SubscriptionPlansScreen(

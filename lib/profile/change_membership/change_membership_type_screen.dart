@@ -1,3 +1,4 @@
+import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/custom_widget/custom_appbar.dart';
 import 'package:clc_app/profile/change_membership/membership_controller.dart';
 import 'package:clc_app/resources/buttons.dart';
@@ -50,7 +51,9 @@ class _ChangeMembershipTypeScreenState
                 dropDownTextField(
                   icon: (Icons.card_membership),
                   title: "Membership Type",
-                  lt: nameController.text == "Free" ? ["Paid"] : ["Free"],
+                  lt: nameController.text == chowLucky
+                      ? [chowLuckyPlus]
+                      : [chowLucky],
                   onSelected: (p0) {
                     typeStr = p0;
                   },
@@ -59,7 +62,7 @@ class _ChangeMembershipTypeScreenState
                 FullWidthAction(
                   title: "Change Membership Type",
                   onPressed: () {
-                    if (typeStr == "Paid") {
+                    if (typeStr == chowLuckyPlus) {
                       Navigation.push(
                         context: context,
                         moveTo: SubscriptionPlansScreen(

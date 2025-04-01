@@ -3,6 +3,7 @@ import 'package:clc_app/resources/buttons.dart';
 import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/utils.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -35,7 +36,6 @@ void showCustomDialog({
   bool isShowCheckBox = false,
   Function()? onAccepted,
 }) async {
-  var isChecked = false;
   showDialog(
     context: context,
     barrierDismissible: barrierDismissible,
@@ -62,35 +62,59 @@ void showCustomDialog({
                   customText(title: msg),
                   SizedBox(height: 10),
                   isShowCheckBox
-                      ? Row(
-                          children: [
-                            Checkbox(
-                              activeColor: primeColor,
-                              value: isChecked,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  isChecked = value!;
-                                });
-                              },
-                            ),
-                            customText(title: "I agree to the"),
-                            TextButton(
-                                onPressed: () {
-                                  Navigation.push(
-                                    context: context,
-                                    moveTo: WebViewScreen(
-                                      title: "Terms and Conditions",
-                                      url:
-                                          "https://drive.google.com/file/d/18TbSJ283MmYBUDYXGn-K_iBH0C-mOAgJ/view",
-                                    ),
-                                  );
-                                },
-                                child: customText(
-                                    title: "Terms and Conditions",
-                                    color: Colors.red))
-                          ],
+                      ? RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            style: TextStyle(fontSize: 14, color: Colors.black),
+                            children: [
+                              TextSpan(text: "By clicking the "),
+                              TextSpan(
+                                text: "“Accept”",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(text: " button, I agree to the "),
+                              TextSpan(
+                                text: "Terms and Conditions",
+                                style: TextStyle(
+                                  color: Colors.red[200],
+                                  decoration: TextDecoration.underline,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigation.push(
+                                      context: context,
+                                      moveTo: WebViewScreen(
+                                        title: "Terms and Conditions",
+                                        url:
+                                            "https://drive.google.com/file/d/18TbSJ283MmYBUDYXGn-K_iBH0C-mOAgJ/view",
+                                      ),
+                                    );
+                                  },
+                              ),
+                              TextSpan(text: " and "),
+                              TextSpan(
+                                text: "Privacy Policy.",
+                                style: TextStyle(
+                                  color: Colors.red[200],
+                                  decoration: TextDecoration.underline,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    Navigation.push(
+                                      context: context,
+                                      moveTo: WebViewScreen(
+                                        title: "Privacy Policy",
+                                        url:
+                                            "https://drive.google.com/file/d/1ZABD_MptkFiZrJd3UJJkVrlBsA3WD6w9/view",
+                                      ),
+                                    );
+                                  },
+                              ),
+                            ],
+                          ),
                         )
                       : SizedBox(),
+                  SizedBox(height: isShowCheckBox ? 10 : 0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -102,20 +126,8 @@ void showCustomDialog({
                       ButtonType(
                         title: titleOK,
                         onTab: () {
-                          if (isShowCheckBox) {
-                            if (isChecked) {
-                              Navigation.pop(context: context);
-                              onAccepted!();
-                            } else {
-                              showInSnackBar(
-                                  context: context,
-                                  message:
-                                      "Please agree to the Terms and Conditions.");
-                            }
-                          } else {
-                            Navigation.pop(context: context);
-                            onAccepted!();
-                          }
+                          Navigation.pop(context: context);
+                          onAccepted!();
                         },
                       ),
                     ],

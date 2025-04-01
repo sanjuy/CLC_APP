@@ -15,15 +15,15 @@ class AdsController {
     var dt = AdsModel.fromJson(responce);
     if (dt.data?.isNotEmpty ?? false) {
       for (var item in dt.data ?? []) {
-        if (item.name == "Dashboard") {
+        if (item.name == "dashboard") {
           UserDetail.setFullAd = item.images ?? "";
           UserDetail.setFullAdUrl = item.adsurl ?? "";
         }
-        if (item.name == "couponlist") {
+        if (item.name == "coupon_list") {
           UserDetail.setListAd = item.images ?? "";
           UserDetail.setListAdUrl = item.adsurl ?? "";
         }
-        if (item.name == "Coupon Popup") {
+        if (item.name == "coupon_popup") {
           UserDetail.setPopupAd = item.images ?? "";
           UserDetail.setPopupAdUrl = item.adsurl ?? "";
         }

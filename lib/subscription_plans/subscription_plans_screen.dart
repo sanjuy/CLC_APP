@@ -20,11 +20,11 @@ class SubscriptionPlansScreen extends StatelessWidget {
           children: [
             SubscriptionCard(
               title: "ChowLucky Plus Weekly",
-              price: "\$1",
+              price: "\$0.88",
               duration: "For the first 8 weeks, pay just",
-              renews: "Renews \$2 per week",
+              renews: "Renews \$1.88 per week",
               onClicked: () {
-                SubscriptionController.instance.makePayment(1, (vl) {
+                SubscriptionController.instance.makePayment(0.88, (vl) {
                   if (vl) {
                     showSuccessPopup(context, () {
                       Navigation.pop(context: context);
@@ -41,12 +41,12 @@ class SubscriptionPlansScreen extends StatelessWidget {
             ),
             SubscriptionCard(
               title: "ChowLucky Plus Special",
-              price: "\$38",
+              price: "\$38.88",
               duration: "Pay just",
               renews: "Renews at \$48.88 every 6 months",
-              oldPrice: "\$48",
+              oldPrice: "\$48.88",
               onClicked: () {
-                SubscriptionController.instance.makePayment(38, (vl) {
+                SubscriptionController.instance.makePayment(38.88, (vl) {
                   if (vl) {
                     showSuccessPopup(context, () {
                       onSuccess!();
@@ -63,13 +63,13 @@ class SubscriptionPlansScreen extends StatelessWidget {
             ),
             SubscriptionCard(
               title: "ChowLucky Plus Annual",
-              price: "\$58",
+              price: "\$58.88",
               duration: "Pay just",
               renews: "Renews \$78 per year",
-              oldPrice: "\$97",
+              oldPrice: "\$97.76",
               isTopChoice: true,
               onClicked: () {
-                SubscriptionController.instance.makePayment(58, (vl) {
+                SubscriptionController.instance.makePayment(58.88, (vl) {
                   if (vl) {
                     showSuccessPopup(context, () {
                       onSuccess!();

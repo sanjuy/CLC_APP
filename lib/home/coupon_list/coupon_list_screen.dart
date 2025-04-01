@@ -1,3 +1,4 @@
+import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_controller.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_model.dart';
 import 'package:clc_app/home/redeem/coupon_redeem_popup.dart';
@@ -89,22 +90,23 @@ class _CouponListScreenState extends State<CouponListScreen> {
                       itemBuilder: (context, index) {
                         return InkWell(
                             onTap: () {
-                              if (value[index].membershipType != "Free" &&
-                                  membershipType != "Paid") {
+                              if (value[index].membershipType != chowLucky &&
+                                  membershipType != chowLuckyPlus) {
                                 showCustomDialog(
                                   barrierDismissible: true,
                                   context: context,
                                   titleOK: "Right Now",
                                   titleCancel: "Not Now",
                                   msg:
-                                      "Unlock more with Chow Luck Card! Upgrade to a paid membership and enjoy exclusive perks.",
+                                      "Unlock more with Chow Luck Card! Upgrade to a ChowLucky Plus membership and enjoy exclusive perks.",
                                   title: "UPGRADE PLAN",
                                   onAccepted: () {
                                     Navigation.push(
                                       context: context,
                                       moveTo: SubscriptionPlansScreen(
                                         onSuccess: () {
-                                          UserDetail.setMembershipType = "Paid";
+                                          UserDetail.setMembershipType =
+                                              chowLuckyPlus;
                                           getCoupon();
                                         },
                                       ),
