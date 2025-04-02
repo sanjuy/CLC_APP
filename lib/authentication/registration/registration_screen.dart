@@ -10,6 +10,7 @@ import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:clc_app/subscription_plans/subscription_plans_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -114,6 +115,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   icon: (Icons.contact_phone),
                   label: "Contact No.",
                   controller: _mobileController,
+                  keyboardType: TextInputType.phone,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(10),
+                  ],
                   focusNode: _mobileFocus,
                   textInputAction: TextInputAction.next,
                   onSubmitted: () =>

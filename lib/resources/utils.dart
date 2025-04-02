@@ -1,5 +1,6 @@
 import 'package:clc_app/resources/default_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 Widget generalTextField({
   String? label,
@@ -9,6 +10,7 @@ Widget generalTextField({
   bool readOnly = false,
   FocusNode? focusNode,
   TextInputAction textInputAction = TextInputAction.done,
+  List<TextInputFormatter>? inputFormatters,
   Function(String)? onTab,
   Function()? onSubmitted,
 }) {
@@ -19,6 +21,7 @@ Widget generalTextField({
     controller: controller,
     textInputAction: textInputAction,
     onSubmitted: (_) => onSubmitted,
+    inputFormatters: inputFormatters,
     decoration: InputDecoration(
       prefixIcon: Icon(icon, color: primeColor),
       labelText: "$label",

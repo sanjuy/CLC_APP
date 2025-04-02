@@ -48,7 +48,7 @@ class Data {
         userId: "${json["user_id"]}",
         name: json["name"],
         email: json["email"],
-        address: json["address"],
+        address: "${json["address"]}",
         profilePicture: json["profile_picture"],
         contactNo: "${json["contact_no"]}",
         gender: json["gender"],

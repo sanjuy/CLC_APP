@@ -63,7 +63,7 @@ void showCustomDialog({
                   SizedBox(height: 10),
                   isShowCheckBox
                       ? RichText(
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.left,
                           text: TextSpan(
                             style: TextStyle(fontSize: 14, color: Colors.black),
                             children: [

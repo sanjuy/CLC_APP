@@ -28,6 +28,7 @@ class AllCouponsList {
   String? discountValue;
   String? couponStatus;
   String? usageStatus;
+  String? location;
   String? url;
   String? ins1;
   String? ins2;
@@ -55,6 +56,7 @@ class AllCouponsList {
     this.usageStatus,
     this.createdAt,
     this.updatedAt,
+    this.location,
     this.url,
     this.ins1,
     this.ins2,
@@ -81,6 +83,7 @@ class AllCouponsList {
         usageStatus: json["usage_status"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
+        location: json["location"],
         url: json["url"],
         ins1: json["ins1"],
         ins2: json["ins2"],

@@ -48,6 +48,7 @@ class RewardCard extends StatelessWidget {
                       reward.restaurantName != null
                           ? customText(
                               title: reward.restaurantName.toString(),
+                              alignment: TextAlign.center,
                               color: Colors.grey)
                           : SizedBox()
                     ],
@@ -65,6 +66,21 @@ class RewardCard extends StatelessWidget {
                         title: reward.title.toString(),
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                      ),
+                      Row(
+                        spacing: 8,
+                        children: [
+                          Icon(
+                            Icons.location_pin,
+                            color: Colors.grey,
+                          ),
+                          customText(
+                            maxLines: 10,
+                            isSingleLine: true,
+                            title: reward.location.toString(),
+                            fontSize: 14,
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 8),
                       LinearProgressIndicator(

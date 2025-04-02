@@ -208,6 +208,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             widget.obj?.ins1 != ""
                                 ? customText(
