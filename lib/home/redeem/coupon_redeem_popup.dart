@@ -124,6 +124,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                       const SizedBox(height: 10),
                       customText(
                         title: widget.obj?.restaurantName ?? "",
+                        alignment: TextAlign.center,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
