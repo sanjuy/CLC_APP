@@ -128,29 +128,31 @@ class _RewardsScreenState extends State<RewardsScreen> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigation.push(
-                            context: context,
-                            moveTo: WebViewScreen(
-                              title: widget.obj?.restaurantName ?? "",
-                              url: "${widget.obj?.url}",
-                            ),
-                          );
-                        },
-                        child: Card(
-                          color: primeColor,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: customText(
-                              title: "Read More",
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
+                      widget.obj?.url != "" || widget.obj?.url != null
+                          ? InkWell(
+                              onTap: () {
+                                Navigation.push(
+                                  context: context,
+                                  moveTo: WebViewScreen(
+                                    title: widget.obj?.restaurantName ?? "",
+                                    url: "${widget.obj?.url}",
+                                  ),
+                                );
+                              },
+                              child: Card(
+                                color: primeColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: customText(
+                                    title: "Read More",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : SizedBox(),
                       const SizedBox(height: 15),
                       // Points Balance Section
                       Container(

@@ -64,8 +64,10 @@ class _CouponListScreenState extends State<CouponListScreen> {
                 builder: (context, value, child) {
                   return value.image != null && value.image != ""
                       ? InkWell(
-                          child: Image.network(value.image ?? "",
-                              fit: BoxFit.cover),
+                          child: Image.network(
+                            value.image ?? "",
+                            fit: BoxFit.fitWidth,
+                          ),
                           onTap: () {
                             Navigation.push(
                               context: context,
