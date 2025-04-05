@@ -1,4 +1,4 @@
-package com.example.clc_app
+package com.chowluckclub.clc
 
 import io.flutter.embedding.android.FlutterFragmentActivity
 

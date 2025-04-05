@@ -15,7 +15,7 @@ class CustomImageView extends StatelessWidget {
     this.height = 100,
     this.width = 100,
     this.shap = BoxShape.rectangle,
-    this.borderColor = Colors.grey,
+    this.borderColor = Colors.transparent,
     this.borderWidth = 3,
     this.imagePath,
   });
@@ -31,7 +31,7 @@ class CustomImageView extends StatelessWidget {
         image: DecorationImage(
           image: imagePath != null
               ? FileImage(imagePath!)
-              : AssetImage("dummy.jpg".directory()),
+              : AssetImage("logo.png".directory()),
           fit: BoxFit.cover,
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:clc_app/custom_widget/custom_image_view.dart';
 import 'package:clc_app/profile/profile_controller.dart';
 import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/buttons.dart';
+import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
@@ -79,6 +80,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 )
                               : CustomImageView(shap: BoxShape.circle);
                     },
+                  ),
+                ),
+                TextButton(
+                  onPressed: () => showImagePickerDialog(context, (source) {
+                    _pickImage(source);
+                  }),
+                  child: customText(
+                    title: "Change Profile Image",
+                    color: primeColor,
                   ),
                 ),
                 generalTextField(

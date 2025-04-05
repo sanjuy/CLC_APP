@@ -149,63 +149,58 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               builder: (context, value, child) {
                                 return value.image != null
                                     ? Center(
-                                        child: Stack(
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.transparent,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  100,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height -
-                                                  400,
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Navigation.push(
-                                                    context: context,
-                                                    moveTo: WebViewScreen(
-                                                      title: "Ad",
-                                                      url: "${value.url}",
-                                                    ),
-                                                  );
-                                                },
-                                                child: Image.network(
-                                                  value.image.toString(),
-                                                  fit: BoxFit.fill,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              100,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height -
+                                              400,
+                                          child: InkWell(
+                                            onTap: () {
+                                              Navigation.push(
+                                                context: context,
+                                                moveTo: WebViewScreen(
+                                                  title: "Ad",
+                                                  url: "${value.url}",
                                                 ),
-                                              ),
+                                              );
+                                            },
+                                            child: Image.network(
+                                              value.image.toString(),
+                                              fit: BoxFit.contain,
                                             ),
-                                            Positioned(
-                                              top: 0,
-                                              right: 0,
-                                              child: ValueListenableBuilder(
-                                                valueListenable: isShowAd,
-                                                builder: (context, v, child) {
-                                                  return !v
-                                                      ? IconButton(
-                                                          onPressed: () =>
-                                                              isHideAd.value =
-                                                                  true,
-                                                          icon: Icon(
-                                                            Icons.cancel,
-                                                            color: Colors.black,
-                                                          ))
-                                                      : SizedBox();
-                                                },
-                                              ),
-                                            ),
-                                          ],
+                                          ),
                                         ),
                                       )
                                     : SizedBox();
                               },
                             ),
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: ValueListenableBuilder(
+                                valueListenable: isShowAd,
+                                builder: (context, v, child) {
+                                  return !v
+                                      ? IconButton(
+                                          onPressed: () =>
+                                              isHideAd.value = true,
+                                          icon: Icon(
+                                            Icons.cancel,
+                                            color: Colors.white,
+                                          ))
+                                      : SizedBox();
+                                },
+                              ),
+                            )
                             // /*
                             // Positioned(
                             //   top: 0,

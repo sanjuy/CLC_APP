@@ -128,7 +128,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
-                      widget.obj?.url != "" || widget.obj?.url != null
+                      widget.obj?.url != ""
                           ? InkWell(
                               onTap: () {
                                 Navigation.push(
@@ -252,7 +252,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                   height: 150,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    border: Border.all(color: Colors.grey, width: 3),
+                    border: Border.all(color: Colors.grey, width: 2),
                     borderRadius: BorderRadius.circular(0),
                   ),
                   child: ValueListenableBuilder(
@@ -292,8 +292,8 @@ class _RewardsScreenState extends State<RewardsScreen> {
                         "Do you want to close this coupon?\nIf you cancel this coupon, you will not get the benefit of this and coupon will expire",
                     title: "Alert",
                     onAccepted: () {
-                      // Navigation.pop(context: context);
-                      redeem();
+                      Navigation.pop(context: context);
+                      // redeem();
                     },
                   );
                 },
