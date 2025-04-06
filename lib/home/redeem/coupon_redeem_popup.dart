@@ -292,8 +292,8 @@ class _RewardsScreenState extends State<RewardsScreen> {
                         "Do you want to close this coupon?\nIf you cancel this coupon, you will not get the benefit of this and coupon will expire",
                     title: "Alert",
                     onAccepted: () {
-                      Navigation.pop(context: context);
-                      // redeem();
+                      // Navigation.pop(context: context);
+                      redeem();
                     },
                   );
                 },
