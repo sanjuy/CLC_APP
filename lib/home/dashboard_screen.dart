@@ -13,6 +13,7 @@ import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -91,6 +92,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
+  void _launchURL(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   // bool isShowAd = true;
 
   @override
@@ -165,13 +175,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               400,
                                           child: InkWell(
                                             onTap: () {
-                                              Navigation.push(
-                                                context: context,
-                                                moveTo: WebViewScreen(
-                                                  title: "Ad",
-                                                  url: "${value.url}",
-                                                ),
-                                              );
+                                              if (value.url!
+                                                  .contains("facebook.com")) {
+                                                WidgetsBinding.instance
+                                                    .addPostFrameCallback((_) {
+                                                  _launchURL(value.url!);
+                                                });
+                                              } else {
+                                                Navigation.push(
+                                                  context: context,
+                                                  moveTo: WebViewScreen(
+                                                    title: "Ad",
+                                                    url: "${value.url}",
+                                                  ),
+                                                );
+                                              }
                                             },
                                             child: Image.network(
                                               value.image.toString(),
