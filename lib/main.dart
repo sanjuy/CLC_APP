@@ -1,7 +1,7 @@
-import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/loading_indicator.dart';
 import 'package:clc_app/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
 void main() async {
@@ -11,7 +11,8 @@ void main() async {
 
 Future<void> _setUP() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Stripe.publishableKey = stripePublishablekey;
+  await dotenv.load(fileName: ".env");
+  Stripe.publishableKey = dotenv.env['STRIPE_PUBLISH_ABLE_KEY']!;
 }
 
 class CLCApp extends StatelessWidget {

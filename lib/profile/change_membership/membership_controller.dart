@@ -1,7 +1,6 @@
 import 'package:clc_app/apis_services/apis_services.dart';
 import 'package:clc_app/profile/edit_profile_model.dart';
 import 'package:clc_app/resources/alert_view.dart';
-import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +8,7 @@ class MembershipController {
   static changeMembershipType({
     required BuildContext context,
     required String membershipType,
+    required Function() onCompletion,
   }) async {
     if (membershipType == "") {
       showInSnackBar(
@@ -29,7 +29,7 @@ class MembershipController {
     if (dt.data != null && dt.meta != null) {
       UserDetail.setMembershipType = membershipType;
       showInSnackBar(context: context, message: dt.meta?.message ?? "");
-      Navigation.pop(context: context);
+      onCompletion();
     } else if (dt.meta != null) {
       showInSnackBar(context: context, message: dt.meta?.message ?? "");
     } else {

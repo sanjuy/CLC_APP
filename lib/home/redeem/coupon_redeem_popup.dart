@@ -9,6 +9,7 @@ import 'package:clc_app/resources/buttons.dart';
 import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/router.dart';
+import 'package:clc_app/resources/url_launcher.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
@@ -261,15 +262,22 @@ class _RewardsScreenState extends State<RewardsScreen> {
                         return value.image != null
                             ? InkWell(
                                 child: Image.network(value.image.toString(),
-                                    fit: BoxFit.cover),
+                                    fit: BoxFit.fitWidth),
                                 onTap: () {
-                                  Navigation.push(
-                                    context: context,
-                                    moveTo: WebViewScreen(
-                                      title: "Ad",
-                                      url: "${value.url}",
-                                    ),
-                                  );
+                                  if (value.url!.contains("facebook.com")) {
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((_) {
+                                      launchURL(value.url!);
+                                    });
+                                  } else {
+                                    Navigation.push(
+                                      context: context,
+                                      moveTo: WebViewScreen(
+                                        title: "Ad",
+                                        url: "${value.url}",
+                                      ),
+                                    );
+                                  }
                                 },
                               )
                             : SizedBox();

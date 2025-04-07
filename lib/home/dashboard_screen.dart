@@ -10,10 +10,10 @@ import 'package:clc_app/profile/profile_screen.dart';
 import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/router.dart';
+import 'package:clc_app/resources/url_launcher.dart';
 import 'package:clc_app/resources/user_detail.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -90,15 +90,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _timer?.cancel();
       }
     });
-  }
-
-  void _launchURL(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 
   // bool isShowAd = true;
@@ -179,7 +170,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   .contains("facebook.com")) {
                                                 WidgetsBinding.instance
                                                     .addPostFrameCallback((_) {
-                                                  _launchURL(value.url!);
+                                                  launchURL(value.url!);
                                                 });
                                               } else {
                                                 Navigation.push(

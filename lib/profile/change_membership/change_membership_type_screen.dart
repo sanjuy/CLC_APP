@@ -68,13 +68,20 @@ class _ChangeMembershipTypeScreenState
                         moveTo: SubscriptionPlansScreen(
                           onSuccess: () {
                             MembershipController.changeMembershipType(
-                                context: context, membershipType: typeStr);
+                              context: context,
+                              membershipType: typeStr,
+                              onCompletion: () =>
+                                  Navigation.pop(context: context),
+                            );
                           },
                         ),
                       );
                     } else {
                       MembershipController.changeMembershipType(
-                          context: context, membershipType: typeStr);
+                        context: context,
+                        membershipType: typeStr,
+                        onCompletion: () => Navigation.pop(context: context),
+                      );
                     }
                   },
                 ),

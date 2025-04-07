@@ -1,6 +1,6 @@
-import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 
 class SubscriptionController {
@@ -36,7 +36,7 @@ class SubscriptionController {
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
           headers: {
-            "Authorization": "Bearer $stripeSecretkey",
+            "Authorization": "Bearer ${dotenv.env['STRIPE_SECRET_KEY']!}",
             "Content-Type": "application/x-www-from-urlencoded"
           },
         ),
