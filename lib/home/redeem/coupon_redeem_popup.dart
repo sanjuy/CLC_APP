@@ -264,20 +264,10 @@ class _RewardsScreenState extends State<RewardsScreen> {
                                 child: Image.network(value.image.toString(),
                                     fit: BoxFit.fitWidth),
                                 onTap: () {
-                                  if (value.url!.contains("facebook.com")) {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((_) {
-                                      launchURL(value.url!);
-                                    });
-                                  } else {
-                                    Navigation.push(
-                                      context: context,
-                                      moveTo: WebViewScreen(
-                                        title: "Ad",
-                                        url: "${value.url}",
-                                      ),
-                                    );
-                                  }
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((_) {
+                                    launchURL("${value.url}");
+                                  });
                                 },
                               )
                             : SizedBox();

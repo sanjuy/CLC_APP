@@ -2,7 +2,6 @@ import 'package:clc_app/apis_services/apis_endpoints.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_controller.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_model.dart';
 import 'package:clc_app/home/redeem/coupon_redeem_popup.dart';
-import 'package:clc_app/home/redeem/web_view_screen.dart';
 import 'package:clc_app/home/reward_card_view.dart';
 import 'package:clc_app/profile/change_membership/membership_controller.dart';
 import 'package:clc_app/resources/alert_view.dart';
@@ -71,19 +70,9 @@ class _CouponListScreenState extends State<CouponListScreen> {
                             fit: BoxFit.fitWidth,
                           ),
                           onTap: () {
-                            if (value.url!.contains("facebook.com")) {
-                              WidgetsBinding.instance.addPostFrameCallback((_) {
-                                launchURL(value.url!);
-                              });
-                            } else {
-                              Navigation.push(
-                                context: context,
-                                moveTo: WebViewScreen(
-                                  title: "Ad",
-                                  url: "${value.url}",
-                                ),
-                              );
-                            }
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              launchURL("${value.url}");
+                            });
                           },
                         )
                       : SizedBox();

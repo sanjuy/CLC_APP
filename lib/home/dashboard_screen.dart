@@ -166,21 +166,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               400,
                                           child: InkWell(
                                             onTap: () {
-                                              if (value.url!
-                                                  .contains("facebook.com")) {
-                                                WidgetsBinding.instance
-                                                    .addPostFrameCallback((_) {
-                                                  launchURL(value.url!);
-                                                });
-                                              } else {
-                                                Navigation.push(
-                                                  context: context,
-                                                  moveTo: WebViewScreen(
-                                                    title: "Ad",
-                                                    url: "${value.url}",
-                                                  ),
-                                                );
-                                              }
+                                              WidgetsBinding.instance
+                                                  .addPostFrameCallback((_) {
+                                                launchURL("${value.url}");
+                                              });
                                             },
                                             child: Image.network(
                                               value.image.toString(),

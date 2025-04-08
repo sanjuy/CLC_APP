@@ -1,4 +1,5 @@
 import 'package:clc_app/custom_widget/custom_appbar.dart';
+import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/buttons.dart';
 import 'package:clc_app/resources/utils.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,10 @@ class _EnquiryScreenState extends State<EnquiryScreen> {
                 SizedBox(height: 20),
                 FullWidthAction(
                   title: "Send",
-                  onPressed: () {},
+                  onPressed: () {
+                    showInSnackBar(
+                        context: context, message: "Under Development!!");
+                  },
                 ),
               ],
             ),
