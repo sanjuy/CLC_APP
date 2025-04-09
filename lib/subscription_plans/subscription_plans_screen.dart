@@ -38,7 +38,9 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
   @override
   void initState() {
     super.initState();
-    _initialize();
+    if (Platform.isIOS) {
+      _initialize();
+    }
   }
 
   Future<void> _initialize() async {
@@ -106,7 +108,9 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
 
   @override
   void dispose() {
-    _subscription.cancel();
+    if (Platform.isIOS) {
+      _subscription.cancel();
+    }
     super.dispose();
   }
 
@@ -126,80 +130,101 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
         child: GridView.count(
           crossAxisCount: 1,
           childAspectRatio: 1.5,
-          children: [
-            if (weekly != null)
-              SubscriptionCard(
-                title: "ChowLucky Plus Weekly",
-                price: weekly.price,
-                duration: "For the first 8 weeks, pay just",
-                renews: "Renews \$1.88 per week",
-                onClicked: () {
-                  if (Platform.isIOS) {
-                    _buy(weekly);
-                  } else {
-                    SubscriptionController.instance.makePayment(0.89, (vl) {
-                      if (vl) {
-                        showSuccessPopup(context, () {
-                          Navigation.pop(context: context);
-                          widget.onSuccess!();
-                        });
-                      } else {
-                        showFailurePopup(context);
-                      }
-                    });
-                  }
-                },
-              ),
-            if (special != null)
-              SubscriptionCard(
-                title: "ChowLucky Plus Special",
-                price: special.price,
-                duration: "Pay just",
-                renews: "Renews at \$48.89 every 6 months",
-                oldPrice: "\$48.89",
-                onClicked: () {
-                  if (Platform.isIOS) {
-                    _buy(special);
-                  } else {
-                    SubscriptionController.instance.makePayment(38.90, (vl) {
-                      if (vl) {
-                        showSuccessPopup(context, () {
-                          widget.onSuccess!();
-                          Navigation.pop(context: context);
-                        });
-                      } else {
-                        showFailurePopup(context);
-                      }
-                    });
-                  }
-                },
-              ),
-            if (annual != null)
-              SubscriptionCard(
-                title: "ChowLucky Plus Annual",
-                price: annual.price,
-                duration: "Pay just",
-                renews: "Renews \$78 per year",
-                oldPrice: "\$97.76",
-                isTopChoice: true,
-                onClicked: () {
-                  if (Platform.isIOS) {
-                    _buy(annual);
-                  } else {
-                    SubscriptionController.instance.makePayment(58.90, (vl) {
-                      if (vl) {
-                        showSuccessPopup(context, () {
-                          widget.onSuccess!();
-                          Navigation.pop(context: context);
-                        });
-                      } else {
-                        showFailurePopup(context);
-                      }
-                    });
-                  }
-                },
-              ),
-          ],
+          children: Platform.isIOS
+              ? [
+                  if (weekly != null)
+                    SubscriptionCard(
+                      title: "ChowLucky Plus Weekly",
+                      price: weekly.price,
+                      duration: "For the first 8 weeks, pay just",
+                      renews: "Renews \$1.88 per week",
+                      onClicked: () {
+                        _buy(weekly);
+                      },
+                    ),
+                  if (special != null)
+                    SubscriptionCard(
+                      title: "ChowLucky Plus Special",
+                      price: special.price,
+                      duration: "Pay just",
+                      renews: "Renews at \$48.89 every 6 months",
+                      oldPrice: "\$48.89",
+                      onClicked: () {
+                        _buy(special);
+                      },
+                    ),
+                  if (annual != null)
+                    SubscriptionCard(
+                      title: "ChowLucky Plus Annual",
+                      price: annual.price,
+                      duration: "Pay just",
+                      renews: "Renews \$78 per year",
+                      oldPrice: "\$97.76",
+                      isTopChoice: true,
+                      onClicked: () {
+                        _buy(annual);
+                      },
+                    ),
+                ]
+              : [
+                  SubscriptionCard(
+                    title: "ChowLucky Plus Weekly",
+                    price: "\$0.89",
+                    duration: "For the first 8 weeks, pay just",
+                    renews: "Renews \$1.88 per week",
+                    onClicked: () {
+                      SubscriptionController.instance.makePayment(0.89, (vl) {
+                        if (vl) {
+                          showSuccessPopup(context, () {
+                            Navigation.pop(context: context);
+                            widget.onSuccess!();
+                          });
+                        } else {
+                          showFailurePopup(context);
+                        }
+                      });
+                    },
+                  ),
+                  SubscriptionCard(
+                    title: "ChowLucky Plus Special",
+                    price: "\$38.90",
+                    duration: "Pay just",
+                    renews: "Renews at \$48.89 every 6 months",
+                    oldPrice: "\$48.89",
+                    onClicked: () {
+                      SubscriptionController.instance.makePayment(38.90, (vl) {
+                        if (vl) {
+                          showSuccessPopup(context, () {
+                            widget.onSuccess!();
+                            Navigation.pop(context: context);
+                          });
+                        } else {
+                          showFailurePopup(context);
+                        }
+                      });
+                    },
+                  ),
+                  SubscriptionCard(
+                    title: "ChowLucky Plus Annual",
+                    price: "\$58.90",
+                    duration: "Pay just",
+                    renews: "Renews \$78 per year",
+                    oldPrice: "\$97.76",
+                    isTopChoice: true,
+                    onClicked: () {
+                      SubscriptionController.instance.makePayment(58.90, (vl) {
+                        if (vl) {
+                          showSuccessPopup(context, () {
+                            widget.onSuccess!();
+                            Navigation.pop(context: context);
+                          });
+                        } else {
+                          showFailurePopup(context);
+                        }
+                      });
+                    },
+                  ),
+                ],
         ),
       ),
     );
