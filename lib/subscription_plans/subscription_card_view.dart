@@ -43,7 +43,7 @@ class SubscriptionCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-          if (isTopChoice) const SizedBox(height: 8),
+          const SizedBox(height: 8),
           customText(
             title: title,
             fontSize: 16,
@@ -73,7 +73,7 @@ class SubscriptionCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           SizedBox(
-            height: 25,
+            height: 40,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange[300],
@@ -93,6 +93,7 @@ class SubscriptionCard extends StatelessWidget {
               alignment: TextAlign.center,
             ),
           ),
+          const SizedBox(height: 8)
         ],
       ),
     );

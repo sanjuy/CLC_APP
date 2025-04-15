@@ -14,6 +14,7 @@ class ProfileController {
     required String name,
     required String mobile,
     required String address,
+    required String gender,
     File? file,
   }) async {
     if (name == "") {
@@ -33,6 +34,7 @@ class ProfileController {
     params["user_id"] = await UserDetail.getUserId ?? "";
     params["name"] = name;
     params["contact_no"] = mobile;
+    params["gender"] = gender;
     params["address"] = address;
     var responce = await ApiService.postRequest(
       params: params,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:clc_app/apis_services/apis_services.dart';
 import 'package:clc_app/authentication/login/login_model.dart';
 import 'package:clc_app/authentication/login/login_screen.dart';
@@ -23,7 +25,11 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     Future.delayed(const Duration(seconds: 4), () {
-      navigationTo();
+      if (Platform.isIOS) {
+        moveToDashboard();
+      } else {
+        navigationTo();
+      }
     });
   }
 
@@ -46,6 +52,20 @@ class _SplashScreenState extends State<SplashScreen> {
       if (!mounted) return;
       Navigation.pushReplacement(context: context, moveTo: const LoginScreen());
     }
+  }
+
+  /// app flow change after app rejected from apple
+  moveToDashboard() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    userProfile((p0, p1) {
+      if (p0) {
+        UserDetail.setUserLoggedIn = true;
+      } else {
+        UserDetail.setUserLoggedIn = false;
+      }
+      Navigation.pushReplacement(
+          context: context, moveTo: const DashboardScreen());
+    });
   }
 
   @override

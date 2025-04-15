@@ -29,4 +29,22 @@ class CouponListController {
     //   showInSnackBar(context: context, message: responce["message"].toString());
     // }
   }
+
+  static Future<List<AllCouponsList>> couponsListWithoutLogin() async {
+    Map<String, String> queryParams = {"p": "allcoupon"};
+    Map<String, String> params = {};
+    // params["user_id"] = await UserDetail.getUserId ?? "";
+
+    var responce = await ApiService.postRequest(
+      params: params,
+      queryParams: queryParams,
+    );
+    // if (!context.mounted) return;
+    List<AllCouponsList> lt1 = [];
+    var dt = CouponListModelModel.fromJson(responce);
+    if (dt.data?.isNotEmpty ?? false) {
+      return dt.data ?? [];
+    }
+    return lt1;
+  }
 }

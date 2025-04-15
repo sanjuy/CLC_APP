@@ -26,6 +26,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   final ValueNotifier<File?> _image = ValueNotifier<File?>(null);
   final ImagePicker _picker = ImagePicker();
+  String gender = "";
 
   Future<void> _pickImage(ImageSource source) async {
     final XFile? pickedFile = await _picker.pickImage(source: source);
@@ -101,6 +102,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   label: "Contact No.",
                   controller: mobileController,
                 ),
+                dropDownTextField(
+                  icon: (Icons.wc),
+                  title: "Gender (optional)",
+                  lt: ["Male", "Female", "Others"],
+                  onSelected: (p0) {
+                    gender = p0;
+                  },
+                ),
                 generalTextField(
                   icon: (Icons.location_city),
                   label: "Address",
@@ -115,6 +124,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       name: nameController.text,
                       mobile: mobileController.text,
                       address: addressController.text,
+                      gender: gender,
                       file: _image.value,
                     );
                   },

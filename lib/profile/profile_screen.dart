@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:clc_app/authentication/login/login_screen.dart';
 import 'package:clc_app/custom_widget/custom_image_view.dart';
+import 'package:clc_app/home/dashboard_screen.dart';
 import 'package:clc_app/profile/change_membership/change_membership_type_screen.dart';
 import 'package:clc_app/profile/edit_profile_screen.dart';
 import 'package:clc_app/profile/profile_controller.dart';
@@ -85,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Column(
       spacing: 5,
       children: [
-        _buildInfoRow(Icons.person, 'Fullname', name),
+        _buildInfoRow(Icons.person, 'Full Name', name),
         _buildInfoRow(Icons.email, 'Email', email),
         _buildInfoRow(Icons.phone, 'Mobile', mobile),
         _buildInfoRow(Icons.location_on, 'Address', address),
@@ -143,8 +146,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               titleCancel: "No",
               onAccepted: () {
                 UserDetail.setUserLoggedIn = false;
-                Navigation.pushAndRemoveUntil(
-                    context: context, moveTo: LoginScreen());
+                UserDetail.setUserId = "";
+                if (Platform.isIOS) {
+                  Navigation.pushAndRemoveUntil(
+                      context: context, moveTo: DashboardScreen());
+                } else {
+                  Navigation.pushAndRemoveUntil(
+                      context: context, moveTo: LoginScreen());
+                }
               },
             );
           }),

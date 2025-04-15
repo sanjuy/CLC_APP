@@ -113,7 +113,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
                 generalTextField(
                   icon: (Icons.contact_phone),
-                  label: "Contact No.",
+                  label: "Contact No. (optional)",
                   controller: _mobileController,
                   keyboardType: TextInputType.phone,
                   inputFormatters: [
@@ -152,7 +152,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 // SizedBox(height: 8),
                 dropDownTextField(
                   icon: (Icons.wc),
-                  title: "Gender",
+                  title: "Gender (optional)",
                   lt: ["Male", "Female", "Others"],
                   onSelected: (p0) {
                     gender = p0;
@@ -182,12 +182,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           message: "Please Enter Correct Email Address");
                       return;
                     }
-                    if (_mobileController.text == "") {
-                      showInSnackBar(
-                          context: context,
-                          message: "Please Enter Contact No.");
-                      return;
-                    }
+                    // if (_mobileController.text == "") {
+                    //   showInSnackBar(
+                    //       context: context,
+                    //       message: "Please Enter Contact No.");
+                    //   return;
+                    // }
                     if (_passwordController.text == "") {
                       showInSnackBar(
                           context: context, message: "Please Enter Password");
@@ -198,11 +198,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     //       context: context, message: "Please Enter Address");
                     //   return;
                     // }
-                    if (gender == "") {
-                      showInSnackBar(
-                          context: context, message: "Please Select Gender");
-                      return;
-                    }
+                    // if (gender == "") {
+                    //   showInSnackBar(
+                    //       context: context, message: "Please Select Gender");
+                    //   return;
+                    // }
                     if (membershipType == "") {
                       showInSnackBar(
                           context: context,

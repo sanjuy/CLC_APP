@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:clc_app/authentication/login/login_screen.dart';
 import 'package:clc_app/custom_widget/custom_appbar.dart';
 import 'package:clc_app/home/ads/ads_controller.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_screen.dart';
 import 'package:clc_app/home/history/coupon_redeem_history_screen.dart';
 import 'package:clc_app/home/redeem/web_view_screen.dart';
-import 'package:clc_app/profile/enquiry_screen.dart';
 import 'package:clc_app/profile/profile_screen.dart';
+import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/default_color.dart';
 import 'package:clc_app/resources/extenssions.dart';
 import 'package:clc_app/resources/router.dart';
@@ -64,19 +65,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
     isShowAd.dispose();
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      if (index == 0) {
-        screenTitle = "Coupon List";
-      }
-      if (index == 1) {
-        screenTitle = "Redeemed Coupon List";
-      }
-      if (index == 2) {
+  void _onItemTapped(int index) async {
+    if (index == 0) {
+      screenTitle = "Coupon List";
+    }
+    if (index == 1) {
+      screenTitle = "Redeemed Coupon List";
+    }
+    if (index == 2) {
+      if (await UserDetail.getUserLoggedIn ?? false) {
         screenTitle = "My Profile";
+      } else {
+        loginAlert();
+        return;
       }
-      _selectedIndex = index;
-    });
+    }
+    _selectedIndex = index;
+    setState(() {});
+  }
+
+  loginAlert() {
+    showCustomDialog(
+      barrierDismissible: true,
+      context: context,
+      titleOK: "Login",
+      titleCancel: "Cancel",
+      msg: "To view your profile, please log in to your account.",
+      title: "Login",
+      onAccepted: () {
+        Navigation.push(context: context, moveTo: const LoginScreen());
+      },
+    );
   }
 
   void _startTimer() {
@@ -105,13 +124,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               // decoration: BoxDecoration(color: Colors.blue),
               child: Image.asset("logo.png".directory()),
             ),
-            buildListTile(Icons.help_outline, 'Restaurant Enquiry', '', () {
-              Navigator.pop(context);
-              Navigation.push(
-                context: context,
-                moveTo: EnquiryScreen(),
-              );
-            }),
+            // buildListTile(Icons.help_outline, 'Restaurant Enquiry', '', () {
+            //   Navigator.pop(context);
+            //   Navigation.push(
+            //     context: context,
+            //     moveTo: EnquiryScreen(),
+            //   );
+            // }),
             const SizedBox(height: 4),
             buildListTile(Icons.privacy_tip, 'Privacy Policy', '', () {
               Navigator.pop(context);

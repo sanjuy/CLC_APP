@@ -1,4 +1,5 @@
 import 'package:clc_app/apis_services/apis_endpoints.dart';
+import 'package:clc_app/authentication/login/login_screen.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_controller.dart';
 import 'package:clc_app/home/coupon_list/coupon_list_model.dart';
 import 'package:clc_app/home/redeem/coupon_redeem_popup.dart';
@@ -37,7 +38,11 @@ class _CouponListScreenState extends State<CouponListScreen> {
   }
 
   getCoupon() async {
-    rewards.value = await CouponListController.couponsList();
+    if (await UserDetail.getUserLoggedIn ?? false) {
+      rewards.value = await CouponListController.couponsList();
+    } else {
+      rewards.value = await CouponListController.couponsListWithoutLogin();
+    }
     ads.value.image = await UserDetail.getListAd ?? "";
     ads.value.url = await UserDetail.getListAdUrl ?? "";
     membershipType = await UserDetail.getMembershipType ?? "";
@@ -88,49 +93,16 @@ class _CouponListScreenState extends State<CouponListScreen> {
                       itemCount: value.length,
                       itemBuilder: (context, index) {
                         return InkWell(
-                            onTap: () {
-                              if (value[index].membershipType != chowLucky &&
-                                  membershipType != chowLuckyPlus) {
-                                showCustomDialog(
-                                  barrierDismissible: true,
-                                  context: context,
-                                  titleOK: "Right Now",
-                                  titleCancel: "Not Now",
-                                  msg:
-                                      "Unlock more with Chow Luck Card! Upgrade to a ChowLucky Plus membership and enjoy exclusive perks.",
-                                  title: "UPGRADE PLAN",
-                                  onAccepted: () {
-                                    Navigation.push(
-                                      context: context,
-                                      moveTo: SubscriptionPlansScreen(
-                                        onSuccess: () {
-                                          MembershipController
-                                              .changeMembershipType(
-                                            context: context,
-                                            membershipType: chowLuckyPlus,
-                                            onCompletion: () {
-                                              getCoupon();
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    );
-                                  },
-                                );
+                            onTap: () async {
+                              if (await UserDetail.getUserLoggedIn ?? false) {
+                                if (value[index].membershipType != chowLucky &&
+                                    membershipType != chowLuckyPlus) {
+                                  upgradeAlert();
+                                } else {
+                                  redeemAlert(value[index]);
+                                }
                               } else {
-                                showCustomDialog(
-                                  barrierDismissible: true,
-                                  context: context,
-                                  titleOK: "Redeem Now",
-                                  titleCancel: "Not Now",
-                                  msg:
-                                      "To redeem this coupon, show this to the wait staff. This coupon will expire in 10 minutes after you click Redeem Now.",
-                                  title: "INSTRUCTIONS",
-                                  onAccepted: () {
-                                    showBoardingPassDialog(context,
-                                        value[index], () => getCoupon());
-                                  },
-                                );
+                                loginAlert();
                               }
                             },
                             child: RewardCard(reward: value[index]));
@@ -141,6 +113,64 @@ class _CouponListScreenState extends State<CouponListScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  upgradeAlert() {
+    showCustomDialog(
+      barrierDismissible: true,
+      context: context,
+      titleOK: "Right Now",
+      titleCancel: "Not Now",
+      msg:
+          "Unlock more with Chow Luck Card! Upgrade to a ChowLucky Plus membership and enjoy exclusive perks.",
+      title: "UPGRADE PLAN",
+      onAccepted: () {
+        Navigation.push(
+          context: context,
+          moveTo: SubscriptionPlansScreen(
+            onSuccess: () {
+              MembershipController.changeMembershipType(
+                context: context,
+                membershipType: chowLuckyPlus,
+                onCompletion: () {
+                  getCoupon();
+                },
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  redeemAlert(AllCouponsList obj) {
+    showCustomDialog(
+      barrierDismissible: true,
+      context: context,
+      titleOK: "Redeem Now",
+      titleCancel: "Not Now",
+      msg:
+          "To redeem this coupon, show this to the wait staff. This coupon will expire in 10 minutes after you click Redeem Now.",
+      title: "INSTRUCTIONS",
+      onAccepted: () {
+        showBoardingPassDialog(context, obj, () => getCoupon());
+      },
+    );
+  }
+
+  loginAlert() {
+    showCustomDialog(
+      barrierDismissible: true,
+      context: context,
+      titleOK: "Login",
+      titleCancel: "Cancel",
+      msg:
+          "To proceed with coupon redemption, \nplease log in to your account.",
+      title: "Login",
+      onAccepted: () {
+        Navigation.push(context: context, moveTo: const LoginScreen());
+      },
     );
   }
 }
