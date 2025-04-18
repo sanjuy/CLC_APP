@@ -9,6 +9,7 @@ class MembershipController {
     required BuildContext context,
     required String membershipType,
     required Function() onCompletion,
+    bool isShowLoader = true,
   }) async {
     if (membershipType == "") {
       showInSnackBar(
@@ -21,19 +22,24 @@ class MembershipController {
     params["membership_type"] = membershipType;
 
     var responce = await ApiService.postRequest(
-      params: params,
-      queryParams: queryParams,
-    );
+        params: params, queryParams: queryParams, isShowLoader: isShowLoader);
     if (!context.mounted) return;
     var dt = EditProfileModel.fromJson(responce);
     if (dt.data != null && dt.meta != null) {
       UserDetail.setMembershipType = membershipType;
-      showInSnackBar(context: context, message: dt.meta?.message ?? "");
-      onCompletion();
+      if (isShowLoader) {
+        showInSnackBar(context: context, message: dt.meta?.message ?? "");
+        onCompletion();
+      }
     } else if (dt.meta != null) {
-      showInSnackBar(context: context, message: dt.meta?.message ?? "");
+      if (isShowLoader) {
+        showInSnackBar(context: context, message: dt.meta?.message ?? "");
+      }
     } else {
-      showInSnackBar(context: context, message: responce["message"].toString());
+      if (isShowLoader) {
+        showInSnackBar(
+            context: context, message: responce["message"].toString());
+      }
     }
   }
 }

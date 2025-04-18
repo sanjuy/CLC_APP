@@ -136,7 +136,7 @@ class _RewardsScreenState extends State<RewardsScreen> {
                                   context: context,
                                   moveTo: WebViewScreen(
                                     title: widget.obj?.restaurantName ?? "",
-                                    url: "${widget.obj?.url}",
+                                    url: "${widget.obj?.url?.trim()}",
                                   ),
                                 );
                               },

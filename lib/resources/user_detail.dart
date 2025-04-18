@@ -129,4 +129,12 @@ class UserDetail {
   static set setPopupAdUrl(String value) {
     UserDefaults.shared.saveString(key: Keys.popupAdUrl, value: value);
   }
+
+  static Future<String?> get getSubscriptionStatus {
+    return UserDefaults.shared.getString(Keys.subscriptionStatus);
+  }
+
+  static set setSubscriptionStatus(String value) {
+    UserDefaults.shared.saveString(key: Keys.subscriptionStatus, value: value);
+  }
 }

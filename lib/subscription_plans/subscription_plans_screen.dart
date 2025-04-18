@@ -55,28 +55,27 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
         _products = response.productDetails;
       });
     }
-
-    // Load local subscription status
-    // final prefs = await SharedPreferences.getInstance();
-    // setState(() {
-    //   _isSubscribed = prefs.getBool('isSubscribed') ?? false;
-    // });
     LoadingIndicator.hide();
   }
 
   Future<void> _handlePurchaseUpdates(List<PurchaseDetails> purchases) async {
-    // final prefs = await SharedPreferences.getInstance();
-
     for (final purchase in purchases) {
       if (purchase.status == PurchaseStatus.pending) {
         _pendingPurchase = purchase;
       } else if (purchase.status == PurchaseStatus.purchased) {
         _pendingPurchase = null;
-        // if (_productIds.contains(purchase.productID)) {
-        //   await prefs.setBool('isSubscribed', true);
-        //   setState(() => _isSubscribed = true);
-        // }
         await _iap.completePurchase(purchase);
+
+        if (purchase.productID == _productID1) {
+          await SubscriptionController.instance.grantAccess(56);
+        }
+        if (purchase.productID == _productID2) {
+          await SubscriptionController.instance.grantAccess(180);
+        }
+        if (purchase.productID == _productID3) {
+          await SubscriptionController.instance.grantAccess(365);
+        }
+        // await _grantAccess(7);
         if (!mounted) return;
         showInSnackBar(
             context: context, message: "Purchase ${purchase.productID}");
@@ -86,10 +85,6 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
         });
       } else if (purchase.status == PurchaseStatus.restored) {
         _pendingPurchase = null;
-        // if (_productIds.contains(purchase.productID)) {
-        //   await prefs.setBool('isSubscribed', true);
-        //   setState(() => _isSubscribed = true);
-        // }
         await _iap.completePurchase(purchase);
         if (!mounted) return;
         // showInSnackBar(
@@ -158,6 +153,7 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
                       SubscriptionCard(
                         title: weekly.title,
                         price: weekly.price,
+                        // price: "\$7.09",
                         duration: weekly.description,
                         renews: "",
                         onClicked: () => _buy(weekly),
@@ -166,6 +162,7 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
                       SubscriptionCard(
                         title: special.title,
                         price: special.price,
+                        // price: "\$38.90",
                         duration: special.description,
                         renews: "",
                         // oldPrice: "\$48.89",
@@ -175,6 +172,7 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
                       SubscriptionCard(
                         title: annual.title,
                         price: annual.price,
+                        // price: "\$58.90",
                         duration: annual.description,
                         renews: "",
                         // oldPrice: "\$97.76",
@@ -189,7 +187,8 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
                     ),
                     SizedBox(height: 3),
                     customText(
-                      title: "1-Week Pass: Enjoy premium access for 7 days.",
+                      title:
+                          "1-Week Pass: Enjoy premium access for 8 weeks (56 days).",
                     ),
                     SizedBox(height: 2),
                     customText(

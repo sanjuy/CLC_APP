@@ -9,6 +9,7 @@ import 'package:clc_app/resources/alert_view.dart';
 import 'package:clc_app/resources/router.dart';
 import 'package:clc_app/resources/url_launcher.dart';
 import 'package:clc_app/resources/user_detail.dart';
+import 'package:clc_app/subscription_plans/subscription_controller.dart';
 import 'package:clc_app/subscription_plans/subscription_plans_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,8 @@ class CouponListScreen extends StatefulWidget {
   State<CouponListScreen> createState() => _CouponListScreenState();
 }
 
-class _CouponListScreenState extends State<CouponListScreen> {
+class _CouponListScreenState extends State<CouponListScreen>
+    with WidgetsBindingObserver {
   ValueNotifier<List<AllCouponsList>> rewards =
       ValueNotifier<List<AllCouponsList>>([]);
   ValueNotifier<Ads> ads = ValueNotifier<Ads>(Ads());
@@ -34,7 +36,21 @@ class _CouponListScreenState extends State<CouponListScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     getCoupon();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      checkForActivePlan();
+    }
   }
 
   getCoupon() async {
@@ -142,6 +158,21 @@ class _CouponListScreenState extends State<CouponListScreen> {
         );
       },
     );
+  }
+
+  checkForActivePlan() async {
+    if (await UserDetail.getUserLoggedIn ?? false) {
+      bool isActive =
+          await SubscriptionController.instance.checkSubscriptionStatus();
+      if (isActive == false && mounted) {
+        MembershipController.changeMembershipType(
+          context: context,
+          isShowLoader: false,
+          membershipType: chowLucky,
+          onCompletion: () {},
+        );
+      }
+    }
   }
 
   redeemAlert(AllCouponsList obj) {

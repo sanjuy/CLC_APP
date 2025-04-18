@@ -1,3 +1,4 @@
+import 'package:clc_app/resources/user_detail.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -6,6 +7,22 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 class SubscriptionController {
   SubscriptionController._();
   static final SubscriptionController instance = SubscriptionController._();
+
+  Future<void> grantAccess(int days) async {
+    final expiry = DateTime.now().add(Duration(days: days));
+    UserDetail.setSubscriptionStatus = expiry.toIso8601String();
+  }
+
+  Future<bool> checkSubscriptionStatus() async {
+    final expiryStr = await UserDetail.getSubscriptionStatus;
+    if (expiryStr != null) {
+      final expiry = DateTime.parse(expiryStr);
+      final now = DateTime.now();
+      // setState(() => _isSubscribed = now.isBefore(expiry));
+      return now.isBefore(expiry);
+    }
+    return false;
+  }
 
   Future<void> makePayment(double amount, Function(bool) onSuccess) async {
     try {
